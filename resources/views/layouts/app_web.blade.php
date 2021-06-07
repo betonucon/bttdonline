@@ -34,6 +34,7 @@
 	<link href="{{url('assets/plugins/DataTables/extensions/FixedHeader/css/fixedHeader.bootstrap.min.css')}}" rel="stylesheet" />
     <link href="{{url('assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css')}}" rel="stylesheet" />
 	<!-- ================== BEGIN BASE JS ================== -->
+	@stack('css')
 	<script src="{{url('assets/plugins/pace/pace.min.js')}}"></script>
 	<!-- ================== END BASE JS ================== -->
     <style>

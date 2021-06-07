@@ -1,4 +1,9 @@
 <ul class="nav">
+@if(Auth::user()['role_id']!=7)
+<li class="nav-header">DASHBOARD</li>
+	<li class="has-sub"><a style="color:#fff" href="{{url('home')}}"><i class="fa fa-chart-pie"></i><span>Dashboard</span></a></li>
+	
+@endif
 @if(Auth::user()['role_id']==1)
 	<li class="nav-header">PENGGUNA APLIKASI</li>
 	<li class="has-sub"><a style="color:#fff" href="{{url('pengguna')}}"><i class="fa fa-user-circle"></i><span>Internal</span></a></li>

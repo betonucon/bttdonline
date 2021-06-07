@@ -7,6 +7,7 @@ use App\Loogin;
 use App\Pengumuman;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 class HomeController extends Controller
 {
     /**
@@ -30,27 +31,25 @@ class HomeController extends Controller
         echo date('H:i:s');
     }
 
-    public function index()
+    public function index(request $request)
     {
-        // $data=Vendor::all();
-        // foreach($data as $o){
-        //     $cek=User::where('username',$o['LIFNR'])->count();
-        //     if($cek>0){
-
-        //     }else{
-        //         $ven            = New User;
-        //         $ven->username     = $o['LIFNR'];
-        //         $ven->email     = $o['email'];
-        //         $ven->password     = Hash::make($o['LIFNR']);
-        //         $ven->name     = $o['name'];
-        //         $ven->role_id     = 7;
-        //         $ven->save();
-        //     }
-        // }
-
-        $menu='Home';
-        $menu_detail=name();
-        $data=Pengumuman::orderBy('id','Desc')->paginate(7);
-        return view('home',compact('menu','menu_detail','data'));
+        if(Auth::user()['role_id']==7){
+            $menu='Home';
+            $menu_detail=name();
+            $data=Pengumuman::orderBy('id','Desc')->paginate(7);
+            return view('home',compact('menu','menu_detail','data'));
+        }else{
+            $menu='Home';
+            $menu_detail=name();
+            if($request->tahun==''){
+                $tahun=date('Y');
+            }else{
+                $tahun=$request->tahun;
+            }
+            // dd($tahun);
+            $data=Pengumuman::orderBy('id','Desc')->paginate(7);
+            return view('home_lokal',compact('menu','menu_detail','data','tahun'));
+        }
+        
     }
 }

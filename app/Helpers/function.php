@@ -13,6 +13,14 @@ function barcode($id){
    $d->setStorPath(__DIR__.'/cache/');
    return $d->getBarcodePNGPath($id, 'PDF417');
 }
+function bulnya($id){
+   if($id>9){
+      $data=$id;
+   }else{
+      $data='0'.$id;
+   }
+   return $data;
+}
 function bulan($bulan)
 {
    Switch ($bulan){
@@ -72,6 +80,18 @@ function uang($id){
 function npwp(){
    $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
    return $data['npwp'];
+}
+function keuangan($bulan,$tahun){
+   $data=App\Bttd::whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->sum('Amount');
+   return $data;
+}
+function keuangan_sap($bulan,$tahun){
+   $data=App\Bttd::whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->where('sts_sap',1)->sum('Amount');
+   return $data;
+}
+function dokumen($bulan,$tahun){
+   $data=App\Bttd::whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->count('Amount');
+   return $data;
 }
 function emailnya(){
    $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
