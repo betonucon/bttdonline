@@ -62,7 +62,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Faktur Pajak</label>
-                                                    <input type="text"  name="Reference" value="{{$data['Reference']}}" class="form-control"  placeholder="Ketik disini" />
+                                                    <input type="text"  name="Reference" id="Reference" value="{{$data['Reference']}}" class="form-control"  placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nomor Faktur Pajak Tanpa Menggunakan Titik</small>
                                                 </div>
                                                 <div class="form-group">
@@ -79,9 +79,9 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Rekening</label><br>
-                                                    <select name="PartBank" style="display:inline;width:35%" class="form-control" >
+                                                    <select name="PartBank" style="display:inline;width:30%" class="form-control" >
                                                         @foreach(rekening_vendor() as $rekven)
-                                                            <option value="{{$rekven['norek']}}" @if($data['PartBank']==$rekven['norek']) selected @endif >[{{$rekven['bank_key']}}] {{$rekven['norek']}}</option>
+                                                            <option value="{{$rekven['norek']}}" @if($data['PartBank']==$rekven['norek']) selected @endif >{{$rekven['norek']}}</option>
                                                         @endforeach
                                                     </select>
                                                     <input type="text" name="nama_bank" value="{{$data['nama_bank']}}"  style="display:inline;width:68%" class="form-control" placeholder="Nama BANK" />
@@ -129,6 +129,16 @@
                                                     <label for="exampleInputEmail1">Dokumen Tagihan </label>
                                                     <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf</small>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Struk Transportir </label>
+                                                    <div class="input-prepend input-group">
+                                                        <span  onclick="buat_struk()" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;">
+                                                            <i class="fa fa-calculator"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control" placeholder="password" >
+                                                    </div>
+                                                    <small class="f-s-12 text-grey-darker">Klik icon calculator kemudian isi nilai sesuai dokumen</small>
                                                 </div>
                                             </fieldset>
                                         </div>
@@ -180,12 +190,12 @@
                                             <fieldset>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Rekening</label><br>
-                                                    <select name="PartBank" style="display:inline;width:35%" class="form-control" >
+                                                    <select name="PartBank" style="display:inline;width:30%" class="form-control" >
                                                         @foreach(rekening_vendor() as $rekven)
                                                             <option value="{{$rekven['norek']}}" @if($data['PartBank']==$rekven['norek']) selected @endif>[{{$rekven['bank_key']}}] {{$rekven['norek']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="nama_bank" value="{{$data['Reference']}}"  style="display:inline;width:73%" class="form-control" placeholder="Nama BANK" />
+                                                    <input type="text" name="nama_bank" value="{{$data['Reference']}}"  style="display:inline;width:68%" class="form-control" placeholder="Nama BANK" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -222,6 +232,16 @@
                                                     <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf</small>
                                                 </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail1">Struk Transportir </label>
+                                                    <div class="input-prepend input-group">
+                                                        <span  onclick="buat_struk()" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;">
+                                                            <i class="fa fa-calculator"></i>
+                                                        </span>
+                                                        <input type="text" class="form-control" placeholder="password" >
+                                                    </div>
+                                                    <small class="f-s-12 text-grey-darker">Klik icon calculator kemudian isi nilai sesuai dokumen</small>
+                                                </div>
                                             </fieldset>
                                         </div>
                             @endif
@@ -257,6 +277,27 @@
                         </div>
                     </div>
                     <!-- #modal-message -->
+                    <div class="modal" id="modal-struk">
+                        <div class="modal-dialog" id="modalmedium">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">struk Data</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post"  enctype="multipart/form-data" id="my_data_struk">
+                                        
+                                        @csrf
+                                        <div id="tampilkan_struk" style="display: contents;"></div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Tutup</a>
+                                    <a href="javascript:;" class="btn btn-success" onclick="simpan_struk()">Simpan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal modal-message fade" id="modal-message">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -293,7 +334,25 @@
     $(document).ready(function() {
         
     });
-
+    function buat_struk(){
+        var tagihan_id=$('#tagihan_id').val();
+        var Reference=$('#Reference').val();
+        if(Reference==''){
+            alert('Isi Nomor Faktur Atau Invoice');
+        }else{
+            $.ajax({
+                type: 'GET',
+                url: "{{url('bttd/struk')}}",
+                data: "tagihan_id="+tagihan_id+"&Reference="+Reference,
+                success: function(msg){
+                    $('#modal-struk').modal('show');
+                    $('#tampilkan_struk').html(msg);
+                    
+                }
+            }); 
+        }
+        
+    }
     function tambah(){
         $('#modal-tambah').modal('show');
     }
@@ -320,18 +379,33 @@
             location.assign("{{url('bttd/baru')}}?kategori=nonfaktur");
         }
     }
-    function ubah(a){
+    function simpan_struk(){
+        var form=document.getElementById('my_data_struk');
+        var Reference=$('#Reference').val();
         $.ajax({
-            type: 'GET',
-            url: "{{url('bank/ubah')}}",
-            data: "id="+a,
-            success: function(msg){
-                $('#modal-ubah').modal('show');
-                $('#tampilkan_ubah').html(msg);
-                
-            }
-        }); 
-        
+                type: 'POST',
+                url: "{{url('bttd/simpan_struk')}}?Reference="+Reference+"&act=ubah",
+                data: new FormData(form),
+                contentType: false,
+                cache: false,
+                processData:false,
+                beforeSend: function() {
+                    document.getElementById("loadnya").style.width = "100%";
+                },
+                success: function(msg){
+                    
+                    if(msg=='ok'){
+                        document.getElementById("loadnya").style.width = "0px";
+                    }else{
+                        document.getElementById("loadnya").style.width = "0px";
+                        $('#modal-notif').modal('show');
+                        $('#notif').html(msg);
+                    }
+                            
+                    
+                }
+        });
+    
     }
     function tampilkan_tagihan(a){
         

@@ -129,19 +129,14 @@
 </div>
 @endsection
 
-@push('css')
 
-@endpush
 @push('ajax')
 <!-- ================== BEGIN PAGE LEVEL JS ================== -->
 <script src="{{url('assets/plugins/chart-js/Chart.min.js')}}"></script>
 <!-- <script src="{{url('assets/js/demo/chart-js.demo.min.js')}}"></script> -->
 	<!-- ================== END PAGE LEVEL JS ================== -->
 <script>
-    $(document).ready(function() {
-        App.init();
-        ChartJs.init();
-    });
+    
 
     function pilih_tahun(a){
         location.assign("{{url('home')}}?tahun="+a);
@@ -272,35 +267,7 @@ var handleChartJs = function() {
         data: lineChartData
     });
     
-    var ctx2 = document.getElementById('bar-chart').getContext('2d');
-    var barChart = new Chart(ctx2, {
-        type: 'bar',
-        data: barChartData
-    });
     
-    var ctx3 = document.getElementById('radar-chart').getContext('2d');
-    var radarChart = new Chart(ctx3, {
-        type: 'radar',
-        data: radarChartData
-    });
-    
-    var ctx4 = document.getElementById('polar-area-chart').getContext('2d');
-    var polarAreaChart = new Chart(ctx4, {
-        type: 'polarArea',
-        data: polarAreaData
-    });
-    
-    var ctx5 = document.getElementById('pie-chart').getContext('2d');
-    window.myPie = new Chart(ctx5, {
-        type: 'pie',
-        data: pieChartData
-    });
-    
-    var ctx6 = document.getElementById('doughnut-chart').getContext('2d');
-    window.myDoughnut = new Chart(ctx6, {
-        type: 'doughnut',
-        data: doughnutChartData
-    });
 };
 
 var ChartJs = function () {

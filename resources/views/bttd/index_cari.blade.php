@@ -28,143 +28,9 @@
                     <h4 class="panel-title">{{$menu}}</h4>
                 </div>
                 <div class="panel-body">
-                    
-                    <form method="post"  enctype="multipart/form-data" id="my_data_all">
-                    @csrf
-                        <table id="example" class="table table-striped table-bordered">
-                        
-                            <thead>
-                                <tr>
-                                    <th width="3%">NO</th>
-                                    <th >Vendor</th>
-                                    <th class="text-nowrap" width="10%" >No Faktur </th>
-                                    <th class="text-nowrap" width="10%" >Nilai Faktur </th>
-                                    <th class="text-nowrap" width="10%" >No Invoice </th>
-                                    <th class="text-nowrap" width="10%" >Nilai Invoice </th>
-                                    <th class="text-nowrap" width="15%" >Tanggal </th>
-                                    <th class="text-nowrap" width="9%" ></th>
-                                    <th class="text-nowrap" width="4%" ></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach($data as $no=>$o)
-
-                                
-                                <tr class="odd gradeX">
-                                    <td class="ttd">{{($no+1)}}</td>
-                                    <td class="ttd"><b>{{$o['LIFNR']}}</b><br>{{$o['vendor']['name']}}</td>
-                                    <td class="ttd">{{$o['Reference']}}</td>
-                                    <td class="ttd">{{uang($o['Amount'])}}</td>
-                                    <td class="ttd">{{$o['HeaderText']}}</td>
-                                    <td class="ttd">{{uang($o['AmountInvoice'])}}</td>
-                                    <td class="ttd"><b>Dibuat :</b> {{tgl($o['InvoiceDate'])}}<br><b>Diterima :</b>{{tgl($o['diterima'])}}</td>
-                                    <td class="ttd" style="background:{{$o['rolenya']['warna']}} !important;text-align:center">
-                                       <b><i>{{$o['rolenya']['name']}}</i></b>
-                                    </td>
-                                    <td class="ttd">
-                                        <span class="btn btn-xs btn-warning" ><i class="fa fa-clone"></i></span>
-                                    </td>
-                                    
-                                </tr>
-                            @endforeach
-                            </tbody>
-                        </table>
-                    </form>
-                    {{ $data->links() }}
-                    <!-- #modal-dialog -->
-                    <div class="modal fade" id="modal-tambah">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Tambah Data</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                </div>
-                                <div class="modal-body">
-                                <form method="post"  style="display: flex;" enctype="multipart/form-data" id="my_data">
-                                    @csrf
-                                    <div class="col-md-6">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Username </label>
-                                                <input type="text" name="username" class="form-control" placeholder="Ketik disini" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Nama </label>
-                                                <input type="text" name="name" class="form-control" placeholder="Ketik disini" />
-                                            </div>
-                                           
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email </label>
-                                                <input type="text" name="email" class="form-control" placeholder="Ketik disini" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Role Akses </label>
-                                                <select name="role_id" class="form-control" placeholder="Ketik disini">
-                                                    <option value="">Pilih Role Akses---</option>
-                                                    <option value="2">LOKET</option>
-                                                    <option value="3">OFFICER</option>
-                                                    <option value="4">SPV</option>
-                                                    <option value="5">SPT</option>
-                                                    <option value="6">MANAGER</option>
-                                                </select>
-                                            </div>
-                                            
-                                        </fieldset>
-                                    </div>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <a href="javascript:;" class="btn btn-success" onclick="simpan()">Simpan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- #modal-without-animation -->
-                    <div class="modal" id="modal-revisi">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Revisi Dokumen</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                </div>
-                                <div class="modal-body">
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Alasan Pengembalian </label>
-                                        <textarea id="keterangan" class="form-control" rows="5" placeholder="Ketik disini"></textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <a href="javascript:;" class="btn btn-success" onclick="simpan_revisi()">Simpan</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- #modal-message -->
-                    <div class="modal modal-message fade" id="modal-message">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title">Modal Message Header</h4>
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                                </div>
-                                <div class="modal-body">
-                                    <p>Text in a modal</p>
-                                    <p>Do you want to turn on location services so GPS can use your location ?</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <a href="javascript:;" class="btn btn-primary">Save Changes</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- #modal-alert -->
+                    <input type="text" class="form-control" onkeyup="cari_text(this.value)" placeholder="Masukan Nomor Invoice / Faktur">
+                    <hr>
+                    <div id="tampilkan_traking"></div>
                     @include('layouts.notif')
                 </div>
             </div>
@@ -180,11 +46,29 @@
 @push('ajax')
 <script>
     $(document).ready(function() {
-        
+        $.ajax({
+            type: 'GET',
+            url: "{{url('bttd/view_traking')}}",
+            data: "inv={{$inv}}",
+            success: function(msg){
+                $('#tampilkan_traking').html(msg);
+                
+            }
+        }); 
     });
 
-    function revisi(){
-        $('#modal-revisi').modal('show');
+    function cari_text(a){
+        
+        $.ajax({
+            type: 'GET',
+            url: "{{url('bttd/view_traking')}}",
+            data: "inv="+a,
+            success: function(msg){
+                $('#tampilkan_traking').html(msg);
+                
+            }
+        }); 
+                    
     }
 
     function ubah(a,b){
@@ -192,116 +76,7 @@
         
     }
 
-    function simpan(){
-        var form=document.getElementById('my_data');
-        $.ajax({
-                type: 'POST',
-                url: "{{url('pengguna/simpan')}}",
-                data: new FormData(form),
-                contentType: false,
-                cache: false,
-                processData:false,
-                beforeSend: function() {
-                    document.getElementById("loadnya").style.width = "100%";
-                },
-                success: function(msg){
-                    
-                    if(msg=='ok'){
-                        location.reload();
-                    }else{
-                    document.getElementById("loadnya").style.width = "0px";
-                        $('#modal-notif').modal('show');
-                        $('#notif').html(msg);
-                    }
-                            
-                    
-                }
-        });
     
-    }
-    function simpan_revisi(){
-        var form=document.getElementById('my_data_all');
-        var keterangan=$('#keterangan').val();
-        $.ajax({
-                type: 'POST',
-                url: "{{url('bttd/simpan_revisi')}}?keterangan="+keterangan,
-                data: new FormData(form),
-                contentType: false,
-                cache: false,
-                processData:false,
-                beforeSend: function() {
-                    document.getElementById("loadnya").style.width = "100%";
-                },
-                success: function(msg){
-                    
-                    if(msg=='ok'){
-                        location.reload();
-                    }else{
-                    document.getElementById("loadnya").style.width = "0px";
-                        $('#modal-notif').modal('show');
-                        $('#notif').html(msg);
-                    }
-                            
-                    
-                }
-        });
-    
-    }
-    function simpan_terima(){
-        var form=document.getElementById('my_data_all');
-        $.ajax({
-                type: 'POST',
-                url: "{{url('bttd/simpan_terima')}}",
-                data: new FormData(form),
-                contentType: false,
-                cache: false,
-                processData:false,
-                beforeSend: function() {
-                    document.getElementById("loadnya").style.width = "100%";
-                },
-                success: function(msg){
-                    
-                    if(msg=='ok'){
-                        location.reload();
-                    }else{
-                    document.getElementById("loadnya").style.width = "0px";
-                        $('#modal-notif').modal('show');
-                        $('#notif').html(msg);
-                    }
-                            
-                    
-                }
-        });
-    
-    }
-      
-    function hapus(){
-        var form=document.getElementById('my_data_all');
-        $.ajax({
-                type: 'POST',
-                url: "{{url('pengguna/hapus')}}",
-                data: new FormData(form),
-                contentType: false,
-                cache: false,
-                processData:false,
-                beforeSend: function() {
-                    document.getElementById("loadnya").style.width = "100%";
-                },
-                success: function(msg){
-                    
-                    if(msg=='ok'){
-                        location.reload();
-                    }else{
-                        document.getElementById("loadnya").style.width = "0px";
-                        $('#modal-notif').modal('show');
-                        $('#notif').html(msg);
-                    }
-                            
-                    
-                }
-        });
-    
-    }
 </script>
 
 @endpush

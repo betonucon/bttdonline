@@ -38,11 +38,13 @@
 			<i class="fa fa-clone"></i>
 			<span>Daftar BTTD</span>
 		</a>
-		<ul class="sub-menu">
+		<ul class="sub-menu" style="display: block;">
 			<li><a style="color:#fff" href="{{url('officer')}}">BTTD Baru</a></li>
 			<li><a style="color:#fff" href="{{url('officer/terima')}}">BTTD Diterima</a></li>
 		</ul>
 	</li>
+	<li class="has-sub"><a href="{{url('bttd/cari')}}"><i class="fa fa-map-marker-alt"></i><span>Cari BTTD</span></a></li>
+	
 @endif
 @if(Auth::user()['role_id']==2)
 	<li class="nav-header">MASTER VENDOR</li>

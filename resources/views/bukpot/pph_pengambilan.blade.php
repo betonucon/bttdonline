@@ -50,18 +50,27 @@
                             </thead>
                             <tbody>
                             @foreach($data as $no=>$o)
+                                <?php
+                                    if($o['sts']==1){
+                                        $warna='';
+                                        $ceklis='<input type="checkbox" name="id[]" value="'.$o['id'].'">';
+                                    }else{
+                                        $warna='#fff9b0';
+                                        $ceklis='';
+                                    }
 
+                                ?>
                                
                                 <tr class="odd gradeX" >
-                                    <td class="ttd">{{($no+1)}}</td>
-                                    <td class="ttd"><input type="checkbox" name="id[]" value="{{$o['id']}}"></td>
-                                    <td class="ttd">{{$o['Docno']}}</td>
-                                    <td class="ttd">{{$o['DateDocno']}}</td>
-                                    <td class="ttd">{{$o['HeaderText']}}</td>
-                                    <td class="ttd"><b>{{$o['LIFNR']}}</b><br>{{$o['vendor']['name']}}</td>
-                                    <td class="ttd">{{$o['Reference']}}</td>
-                                    <td class="ttd"><b>DPP (Rp):</b><br>{{uang($o['AmountDpp'])}}<br><b>PPH (Rp):</b><br>{{uang($o['AmountPph'])}}</td>
-                                    <td class="ttd"><b>Penerima :</b><br>{{$o['penerima']}}<br><b>Tanggal :</b><br>{{$o['tgl_terima']}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd">{{($no+1)}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd">{!!$ceklis!!}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd">{{$o['Docno']}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd">{{$o['DateDocno']}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd">{{$o['HeaderText']}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd"><b>{{$o['LIFNR']}}</b><br>{{$o['vendor']['name']}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd">{{$o['Reference']}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd"><b>DPP (Rp):</b><br>{{uang($o['AmountDpp'])}}<br><b>PPH (Rp):</b><br>{{uang($o['AmountPph'])}}</td>
+                                    <td style="background:{{$warna}} !important" class="ttd"><b>Penerima :</b><br>{{$o['penerima']}}<br><b>Tanggal :</b><br>{{$o['tgl_terima']}}</td>
                                    
                                    
                                 </tr>

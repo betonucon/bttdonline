@@ -34,6 +34,7 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::post('/vendor/hapus', 'VendorController@hapus');
     Route::post('/vendor/simpan', 'VendorController@simpan');
     Route::post('/vendor/simpan_npwp', 'VendorController@simpan_npwp');
+    Route::post('/vendor/simpan_password', 'VendorController@simpan_password');
     Route::post('/vendor/simpan_ubah', 'VendorController@simpan_ubah');
     
 });
@@ -77,12 +78,14 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::get('/bttd', 'BttdController@index');
     Route::get('/loket', 'BttdController@index_loket');
     Route::get('/officer', 'BttdController@index_officer');
+    Route::get('/officer/terima', 'BttdController@index_officer_terima');
     Route::get('/loket/terima', 'BttdController@index_loket_terima');
     Route::get('/bttd_revisi', 'BttdController@index_dikembalikan');
     Route::get('/bttd/baru', 'BttdController@buat');
     Route::get('/bttd/struk', 'BttdController@struk');
     Route::get('/bttd/cari', 'BttdController@index_cari');
     Route::get('/bttd/tagihan', 'BttdController@tagihan');
+    Route::get('/bttd/view_traking', 'BttdController@view_traking');
     Route::get('/bttd/ubah', 'BttdController@ubah');
     Route::get('/bttd/print', 'BttdController@print');
     Route::get('/bttd/view_data', 'BttdController@view_data');
@@ -90,10 +93,13 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::get('/bttd/proses_cetak', 'BttdController@proses_cetak');
     Route::post('/bttd/hapus', 'BttdController@hapus');
     Route::post('/bttd/simpan_revisi', 'BttdController@simpan_revisi');
+    Route::post('/bttd/simpan_struk', 'BttdController@simpan_struk');
     Route::post('/bttd/simpan_terima', 'BttdController@simpan_terima');
     Route::post('/bttd/simpan_kirim', 'BttdController@simpan_kirim');
     Route::post('/bttd/simpan', 'BttdController@simpan');
+    Route::post('/bttd/simpan_voucher', 'BttdController@simpan_voucher');
     Route::post('/bttd/simpan_ubah', 'BttdController@simpan_ubah');
+    Route::post('/bttd/terima_officer', 'BttdController@terima_officer');
     
 });
 Route::group(['middleware'    => 'auth'],function(){

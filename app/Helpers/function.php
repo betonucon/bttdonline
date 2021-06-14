@@ -63,6 +63,11 @@ function cetak_ppn(){
    
    return $data;
 }
+function cek_password(){
+   $data=App\User::where('username',Auth::user()['username'])->where('sts_password',null)->count();
+   
+   return $data;
+}
 function tanggal($tanggal){
     $tgl=explode('-',$tanggal);
     $ttg=$tgl[2].' '.bulan($tgl['1']).' '.$tgl['0'];
@@ -109,9 +114,61 @@ function tagihan(){
    $data=App\Tagihan::orderBy('name','Asc')->get();
    return $data;
 }
+function cek_tagihan($id){
+   $data=App\Tagihan::where('id',$id)->first();
+   $text='<font style="text-transform: capitalize !important;">'.$data['name'].'</font>';
+   return $text;
+}
+function cek_struknya($id){
+   $data=App\Tagihan::where('id',$id)->first();
+   
+   return $data['struknya'];
+}
+function materai($nilai){
+   if($nilai>9000000){
+      $data=10000;
+   }else{
+      $data=5000;
+   }
+   return $data;
+}
+function tgl_terima($id){
+   $data=App\Traking::where('bttd_id',$id)->where('role_id',Auth::user()['role_id'])->first();
+   
+   return $data['tanggal'];
+}
+function struk_get($id){
+   $data=App\Struk::where('Reference',$id)->orderBy('urut','Asc')->get();
+   
+   return $data;
+}
+function datastruk($id){
+   $data=App\Struk::where('Reference',$id)->orderBy('urut','Asc')->firstorfail();
+   
+   return $data;
+}
+function detail_tagihan($id){
+   $data=App\Detailtagihan::where('tagihan_id',$id)->where('name','!=','')->orderBy('id','Asc')->get();
+   return $data;
+}
 function rolepengguna(){
    $data=App\Rolenya::where('id',Auth::user()['role_id'])->first();
    return $data['name'];
+}
+function cek_kategori_tagihan($id){
+   if($id==1){
+      $data='Barang dan Jasa';
+   }
+   if($id==2){
+      $data='Transportir';
+   }
+   if($id==3){
+      $data='Khusus';
+   }
+   if($id==''){
+      $data='Belum ada';
+   }
+   return $data;
 }
 function total_dokumen(){
    $data=App\Bttd::where('LIFNR',Auth::user()['username'])->count();

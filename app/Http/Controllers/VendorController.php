@@ -281,6 +281,28 @@ class VendorController extends Controller
             
         }
     }
+    public function simpan_password(request $request){
+        if (trim($request->password) == '') {$error[] = '- Masukan Password Baru';}
+        if (trim($request->konfirmasi_password) == '') {$error[] = '- Masukan Konfirmasi Password';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+            if($request->password==$request->konfirmasi_password){
+                $data           = User::find(Auth::user()['id']);
+                $data->password   = Hash::make($request->password);
+                $data->sts_password   = 1;
+                $data->save();
+                if($data){
+                    echo'ok';
+                }
+            }else{
+                echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br /> Konfirmasi Password Salah</p>';
+            }
+            
+                
+                 
+            
+        }
+    }
 
     
 

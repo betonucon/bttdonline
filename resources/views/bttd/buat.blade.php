@@ -61,7 +61,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Faktur Pajak</label>
-                                                    <input type="text"  onkeypress="return hanyaAngka(event)" name="Reference" class="form-control"  placeholder="Ketik disini" />
+                                                    <input type="text"  onkeypress="return hanyaAngka(event)" name="Reference" id="Reference" class="form-control"  placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nomor Faktur Pajak Tanpa Menggunakan Titik</small>
                                                 </div>
                                                 <div class="form-group">
@@ -106,7 +106,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
                                                     <input type="text" id="matauanginvoice" disabled style="display:inline;width:15%" class="form-control" >
-                                                    <input type="text" name="Amount" onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -206,8 +206,8 @@
                                                             <option value="{{$mata['name']}}">{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="Amount" onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:78%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="hidden" name="AmountInvoice" id="Amount" onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:78%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="hidden" name="AmountInvoice"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -263,7 +263,8 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body">
-                                    <form method="post"  style="display: flex;" enctype="multipart/form-data" id="my_data_struk">
+                                    <form method="post"  enctype="multipart/form-data" id="my_data_struk">
+                                        
                                         @csrf
                                         <div id="tampilkan_struk" style="display: contents;"></div>
                                     </form>
@@ -342,16 +343,21 @@
     }
     function buat_struk(){
         var tagihan_id=$('#tagihan_id').val();
-        $.ajax({
-            type: 'GET',
-            url: "{{url('bttd/struk')}}",
-            data: "tagihan_id="+tagihan_id,
-            success: function(msg){
-                $('#modal-struk').modal('show');
-                $('#tampilkan_struk').html(msg);
-                
-            }
-        }); 
+        var Reference=$('#Reference').val();
+        if(Reference==''){
+            alert('Isi Nomor Faktur Atau Invoice');
+        }else{
+            $.ajax({
+                type: 'GET',
+                url: "{{url('bttd/struk')}}",
+                data: "tagihan_id="+tagihan_id+"&Reference="+Reference,
+                success: function(msg){
+                    $('#modal-struk').modal('show');
+                    $('#tampilkan_struk').html(msg);
+                    
+                }
+            }); 
+        }
         
     }
     function tampilkan_tagihan(a){
@@ -384,6 +390,34 @@
                     
                     if(msg=='ok'){
                         location.assign("{{url('bttd/')}}");
+                    }else{
+                        document.getElementById("loadnya").style.width = "0px";
+                        $('#modal-notif').modal('show');
+                        $('#notif').html(msg);
+                    }
+                            
+                    
+                }
+        });
+    
+    }
+    function simpan_struk(){
+        var form=document.getElementById('my_data_struk');
+        var Reference=$('#Reference').val();
+        $.ajax({
+                type: 'POST',
+                url: "{{url('bttd/simpan_struk')}}?Reference="+Reference,
+                data: new FormData(form),
+                contentType: false,
+                cache: false,
+                processData:false,
+                beforeSend: function() {
+                    document.getElementById("loadnya").style.width = "100%";
+                },
+                success: function(msg){
+                    
+                    if(msg=='ok'){
+                        document.getElementById("loadnya").style.width = "0px";
                     }else{
                         document.getElementById("loadnya").style.width = "0px";
                         $('#modal-notif').modal('show');

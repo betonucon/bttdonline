@@ -45,7 +45,7 @@
                             <thead>
                                 <tr>
                                     <th width="3%">NO</th>
-                                    <th width="2%" ></th>
+                                    <th width="2%" ><input type="checkbox" onchange="pilihsemua(this)"></th>
                                     <th >Vendor</th>
                                     <th class="text-nowrap" width="10%" >No Faktur </th>
                                     <th class="text-nowrap" width="10%" >Nilai Faktur </th>
@@ -80,7 +80,7 @@
                                         
                                     </td>
                                     <td class="ttd">
-                                        <span class="btn btn-xs btn-white " onclick="cetak({{$o['id']}})"><i class="fa fa-file-pdf"></i></span>
+                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -90,18 +90,19 @@
                     {{ $data->links() }}
                     
                     <!-- #modal-without-animation -->
-                    <div class="modal" id="modal-cetak">
+                    <div class="modal" id="modal-tampilkan">
                         <div class="modal-dialog" id="modalbesar">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Cetak</h4>
+                                    <h4 class="modal-title">Dokumen</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body">
-                                    <div id="tampilcetak"></div>
+                                    <div id="tampilkanprint">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Tutup</a>
                                 </div>
                             </div>
                         </div>
@@ -141,9 +142,19 @@
         
     }
 
-    function ubah(a,b){
-        location.assign("{{url('bttd/ubah')}}?kategori="+b+"&id="+a);
+    function tampilkan(a){
         
+        $.ajax({
+            type: 'GET',
+            url: "{{url('bttd/proses_cetak')}}",
+            data: "id="+a,
+            success: function(msg){
+                $('#tampilkanprint').html(msg);
+                $('#modal-tampilkan').modal('show');
+                
+            }
+        }); 
+                    
     }
 
     function simpan(){

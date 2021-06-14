@@ -50,16 +50,18 @@
                             <tbody>
                             @foreach($data as $no=>$o)
                                 <?php 
-                                    if($o['cetak']['urut']==''){
-                                    $warna='';
+                                    if($o['sts_cetak']=='0' || $o['sts_cetak']==null){
+                                        $warna='';
+                                        $ceklis='<input type="checkbox" name="id[]" value="'.$o['id'].'">';
                                     }else{
                                         $warna='#fff9b0';
+                                        $ceklis='';
                                     }
                                 ?>
                                 
                                 <tr class="odd gradeX">
                                     <td style="background:{{$warna}} !important" class="ttd">{{($no+1)}}</td>
-                                    <td style="background:{{$warna}} !important" class="ttd"><input type="checkbox" name="id[]" value="{{$o['id']}}"></td>
+                                    <td style="background:{{$warna}} !important" class="ttd">{!!$ceklis!!}</td>
                                     <td style="background:{{$warna}} !important" class="ttd">{{$o['HeaderText']}}</td>
                                     <td style="background:{{$warna}} !important" class="ttd"><b>{{$o['LIFNR']}}</b><br>{{$o['vendor']['name']}}</td>
                                     <td style="background:{{$warna}} !important" class="ttd">{{$o['Reference']}}</td>

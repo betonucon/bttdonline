@@ -41,6 +41,7 @@
                                     <th width="3%">NO</th>
                                     <th width="3%" ></th>
                                     <th>Nama Tagihan</th>
+                                    <th width="20%" >Kategori</th>
                                     <th width="4%" ></th>
                                 </tr>
                             </thead>
@@ -52,6 +53,7 @@
                                     <td class="ttd">{{($no+1)}}</td>
                                     <td class="ttd"><input type="checkbox" name="id[]" value="{{$o['id']}}"></td>
                                     <td class="ttd">{{$o['name']}}</td>
+                                    <td class="ttd">{{cek_kategori_tagihan($o['struknya'])}}</td>
                                     <td class="ttd">
                                         <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}})"><i class="fa fa-edit"></i></span>
                                     </td>

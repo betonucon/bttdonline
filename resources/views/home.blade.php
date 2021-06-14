@@ -83,8 +83,8 @@
                     <tbody>
                     @foreach($data as $no=>$o)
                             <tr>
-                                <td><a href="{{url('_file_pengumuman/'.$o['file'])}}" target="_blank" style="color:#000">{{$o['name']}}</a></td>
-                                <td><a href="{{url('_file_pengumuman/'.$o['file'])}}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-pdf"></i></a></td>
+                                <td style="padding: 3px;"><a href="{{url('_file_pengumuman/'.$o['file'])}}" target="_blank" style="color:#000">{{$o['name']}}</a></td>
+                                <td style="padding: 3px;"><a href="{{url('_file_pengumuman/'.$o['file'])}}" target="_blank" class="btn btn-sm btn-success"><i class="fa fa-file-pdf"></i></a></td>
                             </tr>
                     @endforeach   
                     </tbody>

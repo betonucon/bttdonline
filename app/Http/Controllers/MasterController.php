@@ -36,6 +36,15 @@ class MasterController  extends Controller
                     <label>Nama </label>
                     <input type="text" name="name" class="form-control" value="'.$data['name'].'">
                 </div>
+                <div class="form-group">
+                    <label>Kategori </label>
+                    <select name="struknya" class="form-control">
+                        <option value="">Pilihan Kategori--</option>
+                        <option value="1"'; if($data['struknya']==1){echo'selected';} echo'>Barang Dan Jasa</option>
+                        <option value="2"'; if($data['struknya']==2){echo'selected';} echo'>Transportir</option>
+                        <option value="3"'; if($data['struknya']==3){echo'selected';} echo'>Khusus</option>
+                    </select>
+                </div>
                 
                 
                 
@@ -183,6 +192,7 @@ class MasterController  extends Controller
             
                 $data           = Tagihan::find($request->id);
                 $data->name   = $request->name;
+                $data->struknya   = $request->struknya;
                 $data->save();
                 if($data){
                    echo'ok';

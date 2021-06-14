@@ -45,7 +45,7 @@
                             <thead>
                                 <tr>
                                     <th width="3%">NO</th>
-                                    <th width="2%" ></th>
+                                    <th width="2%" ><input type="checkbox" onchange="pilihsemua(this)"></th>
                                     <th >Vendor</th>
                                     <th class="text-nowrap" width="10%" >No Faktur </th>
                                     <th class="text-nowrap" width="10%" >Nilai Faktur </th>
@@ -81,7 +81,7 @@
                                         <span class="btn btn-xs btn-warning" ><i class="fa fa-clone"></i></span>
                                     </td>
                                     <td class="ttd">
-                                        <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}},`{{$o['kategori']}}`)"><i class="fa fa-edit"></i></span>
+                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>
                                     </td>
                                 </tr>
                             @endforeach
@@ -90,54 +90,19 @@
                     </form>
                     {{ $data->links() }}
                     <!-- #modal-dialog -->
-                    <div class="modal fade" id="modal-tambah">
-                        <div class="modal-dialog modal-lg">
+                    <div class="modal" id="modal-tampilkan">
+                        <div class="modal-dialog" id="modalbesar">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Tambah Data</h4>
+                                    <h4 class="modal-title">Dokumen</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body">
-                                <form method="post"  style="display: flex;" enctype="multipart/form-data" id="my_data">
-                                    @csrf
-                                    <div class="col-md-6">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Username </label>
-                                                <input type="text" name="username" class="form-control" placeholder="Ketik disini" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Nama </label>
-                                                <input type="text" name="name" class="form-control" placeholder="Ketik disini" />
-                                            </div>
-                                           
-                                        </fieldset>
+                                    <div id="tampilkanprint">
                                     </div>
-                                    <div class="col-md-6">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email </label>
-                                                <input type="text" name="email" class="form-control" placeholder="Ketik disini" />
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Role Akses </label>
-                                                <select name="role_id" class="form-control" placeholder="Ketik disini">
-                                                    <option value="">Pilih Role Akses---</option>
-                                                    <option value="2">LOKET</option>
-                                                    <option value="3">OFFICER</option>
-                                                    <option value="4">SPV</option>
-                                                    <option value="5">SPT</option>
-                                                    <option value="6">MANAGER</option>
-                                                </select>
-                                            </div>
-                                            
-                                        </fieldset>
-                                    </div>
-                                    </form>
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <a href="javascript:;" class="btn btn-success" onclick="simpan()">Simpan</a>
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Tutup</a>
                                 </div>
                             </div>
                         </div>
@@ -210,33 +175,21 @@
         
     }
 
-    function simpan(){
-        var form=document.getElementById('my_data');
+    function tampilkan(a){
+        
         $.ajax({
-                type: 'POST',
-                url: "{{url('pengguna/simpan')}}",
-                data: new FormData(form),
-                contentType: false,
-                cache: false,
-                processData:false,
-                beforeSend: function() {
-                    document.getElementById("loadnya").style.width = "100%";
-                },
-                success: function(msg){
+            type: 'GET',
+            url: "{{url('bttd/proses_cetak')}}",
+            data: "id="+a,
+            success: function(msg){
+                $('#tampilkanprint').html(msg);
+                $('#modal-tampilkan').modal('show');
+                
+            }
+        }); 
                     
-                    if(msg=='ok'){
-                        location.reload();
-                    }else{
-                    document.getElementById("loadnya").style.width = "0px";
-                        $('#modal-notif').modal('show');
-                        $('#notif').html(msg);
-                    }
-                            
-                    
-                }
-        });
-    
     }
+   
     function simpan_revisi(){
         var form=document.getElementById('my_data_all');
         var keterangan=$('#keterangan').val();

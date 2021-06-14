@@ -1,4 +1,32 @@
 
+<div class="modal fade" id="modal-password">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ubah Password</h4>
+                <button type="button" class="close" >×</button>
+            </div>
+            <div class="modal-body">
+                <form method="post"   enctype="multipart/form-data" id="my_data_password">
+                    @csrf
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Password Baru </label>
+                            <input type="password" name="password" class="form-control" placeholder="*********************" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Konfirmasi Password </label>
+                            <input type="password" name="konfirmasi_password"  class="form-control" placeholder="*********************" />
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <span class="btn btn-primary" onclick="simpan_password()">Simpan</span>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="modal-npwp">
     <div class="modal-dialog">
         <div class="modal-content">

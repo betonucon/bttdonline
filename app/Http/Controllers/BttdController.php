@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Vendor;
 use App\Traking;
+use App\Struk;
 use App\Bttd;
 use App\Tagihan;
 use PDF;
@@ -27,6 +28,48 @@ class BttdController extends Controller
         
        
     }
+    public function view_traking(request $request){
+        $data=Bttd::where('Reference',$request->inv)->orWhere('HeaderText',$request->inv)->first();
+        $count=Bttd::where('Reference',$request->inv)->orWhere('HeaderText',$request->inv)->count();
+        $get=Traking::with(['user'])->where('bttd_id',$data['id'])->orderBy('id','Desc')->get();
+        if($count>0){
+            echo'
+                <h4>Traking Dokumen</h4>
+                <table class="table m-b-0">
+                    <thead>
+                        <tr>
+                            <th>Petugas</th>
+                            <th>Role</th>
+                            <th>Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+                    foreach($get as $no=>$o){
+                        echo'
+                        <tr>
+                            <td>==> '.$o['user']['name'].'</td>
+                            <td>'.$o->user->role['name'].'</td>
+                            <td>'.$o['tanggal'].'</td>
+                        </tr>';
+
+                    }
+                    echo'
+                    
+                        
+                    </tbody>
+                </table>
+
+            ';
+        }else{
+            echo'
+            <div class="alert alert-success fade show m-b-0">
+                <span class="close" data-dismiss="alert">×</span>
+                <strong>Ops</strong>
+                Nomor Invoice / Faktur Tidak Terdaftar
+            </div>
+            ';
+        }
+    }
     public function index_dikembalikan(request $request){
         $menu='Daftar BTTD dikembalikan';
         $menu_detail=name();
@@ -41,16 +84,15 @@ class BttdController extends Controller
        
     }
     public function index_cari(request $request){
-        $menu='Daftar BTTD dikembalikan';
+        $menu='Traking BTTD';
         $menu_detail=name();
-        if(Auth::user()['role_id']==7){
-            $data=Bttd::with(['vendor','rolenya'])->where('sts',2)->where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->paginate(20);
-        }
-        else{
-            $data=Bttd::with(['vendor','rolenya'])->orderBy('id','Desc')->paginate(20);
+        if($request->inv==''){
+            $inv='';
+        }else{
+            $inv=$request->inv;
         }
         
-        return view('bttd.index_cari',compact('menu','menu_detail','data'));
+        return view('bttd.index_cari',compact('menu','menu_detail','inv'));
        
     }
     public function index_loket(request $request){
@@ -70,8 +112,21 @@ class BttdController extends Controller
         if(Auth::user()['role_id']==3){
             $menu='Daftar BTTD';
             $menu_detail=name();
-            $data=Bttd::with(['vendor','rolenya'])->where('sts_sap',0)->where('lokasi',3)->orderBy('lokasi','Desc')->paginate(20);
+            $data=Bttd::with(['vendor','rolenya'])->where('sts_officer',0)->where('lokasi',3)->orderBy('lokasi','Desc')->paginate(20);
             return view('bttd.index_officer',compact('menu','menu_detail','data'));
+        }else{
+            return view('error');
+        }
+        
+        
+       
+    }
+    public function index_officer_terima(request $request){
+        if(Auth::user()['role_id']==3){
+            $menu='Daftar BTTD Officer';
+            $menu_detail=name();
+            $data=Bttd::with(['vendor','rolenya'])->where('sts_officer',1)->where('lokasi',3)->orderBy('sts_sap','Asc')->paginate(20);
+            return view('bttd.index_officer_terima',compact('menu','menu_detail','data'));
         }else{
             return view('error');
         }
@@ -242,52 +297,72 @@ class BttdController extends Controller
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
             $cek=Bttd::where('HeaderText',$request->HeaderText)->orWhere('Reference',$request->Reference)->count();
+            $cekstruk=Struk::where('Reference',$request->Reference)->count();
             if($cek>0){
                 echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-No Faktur Pajak atau Invoice Sudah terdaftar</p>';
             }else{
-                $cek=explode('/',$_FILES['file']['type']);
-                $file_tmp=$_FILES['file']['tmp_name'];
-                $file=explode('.',$_FILES['file']['name']);
-                $filename=$request->Reference.'.'.$cek[1];
-                $lokasi='_file_tagihan/';
-                
-                if($cek[1]=='pdf'){
-                    if(move_uploaded_file($file_tmp, $lokasi.$filename)){
-                        $data           = New Bttd;
-                        $data->LIFNR   = Auth::user()['username']; 
-                        $data->InvoiceDate   = $request->InvoiceDate; 
-                        $data->Reference   = $request->Reference;
-                        $data->Amount   = $request->Amount;
-                        $data->AmountInvoice   = $request->AmountInvoice;
-                        $data->PurchaseOrder   = $request->PurchaseOrder;
-                        $data->PartBank   = $request->PartBank;
-                        $data->kategori   = $request->kategori;
-                        $data->HeaderText   = $request->HeaderText;
-                        $data->DocCurrency   = $request->DocCurrency;
-                        $data->InvoiceDate   = $request->InvoiceDate;
-                        $data->nama_bank   = $request->nama_bank;
-                        $data->tagihan_id   = $request->tagihan_id;
-                        $data->email   = $request->email;
-                        $data->lokasi   = 7;
-                        $data->sts   = 1;
-                        $data->file   = $filename;
-                        
-                        $data->save();
-                        if($data){
-                            echo'ok';
+                if($cekstruk>0){
+                    $cek=explode('/',$_FILES['file']['type']);
+                    $file_tmp=$_FILES['file']['tmp_name'];
+                    $file=explode('.',$_FILES['file']['name']);
+                    $filename=$request->Reference.'.'.$cek[1];
+                    $lokasi='_file_tagihan/';
+                    
+                    if($cek[1]=='pdf'){
+                        if(move_uploaded_file($file_tmp, $lokasi.$filename)){
+                            $data           = New Bttd;
+                            $data->LIFNR   = Auth::user()['username']; 
+                            $data->InvoiceDate   = $request->InvoiceDate; 
+                            $data->Reference   = $request->Reference;
+                            $data->Amount   = $request->Amount;
+                            $data->AmountInvoice   = $request->AmountInvoice;
+                            $data->PurchaseOrder   = $request->PurchaseOrder;
+                            $data->PartBank   = $request->PartBank;
+                            $data->kategori   = $request->kategori;
+                            $data->HeaderText   = $request->HeaderText;
+                            $data->DocCurrency   = $request->DocCurrency;
+                            $data->InvoiceDate   = $request->InvoiceDate;
+                            $data->nama_bank   = $request->nama_bank;
+                            $data->tagihan_id   = $request->tagihan_id;
+                            $data->email   = $request->email;
+                            $data->lokasi   = 7;
+                            $data->sts   = 1;
+                            $data->file   = $filename;
+                            
+                            $data->save();
+                            if($data){
+                                echo'ok';
+                            }
+                        }else{
+
                         }
                     }else{
-
+                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
                     }
                 }else{
-                    echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
-                }
-                 
+                    echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Isi nilai Struk</p>';
+                } 
             }
         }
     }
     
 
+    public function simpan_voucher(request $request){
+        if (trim($request->no_voucher) == '') {$error[] = '- Isi Nomor Voucher';}
+        if (trim($request->tempo) == '') {$error[] = '- Isi tempo';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+                $data           = Bttd::find($request->bttd_id);
+                $data->no_voucher   = $request->no_voucher; 
+                $data->tempo   = $request->tempo; 
+                $data->sts_sap   = 1; 
+                $data->save();
+
+                if($data){
+                    echo'ok';
+                }
+        }
+    }
     public function simpan_ubah(request $request){
         if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur Pajak/Invoice';}
         if (trim($request->Reference) == '') {$error[] = '- Masukan No Faktur Pajak';}
@@ -319,7 +394,6 @@ class BttdController extends Controller
                 $data->nama_bank   = $request->nama_bank;
                 $data->tagihan_id   = $request->tagihan_id;
                 $data->email   = $request->email;
-                $data->file   = $filename;
                 $data->sts   = 1;
                 $data->save();
                 if($data){
@@ -333,7 +407,24 @@ class BttdController extends Controller
                 $lokasi='_file_tagihan/';
                 
                 if($cek[1]=='pdf'){
-
+                    $data           = Bttd::find($request->id);
+                    $data->LIFNR   = Auth::user()['username']; 
+                    $data->InvoiceDate   = $request->InvoiceDate; 
+                    $data->Reference   = $request->Reference;
+                    $data->Amount   = $request->Amount;
+                    $data->AmountInvoice   = $request->AmountInvoice;
+                    $data->PurchaseOrder   = $request->PurchaseOrder;
+                    $data->PartBank   = $request->PartBank;
+                    $data->kategori   = $request->kategori;
+                    $data->HeaderText   = $request->HeaderText;
+                    $data->DocCurrency   = $request->DocCurrency;
+                    $data->InvoiceDate   = $request->InvoiceDate;
+                    $data->nama_bank   = $request->nama_bank;
+                    $data->tagihan_id   = $request->tagihan_id;
+                    $data->email   = $request->email;
+                    $data->file   = $filename;
+                    $data->sts   = 1;
+                    $data->save();
 
                 }else{
                     echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
@@ -381,9 +472,9 @@ class BttdController extends Controller
                 $trak->tanggal  =date('Y-m-d');
                 $trak->save();
 
-                echo'ok';
+                
             }
-            
+            echo'ok';
         }else{
             echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />-Pilih Data Yang akan diterima</p>';
         }
@@ -396,33 +487,126 @@ class BttdController extends Controller
             for($x=0;$x<$jum;$x++){
                 $data       =Bttd::where('id',$_POST['id'][$x])->first();
                 $data->lokasi  =3;
-                $data->sts_sap  =0;
+                $data->sts_officer  =0;
                 $data->diterima  =date('Y-m-d');
                 $data->save();
 
-                $trak       = New Traking;
-                $trak->role_id  =3;
-                $trak->username  =Auth::user()['username'];
-                $trak->bttd_id  =$_POST['id'][$x];
-                $trak->tanggal  =date('Y-m-d');
-                $trak->save();
+                
 
-                echo'ok';
+                
             }
-            
+            echo'ok';
         }else{
             echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />-Pilih Data Yang akan kirim</p>';
         }
 
     }
     public function struk(request $request){
+        $data=Bttd::where('Reference',$request->Reference)->first();
+        echo'
+            <style>
+                th{
+                  padding:5px;
+                }
+                .contrl{
+                    padding: 3px;
+                    height: 25px;
+                }
+            </style>
+
+        ';
         if($request->tagihan_id==''){
-            echo 'Pilih Jenis Tagihan anda';
-        }else{
-            $data=Tagihan::where('id',$request->tagihan_id)->first();
-            echo $data['struknya'].'--'.$data['id'];
-        }
+            echo '
+                
+
+            ';
             
+        }else{
+            echo '
+                <div class="form-group">
+                    <label>Denda</label>
+                    <input type="number" class="form-control" value="'.datastruk($request->Reference)['denda'].'" name="denda">
+                    <label>Tarif PPH</label>
+                    <select class="form-control contrl" name="tarif">
+                        <option value="0"'; if(datastruk($request->Reference)['tarif']==0){echo'selected';} echo'>0%</option>
+                        <option value="1.5"'; if(datastruk($request->Reference)['tarif']=='1.5'){echo'selected';} echo'>1.5%</option>
+                        <option value="2"'; if(datastruk($request->Reference)['tarif']==2){echo'selected';} echo'>2%</option>
+                        <option value="4"'; if(datastruk($request->Reference)['tarif']==4){echo'selected';} echo'>4%</option>
+                        <option value="6"'; if(datastruk($request->Reference)['tarif']==6){echo'selected';} echo'>6%</option>
+                    </select>';
+                    if(cek_struknya($data['tagihan_id'])==3){
+                        echo'
+                        <label>Denda</label>
+                        <input type="number" class="form-control" value="'.datastruk($request->Reference)['um'].'" name="um">';
+                        
+                    }else{
+                        echo'
+                        <input type="hidden" class="form-control" value="0" name="um">';
+                    }
+                echo'
+                </div>
+                <table width="100%">
+                    <tr>
+                        <th width="5%">NO</th>
+                        <th width="15%">Discount</th>
+                        <th width="15%">Qty</th>
+                        <th width="35%">Harga Satuan</th>
+                        <th >Jumlah</th>
+                    </tr>
+                </table>
+                <div style="overflow-y:scroll;height:400px">
+                <table width="100%">';
+                    for($x=1;$x<50;$x++){
+
+                        $cek=Struk::where('Reference',$request->Reference)->where('urut',$x)->count();
+                        $data=Struk::where('Reference',$request->Reference)->where('urut',$x)->first();
+                        if($cek>0){
+                            $discount=$data['discount'];
+                            $qty=$data['qty'];
+                            $harga_satuan=$data['harga_satuan'];
+                            $total_harga=$data['total_harga'];
+                        }else{
+                            $discount=0;
+                            $qty=0;
+                            $harga_satuan=0;
+                            $total_harga=0;
+                        }
+                        echo'
+                            <tr>
+                                <td width="5%"><input type="hidden" class="form-control contrl"  value="'.$x.'" name="urut[]">'.$x.'</td>
+                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$discount.'" name="discount[]" onkeyup="cek_discount('.$x.',this.value)" id="discount'.$x.'"></td>
+                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$qty.'" name="qty[]" onkeyup="cek_qty('.$x.',this.value)" id="qty'.$x.'"></td>
+                                <td width="35%"><input type="number" class="form-control contrl"  value="'.$harga_satuan.'" name="harga_satuan[]" onkeyup="hitung_total_harga('.$x.',this.value)" id="harga_satuan'.$x.'"></td>
+                                <td><input type="number" readonly class="form-control contrl"  value="'.$total_harga.'" name="total_harga[]" id="total_harga'.$x.'"></td>
+                            </tr>
+
+                        ';
+                    }
+                    echo'
+                </table>
+                </div>
+
+            ';
+        }
+        echo '
+
+        <script>
+            function cek_discount(a,nilai){
+                $("#total_harga"+a).val(0);
+                $("#harga_satuan"+a).val(0);
+            }
+            function cek_qty(a,nilai){
+                $("#total_harga"+a).val(0);
+                $("#harga_satuan"+a).val(0);
+            }
+            function hitung_total_harga(a,nilai){
+                var discount=$("#discount"+a).val();
+                var qty=$("#qty"+a).val();
+                var total_harga=(parseInt(qty)*parseInt(nilai))-parseInt(discount);
+                    $("#total_harga"+a).val(total_harga);
+            }
+        </script>
+    ';   
     }
     public function proses_cetak(request $request){
         echo'
@@ -449,6 +633,91 @@ class BttdController extends Controller
             echo'ok';
         }else{
             echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />-Pilih Data Yang akan dihapus</p>';
+        }
+
+    }
+    public function simpan_struk(request $request){
+        if (trim($request->Reference) == '') {$error[] = '- Masukan nomor Faktur / Invoice';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+            error_reporting(0);
+            $jum=count($request->urut);
+            $cek=Bttd::where('Reference',$request->Reference)->count();
+            if($cek>0){
+                if($request->act=='ubah'){
+                    $hapus=Struk::where('Reference',$request->Reference)->delete();
+               
+
+                    for($x=0;$x<$jum;$x++){
+                        if($_POST['harga_satuan'][$x]>0){
+
+                            $data       =New Struk;
+                            $data->discount  =$_POST['discount'][$x];
+                            $data->urut  =$_POST['urut'][$x];
+                            $data->qty  =$_POST['qty'][$x];
+                            $data->harga_satuan  =$_POST['harga_satuan'][$x];
+                            $data->total_harga  =$_POST['total_harga'][$x];
+                            $data->Reference =$request->Reference;
+                            $data->denda =$request->denda;
+                            $data->tarif =$request->tarif;
+                            $data->save();
+                        }
+                        
+                    }
+
+                    echo'ok';
+                }else{
+                    echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br /> Nomor Faktur atau Invoice sudah terdaftar</p>';
+                }
+                
+            }else{
+                $hapus=Struk::where('Reference',$request->Reference)->delete();
+               
+
+                    for($x=0;$x<$jum;$x++){
+                        if($_POST['harga_satuan'][$x]>0){
+
+                            $data       =New Struk;
+                            $data->discount  =$_POST['discount'][$x];
+                            $data->urut  =$_POST['urut'][$x];
+                            $data->qty  =$_POST['qty'][$x];
+                            $data->harga_satuan  =$_POST['harga_satuan'][$x];
+                            $data->total_harga  =$_POST['total_harga'][$x];
+                            $data->Reference =$request->Reference;
+                            $data->denda =$request->denda;
+                            $data->tarif =$request->tarif;
+                            $data->save();
+                        }
+                        
+                    }
+
+                    echo'ok';
+            }  
+            
+        }
+    }
+    public function terima_officer(request $request){
+        error_reporting(0);
+        $jum=count($request->id);
+        if($jum>0){
+            
+            for($x=0;$x<$jum;$x++){
+                $data            =Bttd::find($_POST['id'][$x]);
+                $data->sts_officer = 1;
+                $data->save();
+
+                $trak       = New Traking;
+                $trak->role_id  =Auth::user()['role_id'];
+                $trak->username  =Auth::user()['username'];
+                $trak->bttd_id  =$_POST['id'][$x];
+                $trak->tanggal  =date('Y-m-d');
+                $trak->save();
+                
+            }
+
+            echo'ok';
+        }else{
+            echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />-Pilih Data Yang akan diproses</p>';
         }
 
     }

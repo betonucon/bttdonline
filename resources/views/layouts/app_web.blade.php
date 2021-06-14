@@ -337,6 +337,7 @@
 		$(document).ready(function() {
 			App.init();
 			Notification.init();
+			ChartJs.init();
 			TableManageDefault.init();
 			FormPlugins.init();
 			TableManageResponsive.init();
@@ -355,10 +356,21 @@
 				"ordering": false,
 				"info":     false
 			} );
-			@if(Auth::user()['role_id']==7)
-				@if(npwp()=='')
-					$('#modal-npwp').modal({backdrop: 'static', keyboard: false});
+			@if(Auth::user()['role_id']==1 || Auth::user()['role_id']==2 || Auth::user()['role_id']==3)
+				@if(cek_password()>0)
+					$('#modal-password').modal({backdrop: 'static', keyboard: false});
 				@endif
+
+			@endif
+			@if(Auth::user()['role_id']==7)
+				@if(cek_password()>0)
+					$('#modal-password').modal({backdrop: 'static', keyboard: false});
+				@else
+					@if(npwp()=='')
+						$('#modal-npwp').modal({backdrop: 'static', keyboard: false});
+					@endif
+				@endif
+				
 			@endif
 		} );
 
@@ -388,6 +400,46 @@
 					}
 			});
 		
+		}
+		function simpan_password(){
+			var form=document.getElementById('my_data_password');
+			$.ajax({
+					type: 'POST',
+					url: "{{url('vendor/simpan_password')}}",
+					data: new FormData(form),
+					contentType: false,
+					cache: false,
+					processData:false,
+					beforeSend: function() {
+						document.getElementById("loadnya").style.width = "100%";
+					},
+					success: function(msg){
+						
+						if(msg=='ok'){
+							location.reload();
+						}else{
+							document.getElementById("loadnya").style.width = "0px";
+							$('#modal-notif').modal('show');
+							$('#notif').html(msg);
+						}
+								
+						
+					}
+			});
+		
+		}
+		function pilihsemua(e) {
+			var checkboxes = document.getElementsByName('id[]');
+		
+			if (e.checked) {
+			for (var i = 0; i < checkboxes.length; i++) { 
+				checkboxes[i].checked = true;
+			}
+			} else {
+			for (var i = 0; i < checkboxes.length; i++) {
+				checkboxes[i].checked = false;
+			}
+			}
 		}
 	</script>
     @stack('ajax')

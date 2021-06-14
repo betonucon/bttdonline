@@ -3,7 +3,7 @@
   <style>
     @page { margin: 30px 25px 30px 25px; }
     .header {  left: 0px; right: 0px;  height: 100px;border:solid 1px #5d6975 }
-    .footer {   left: 0px; right: 0px;  height: 100px;border:solid 1px #5d6975 }
+    .footer {   left: 0px; right: 0px;  height: 140px;border:solid 1px #5d6975 }
     p { page-break-after: always; }
     p:last-child { page-break-after: never; }
     
@@ -36,7 +36,7 @@
         border:solid 1px #5d6975;
         width:100%;
         display:block;
-        height:450px;
+        height:400px;
         padding:1%;
         
     }
@@ -93,13 +93,13 @@
                     </tr>
                     @foreach(cetak_pph() as $no=>$o)
                         <tr>
-                            <td color="blue">{{$no+1}}</td>
-                            <td></td>
-                            <td>ss</td>
-                            <td>ss</td>
-                            <td>ss</td>
-                            <td>ss</td>
-                            <td>ss</td>
+                            <td style="padding-left:4px;font-size:13px;" color="blue">{{$no+1}}</td>
+                            <td style="padding-left:4px;font-size:13px;">{{$o['pph']['Docno']}}</td>
+                            <td style="padding-left:4px;font-size:13px;">{{$o['pph']['DateDocno']}}</td>
+                            <td style="padding-left:4px;font-size:13px;">{{$o['pph']['HeaderText']}}</td>
+                            <td style="padding-left:4px;font-size:13px;">{{$o['pph']['Reference']}}</td>
+                            <td style="padding-left:4px;font-size:13px;">{{uang($o['pph']['AmountDpp'])}}</td>
+                            <td style="padding-left:4px;font-size:13px;">{{uang($o['pph']['AmountPph'])}}</td>
                         </tr>
                     @endforeach
                     
@@ -111,11 +111,21 @@
         <div class="footer">
                 <table width="100%" border="0">
                     <tr>
-                        <td colspan="2">sss</td>
+                        <td colspan="3">
+                        
+                        </td>
                     </tr>
                     <tr>
-                        <td width="50%">sss</td>
-                        <td width="50%">ss</td>
+                        <td width="40%" style="text-align:center">Penerima Bukti Potong,<br><br><font style="color:blue;font-size:14px">Cap Stempel Perusahaan</font><br><br>(...............................................)</td>
+                        <td width="20%"></td>
+                        <td width="40%" style="text-align:center">Petugas Loket,<br><br><font style="color:blue;font-size:14px">Cap Tanggal Stempel Loket</font><br><br>(...............................................)</td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="padding-left:4px;font-size:13px;font-size:13px;font-style:italic">
+                        Informasi : Bukti Pemotongan/Pemungutan PPh dapat diambil diloket Divisi Tax & Verification 16 Hari Setelah berakhirnya masa pajak
+                        Pengambilan Bukti potong tanpa kupon tidak kami layani
+
+                        </td>
                     </tr>
                 </table>
         </div>

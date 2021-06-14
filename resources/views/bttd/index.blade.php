@@ -53,7 +53,6 @@
                                     <th class="text-nowrap" width="15%" >Tanggal </th>
                                     <th class="text-nowrap" width="9%" ></th>
                                     <th class="text-nowrap" width="4%" >File</th>
-                                    <th class="text-nowrap" width="4%" >Print</th>
                                     <th class="text-nowrap" width="4%" ></th>
                                 </tr>
                             </thead>
@@ -72,9 +71,6 @@
                                     <td class="ttd"><b>Dibuat :</b> {{tgl($o['InvoiceDate'])}}<br><b>Diterima : </b>{{tgl($o['diterima'])}}</td>
                                     <td class="ttd" style="background:{{$o['rolenya']['warna']}} !important;text-align:center">
                                        <b><i>{{$o['rolenya']['name']}}</i></b>
-                                    </td>
-                                    <td class="ttd">
-                                        <a href="{{url('_file_tagihan/'.$o['file'])}}" target="_blank" title="file tagihan"><span class="btn btn-xs btn-warning" ><i class="fa fa-clone"></i></span></a>
                                     </td>
                                     <td class="ttd">
                                         <a href="{{url('_file_tagihan/'.$o['file'])}}" target="_blank" title="file tagihan"><span class="btn btn-xs btn-warning" ><i class="fa fa-clone"></i></span></a>

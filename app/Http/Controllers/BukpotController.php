@@ -70,7 +70,7 @@ class BukpotController extends Controller
         if(Auth::user()['role_id']==2){
             $menu='Penyerahan E-Cupon PPH';
             $menu_detail=name();
-            $data=Pph::with(['vendor','cetak'])->where('sts',1)->orderBy('sts_cetak','Asc')->paginate(20);
+            $data=Pph::with(['vendor','cetak'])->where('sts_cetak',1)->orderBy('sts','Asc')->paginate(20);
             return view('bukpot.pph_pengambilan',compact('menu','menu_detail','data'));
         }else{
             return view('error');
@@ -106,7 +106,7 @@ class BukpotController extends Controller
         if(Auth::user()['role_id']==2){
             $menu='Penyerahan E-Cupon PPN';
             $menu_detail=name();
-            $data=Ppn::with(['vendor','cetak'])->where('sts',1)->orderBy('sts_cetak','Asc')->paginate(20);
+            $data=Ppn::with(['vendor','cetak'])->where('sts_cetak',1)->orderBy('sts','Asc')->paginate(20);
             return view('bukpot.ppn_pengambilan',compact('menu','menu_detail','data'));
         }else{
             return view('error');
