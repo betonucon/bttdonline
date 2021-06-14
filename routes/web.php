@@ -18,9 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 
-Route::get('/admin', 'AdminController@index');
-Route::get('/admin/view_data', 'AdminController@view_data');
-Route::post('/admin/simpan', 'AdminController@simpan');
+Route::get('/register', 'Auth\LoginController@login');
 
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/', 'HomeController@index');

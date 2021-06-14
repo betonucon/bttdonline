@@ -6,6 +6,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title>BTTD Online | Krakatau Steel</title>
+	<link rel="icon" href="https://sso.krakatausteel.com/public/fav.png" type="image/x-icon">
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
