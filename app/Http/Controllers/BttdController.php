@@ -502,7 +502,7 @@ class BttdController extends Controller
 
     }
     public function struk(request $request){
-        $data=Bttd::where('Reference',$request->Reference)->first();
+        // $data=Bttd::where('Reference',$request->Reference)->first();
         echo'
             <style>
                 th{
@@ -516,13 +516,17 @@ class BttdController extends Controller
 
         ';
         if($request->tagihan_id==''){
+           
             echo '
                 
 
             ';
             
         }else{
-            echo '
+            $jumnilai=Struk::where('Reference',$request->Reference)->count();
+
+             if($jumnilai>0){
+                echo '
                 <div class="form-group">
                     <label>Denda</label>
                     <input type="number" class="form-control" value="'.datastruk($request->Reference)['denda'].'" name="denda">
@@ -534,7 +538,7 @@ class BttdController extends Controller
                         <option value="4"'; if(datastruk($request->Reference)['tarif']==4){echo'selected';} echo'>4%</option>
                         <option value="6"'; if(datastruk($request->Reference)['tarif']==6){echo'selected';} echo'>6%</option>
                     </select>';
-                    if(cek_struknya($data['tagihan_id'])==3){
+                    if(cek_struknya($request->tagihan_id)==3){
                         echo'
                         <label>Denda</label>
                         <input type="number" class="form-control" value="'.datastruk($request->Reference)['um'].'" name="um">';
@@ -543,6 +547,29 @@ class BttdController extends Controller
                         echo'
                         <input type="hidden" class="form-control" value="0" name="um">';
                     }
+                }else{
+                    echo '
+                    <div class="form-group">
+                        <label>Denda</label>
+                        <input type="number" class="form-control" value="" name="denda">
+                        <label>Tarif PPH</label>
+                        <select class="form-control contrl" name="tarif">
+                            <option value="0">0%</option>
+                            <option value="1.5">1.5%</option>
+                            <option value="2">2%</option>
+                            <option value="4">4%</option>
+                            <option value="6">6%</option>
+                        </select>';
+                        if(cek_struknya($request->tagihan_id)==3){
+                            echo'
+                            <label>Denda</label>
+                            <input type="number" class="form-control" value="" name="um">';
+                            
+                        }else{
+                            echo'
+                            <input type="hidden" class="form-control" value="0" name="um">';
+                        }
+                }
                 echo'
                 </div>
                 <table width="100%">
@@ -559,12 +586,12 @@ class BttdController extends Controller
                     for($x=1;$x<50;$x++){
 
                         $cek=Struk::where('Reference',$request->Reference)->where('urut',$x)->count();
-                        $data=Struk::where('Reference',$request->Reference)->where('urut',$x)->first();
+                        $struk=Struk::where('Reference',$request->Reference)->where('urut',$x)->first();
                         if($cek>0){
-                            $discount=$data['discount'];
-                            $qty=$data['qty'];
-                            $harga_satuan=$data['harga_satuan'];
-                            $total_harga=$data['total_harga'];
+                            $discount=$struk['discount'];
+                            $qty=$struk['qty'];
+                            $harga_satuan=$struk['harga_satuan'];
+                            $total_harga=$struk['total_harga'];
                         }else{
                             $discount=0;
                             $qty=0;
