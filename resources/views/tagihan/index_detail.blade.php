@@ -58,7 +58,7 @@
                         </table>
                     
                     </form>
-                    {{ $data->links() }}
+                    
                     <!-- #modal-dialog -->
                     <div class="modal fade" id="modal-tambah">
                         <div class="modal-dialog modal-lg">

@@ -106,6 +106,34 @@ function keuangan($bulan,$tahun){
    $data=App\Bttd::whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->sum('Amount');
    return $data;
 }
+function nilai_poling($bulan,$tahun,$sts){
+   $data=App\Poling::whereMonth('tanggal',$bulan)->whereYear('tanggal',$tahun)->where('sts',$sts)->count();
+   return $data;
+}
+function persen_nilai_poling($bulan,$tahun,$sts){
+   $total=App\Poling::whereMonth('tanggal',$bulan)->whereYear('tanggal',$tahun)->count();
+   $data=App\Poling::whereMonth('tanggal',$bulan)->whereYear('tanggal',$tahun)->where('sts',$sts)->count();
+   if($total==0){
+      $tot=1;
+   }else{
+      $tot=$total;
+   }
+   $per=100/$tot;
+   $persen=$per*$data;
+   return number_format($persen,1);
+}
+function total_tagihan_pertanggal($tanggal){
+   $data=App\Bttd::where('diterima',$tanggal)->sum('Amount');
+   return $data;
+}
+function total_dokumen_pertanggal($tanggal){
+   $data=App\Bttd::where('diterima',$tanggal)->count();
+   return $data;
+}
+function get_data_bttd($bulan,$tahun){
+   $data=App\Bttd::select('diterima')->whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->groupBy('diterima')->get();
+   return $data;
+}
 function keuangan_sap($bulan,$tahun){
    $data=App\Bttd::whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->where('sts_sap',1)->sum('Amount');
    return $data;

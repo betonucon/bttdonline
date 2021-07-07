@@ -16,7 +16,7 @@ class MasterController  extends Controller
     public function index(request $request){
         $menu='Jenis Tagihan';
         $menu_detail=name();
-        $data=Tagihan::orderBy('name','Asc')->paginate(20);
+        $data=Tagihan::orderBy('name','Asc')->get();
         return view('tagihan.index',compact('menu','menu_detail','data'));
        
     }
@@ -26,7 +26,7 @@ class MasterController  extends Controller
         $menu='Tagihan =>'.$name['name'];
         $menu_detail=name();
         $id=$request->id;
-        $data=Detailtagihan::where('tagihan_id',$request->id)->orderBy('name','Asc')->paginate(20);
+        $data=Detailtagihan::where('tagihan_id',$request->id)->orderBy('name','Asc')->get();
         return view('tagihan.index_detail',compact('menu','menu_detail','data','id'));
        
     }

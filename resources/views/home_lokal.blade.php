@@ -44,7 +44,7 @@
                     <!-- end panel -->
                 </div>
                 <div class="col-lg-4">
-            <!-- begin panel -->
+           
                     <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-2">
                         <div class="panel-heading">
                             <div class="panel-heading-btn">
@@ -94,6 +94,172 @@
                     <!-- end panel -->
                     
                 </div>
+                <div class="col-lg-8">
+			    	<!-- begin panel -->
+                    <div class="panel panel-inverse" data-sortable-id="chart-js-1">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                            <h4 class="panel-title">Poling</h4>
+                        </div>
+                        <div class="panel-body" style="min-height: 500px;">
+                            
+                            <div>
+                            <canvas id="bar-chart" data-render="chart-js"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end panel -->
+                </div>
+                <div class="col-lg-4">
+           
+                    <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-2">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                            <h4 class="panel-title">Rekap Poling {{$tahun}}</h4>
+                        </div>
+                        <div class="panel-body" >
+                            <div class="list-group">
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-striped m-b-0">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">No</th>
+                                                <th >Bulan</th>
+                                                <th>SP</th>
+                                                <th>PS</th>
+                                                <th>TP</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for($x=1;$x<13;$x++)
+                                            <tr>
+                                              <td>{{$x}}</td>
+                                              <td>{{bulan(bulnya($x))}}</td>
+                                              <td>{{persen_nilai_poling(bulnya($x),$tahun,1)}}%</td>
+                                              <td>{{persen_nilai_poling(bulnya($x),$tahun,2)}}%</td>
+                                              <td>{{persen_nilai_poling(bulnya($x),$tahun,3)}}%</td>
+                                            </tr>
+                                            @endfor
+                                        </tbody>
+                                    </table>
+                                </div>
+                                     
+                                
+                                
+                                
+                            </div>       
+                            <div class="modal" id="modal-ubah">
+                                <div class="modal-dialog" id="modalmedium">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Ubah Data</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post"  style="display: flex;" enctype="multipart/form-data" id="my_data_ubah">
+                                                @csrf
+                                                <div id="tampilkan_ubah" style="display: contents;"></div>
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                                            <a href="javascript:;" class="btn btn-success" onclick="simpan_ubah()">Simpan</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            @include('layouts.notif')
+                        </div>
+                    </div>
+                    <!-- end panel -->
+                    
+                </div>
+                <div class="col-lg-12">
+            <!-- begin panel -->
+                    <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-2">
+                        <div class="panel-heading">
+                            <div class="panel-heading-btn">
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                                <a href="javascript:;" class="btn btn-xs btn-icon  btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                            </div>
+                            <h4 class="panel-title">Tabel Tagihan</h4>
+                        </div>
+                        <div class="panel-body" style="background:#ddfbcd" >
+                        
+                        <ul class="nav nav-tabs">
+                         @for($blan=1;$blan<13;$blan++)
+                            <li class="nav-items">
+                                <a href="#default-tab-{{$blan}}" data-toggle="tab" class="nav-link @if($blan==1)active show @endif">
+                                    <span class="d-sm-none">{{bulnya($blan)}}</span>
+                                    <span class="d-sm-block d-none">{{bulan(bulnya($blan))}}</span>
+                                </a>
+                            </li>
+                         @endfor   
+                        </ul>
+                        <!-- end nav-tabs -->
+                        <!-- begin tab-content -->
+                        <div class="tab-content">
+                            <!-- begin tab-pane -->
+                            @for($blan=1;$blan<13;$blan++)
+                            <div class="tab-pane fade @if($blan==1)active show @endif" id="default-tab-{{$blan}}">
+                                <h4 class="m-t-7"><i class="fa fa-clone"></i> {{bulan(bulnya($blan))}} {{$tahun}}</h4>
+                                <div class="table-responsive">
+                                    <table class="table table-striped m-b-0">
+                                        <thead>
+                                            <tr>
+                                                <th width="10%">No</th>
+                                                <th width="15%">Tanggal</th>
+                                                <th width="25%">Total Dokumen</th>
+                                                <th >Total Tagihan</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach(get_data_bttd(bulnya($blan),$tahun) as $no=>$bttdget)
+                                            <tr>
+                                                <td>{{$no+1}}</td>
+                                                <td>{{$bttdget['diterima']}}</td>
+                                                <td>{{total_dokumen_pertanggal($bttdget['diterima'])}}</td>
+                                                <td>{{uang(total_tagihan_pertanggal($bttdget['diterima']))}}</td>
+                                                
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            @endfor
+                            
+                            <!-- end tab-pane -->
+                        </div>
+
+
+
+
+
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+
+
+
+                
                 <!-- end col-6 -->
                 <!-- begin col-6 -->
                 <!-- <div class="col-lg-6">
@@ -190,19 +356,41 @@ var lineChartData = {
 };
 
 var barChartData = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: [
+        @for($x=1;$x<13;$x++)
+            '{{bulan(bulnya($x))}}',
+        @endfor
+    ],
     datasets: [{
-        label: 'Dataset 1',
+        label: 'Sangat Puas',
         borderWidth: 2,
         borderColor: COLOR_PURPLE,
-        backgroundColor: COLOR_PURPLE_TRANSPARENT_3,
-        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+        backgroundColor: 'blue',
+        data: [
+            @for($x=1;$x<13;$x++)
+            '{{nilai_poling(bulnya($x),$tahun,1)}}',
+            @endfor
+        ]
     }, {
-        label: 'Dataset 2',
+        label: 'Puas',
         borderWidth: 2,
         borderColor: COLOR_BLACK,
-        backgroundColor: COLOR_BLACK_TRANSPARENT_3,
-        data: [randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor(), randomScalingFactor()]
+        backgroundColor: 'aqua',
+        data: [
+            @for($x=1;$x<13;$x++)
+                '{{nilai_poling(bulnya($x),$tahun,2)}}',
+            @endfor
+        ]
+    },{
+        label: 'Tidak Puas',
+        borderWidth: 2,
+        borderColor: COLOR_BLACK,
+        backgroundColor: 'red',
+        data: [
+            @for($x=1;$x<13;$x++)
+                '{{nilai_poling(bulnya($x),$tahun,3)}}',
+            @endfor
+        ]
     }]
 };
 
@@ -268,6 +456,17 @@ var handleChartJs = function() {
     });
     
     
+    
+};
+var barChartJs = function() {
+    var ctx = document.getElementById('bar-chart').getContext('2d');
+    var lineChart = new Chart(ctx, {
+        type: 'bar',
+        data: barChartData
+    });
+    
+    
+    
 };
 
 var ChartJs = function () {
@@ -276,6 +475,7 @@ var ChartJs = function () {
         //main function
         init: function () {
             handleChartJs();
+            barChartJs();
         }
     };
 }();

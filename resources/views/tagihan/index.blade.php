@@ -56,7 +56,7 @@
                                     <td class="ttd">{{$o['name']}}</td>
                                     <td class="ttd">{{cek_kategori_tagihan($o['struknya'])}}</td>
                                     <td class="ttd">
-                                        <span class="btn btn-xs btn-primary" onclick="detail({{$o['id']}})"><i class="fa fa-clone"></i> View</span>
+                                        <span class="btn btn-xs btn-primary" onclick="detail_tagihan({{$o['id']}})"><i class="fa fa-clone"></i> View</span>
                                     </td>
                                     <td class="ttd">
                                         <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}})"><i class="fa fa-edit"></i></span>
@@ -67,7 +67,7 @@
                         </table>
                     
                     </form>
-                    {{ $data->links() }}
+                    
                     <!-- #modal-dialog -->
                     <div class="modal fade" id="modal-tambah">
                         <div class="modal-dialog modal-lg">
@@ -160,8 +160,8 @@
     function tambah(){
         $('#modal-tambah').modal('show');
     }
-    function detail(a){
-       lo cation.assign("{{url('tagihan_detail')}}?id="+a);
+    function detail_tagihan(a){
+       location.assign("{{url('tagihan_detail')}}?id="+a);
     }
 
     function ubah(a){
