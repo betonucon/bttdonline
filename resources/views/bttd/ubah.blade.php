@@ -66,7 +66,7 @@
                                                     <small class="f-s-12 text-grey-darker">Format Nomor Faktur Pajak Tanpa Menggunakan Titik</small>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Nilai Faktur Pajak (PPn 10%)	</label><br>
+                                                    <label for="exampleInputEmail1">Nilai Faktur Pajak (PPN 10%)	</label><br>
                                                     <select name="DocCurrency" onchange="cari_matauang(this.value)" style="display:inline;width:20%" class="form-control" >
                                                         <option value="">Pilih-----</option>
                                                         @foreach(matauang() as $mata)

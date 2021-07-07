@@ -3,13 +3,10 @@
 @section('content')
 <div id="content" class="content">
     <!-- begin breadcrumb -->
-    <ol class="breadcrumb pull-right">
-        <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-        <li class="breadcrumb-item"><a href="javascript:;">{{$menu}}</a></li>
-    </ol>
+    
     <!-- end breadcrumb -->
     <!-- begin page-header -->
-    <h1 class="page-header">{{$menu}}<small>{{$menu_detail}}</small></h1>
+    <h1 class="page-header">{{$menu}}</h1>
     <!-- end page-header -->
     
     <!-- begin row -->
@@ -41,8 +38,6 @@
                                     <th width="3%">NO</th>
                                     <th width="3%" ></th>
                                     <th>Nama Tagihan</th>
-                                    <th width="20%" >Kategori</th>
-                                    <th width="5%" >Detail</th>
                                     <th width="4%" ></th>
                                 </tr>
                             </thead>
@@ -54,10 +49,6 @@
                                     <td class="ttd">{{($no+1)}}</td>
                                     <td class="ttd"><input type="checkbox" name="id[]" value="{{$o['id']}}"></td>
                                     <td class="ttd">{{$o['name']}}</td>
-                                    <td class="ttd">{{cek_kategori_tagihan($o['struknya'])}}</td>
-                                    <td class="ttd">
-                                        <span class="btn btn-xs btn-primary" onclick="detail({{$o['id']}})"><i class="fa fa-clone"></i> View</span>
-                                    </td>
                                     <td class="ttd">
                                         <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}})"><i class="fa fa-edit"></i></span>
                                     </td>
@@ -79,10 +70,11 @@
                                 <div class="modal-body">
                                 <form method="post"  style="display: flex;" enctype="multipart/form-data" id="my_data">
                                     @csrf
+                                    <input type="hidden" name="id" value="{{$id}}">
                                     <div class="col-md-12">
                                         <fieldset>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Nama Tagihan</label>
+                                                <label for="exampleInputEmail1">Nama </label>
                                                 <input type="text" name="name" class="form-control" placeholder="Ketik disini" />
                                             </div>
                                            
@@ -161,13 +153,13 @@
         $('#modal-tambah').modal('show');
     }
     function detail(a){
-       lo cation.assign("{{url('tagihan_detail')}}?id="+a);
+        location.assign("{{url('tagihan_detail')}}?id="+a);
     }
 
     function ubah(a){
         $.ajax({
             type: 'GET',
-            url: "{{url('tagihan/ubah')}}",
+            url: "{{url('tagihan_detail/ubah')}}",
             data: "id="+a,
             success: function(msg){
                 $('#modal-ubah').modal('show');
@@ -182,7 +174,7 @@
         var form=document.getElementById('my_data');
         $.ajax({
                 type: 'POST',
-                url: "{{url('tagihan/simpan')}}",
+                url: "{{url('tagihan_detail/simpan')}}",
                 data: new FormData(form),
                 contentType: false,
                 cache: false,
@@ -209,7 +201,7 @@
         var form=document.getElementById('my_data_ubah');
         $.ajax({
                 type: 'POST',
-                url: "{{url('tagihan/simpan_ubah')}}",
+                url: "{{url('tagihan_detail/simpan_ubah')}}",
                 data: new FormData(form),
                 contentType: false,
                 cache: false,
@@ -237,7 +229,7 @@
         var form=document.getElementById('my_data_all');
         $.ajax({
                 type: 'POST',
-                url: "{{url('tagihan/hapus')}}",
+                url: "{{url('tagihan_detail/hapus')}}",
                 data: new FormData(form),
                 contentType: false,
                 cache: false,

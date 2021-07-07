@@ -42,7 +42,7 @@
             <!-- begin brand -->
             <div class="login-header">
                 <div class="brand">
-                    <img src="{{url('img/logo2.png')}}" width="100%">
+                    <img src="{{url('https://www.krakatausteel.com/public/images/reverselogo.png')}}" width="100%">
                     <small>BTTD Online</small>
                 </div>
                 

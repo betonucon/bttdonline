@@ -26,6 +26,7 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::get('/waktu', 'HomeController@waktu');
 });
 Route::group(['middleware'    => 'auth'],function(){
+    Route::get('/poling', 'VendorController@poling');
     Route::get('/vendor', 'VendorController@index');
     Route::get('/vendor/ubah', 'VendorController@ubah');
     Route::get('/vendor/view_data', 'VendorController@view_data');
@@ -34,6 +35,7 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::post('/vendor/simpan_npwp', 'VendorController@simpan_npwp');
     Route::post('/vendor/simpan_password', 'VendorController@simpan_password');
     Route::post('/vendor/simpan_ubah', 'VendorController@simpan_ubah');
+    Route::post('/vendor/simpan_ubah_vendor', 'VendorController@simpan_ubah_vendor');
     
 });
 Route::group(['middleware'    => 'auth'],function(){
@@ -56,11 +58,16 @@ Route::group(['middleware'    => 'auth'],function(){
 });
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/tagihan', 'MasterController@index');
+    Route::get('/tagihan_detail', 'MasterController@index_detail');
     Route::get('/tagihan/ubah', 'MasterController@ubah');
+    Route::get('/tagihan_detail/ubah', 'MasterController@ubah_detail');
     Route::get('/tagihan/view_data', 'MasterController@view_data');
     Route::post('/tagihan/hapus', 'MasterController@hapus');
+    Route::post('/tagihan_detail/hapus', 'MasterController@hapus_detail');
     Route::post('/tagihan/simpan', 'MasterController@simpan');
+    Route::post('/tagihan_detail/simpan', 'MasterController@simpan_detail');
     Route::post('/tagihan/simpan_ubah', 'MasterController@simpan_ubah');
+    Route::post('/tagihan_detail/simpan_ubah', 'MasterController@simpan_ubah_detail');
     
 });
 Route::group(['middleware'    => 'auth'],function(){
@@ -69,6 +76,7 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::get('/spt/view_data', 'MasterController@view_data_spt');
     Route::post('/spt/hapus', 'MasterController@hapus_spt');
     Route::post('/spt/simpan', 'MasterController@simpan_spt');
+    Route::post('/spt/simpan_upload', 'MasterController@simpan_upload');
     Route::post('/spt/simpan_ubah', 'MasterController@simpan_ubah_spt');
     
 });

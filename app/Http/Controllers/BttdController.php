@@ -178,7 +178,7 @@ class BttdController extends Controller
                 $data=Bttd::with(['vendor'])->where('LIFNR',Auth::user()['username'])->where('id',$request->id)->where('lokasi',7)->where('kategori',$request->kategori)->first();
                 return view('bttd.ubah',compact('menu','menu_detail','kategori','data'));
             }else{
-                return view('error');
+                return redirect('bttd');
             }
         }else{
             return view('error');
@@ -292,7 +292,7 @@ class BttdController extends Controller
         if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur/Invoice';}
         if (trim($request->nama_bank) == '') {$error[] = '- Masukan Nama BANK';}
         if (trim($request->tagihan_id) == '') {$error[] = '- Pilih Jenis Tagihan';}
-        if (trim($request->email) == '') {$error[] = '- Masukan Email / Telp / Fax Vendor';}
+        if (trim($request->email) == '') {$error[] = '- Masukan Nomor Telepon/Handphone';}
         if (trim($request->file) == '') {$error[] = '- Upload dokumen tagihan';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
@@ -324,7 +324,8 @@ class BttdController extends Controller
                             $data->InvoiceDate   = $request->InvoiceDate;
                             $data->nama_bank   = $request->nama_bank;
                             $data->tagihan_id   = $request->tagihan_id;
-                            $data->email   = $request->email;
+                            $data->no_tlp   = $request->email;
+                            $data->email   = email_vendor();
                             $data->lokasi   = 7;
                             $data->sts   = 1;
                             $data->file   = $filename;
@@ -375,7 +376,7 @@ class BttdController extends Controller
         if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur/Invoice';}
         if (trim($request->nama_bank) == '') {$error[] = '- Masukan Nama BANK';}
         if (trim($request->tagihan_id) == '') {$error[] = '- Pilih Jenis Tagihan';}
-        if (trim($request->email) == '') {$error[] = '- Masukan Email / Telp / Fax Vendor';}
+        if (trim($request->email) == '') {$error[] = '- Masukan Nomor Telepon/Handphone';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
             if($request->file==''){
@@ -393,7 +394,8 @@ class BttdController extends Controller
                 $data->InvoiceDate   = $request->InvoiceDate;
                 $data->nama_bank   = $request->nama_bank;
                 $data->tagihan_id   = $request->tagihan_id;
-                $data->email   = $request->email;
+                $data->no_tlp   = $request->email;
+                $data->email   = email_vendor();
                 $data->sts   = 1;
                 $data->save();
                 if($data){
@@ -421,7 +423,8 @@ class BttdController extends Controller
                     $data->InvoiceDate   = $request->InvoiceDate;
                     $data->nama_bank   = $request->nama_bank;
                     $data->tagihan_id   = $request->tagihan_id;
-                    $data->email   = $request->email;
+                    $data->no_tlp   = $request->email;
+                    $data->email   = email_vendor();
                     $data->file   = $filename;
                     $data->sts   = 1;
                     $data->save();

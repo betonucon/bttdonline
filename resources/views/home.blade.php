@@ -60,8 +60,65 @@
     <!-- begin row -->
     <div class="row">
         
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <!-- begin panel -->
+            <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-2">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon  btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon  btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon  btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon  btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Profil</h4>
+                </div>
+                <div class="panel-body" style="background:#ddfbcd" >
+                <form method="post" class="fomrnya"  enctype="multipart/form-data" id="my_data_ubah_vendor">
+                    @csrf
+                    <div class="col-lg-6">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Vendor </label>
+                                <input type="text" disabled  class="form-control" value="[{{Auth::user()['username']}}] {{Auth::user()['name']}}"placeholder="Ketik disini" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">No Telepon/Handphone </label>
+                                <input type="text" name="no_tlp" class="form-control" value="{{no_tlp()}}" placeholder="Ketik disini" />
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">NPWP </label>
+                                <input type="text" name="npwp" class="form-control"  value="{{npwp()}}" placeholder="Ketik disini" />
+                            </div>
+                            
+                        </fieldset>
+                    </div>
+                    <div class="col-lg-6">
+                        <fieldset>
+                            
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email </label>
+                                <input type="text" name="email" value="{{emailnya()}}" class="form-control" placeholder="Ketik disini" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Nama PIC (Karyawan yang bertanggung jawab atas tagihan vendor) </label>
+                                <input type="text" name="pic" value="{{pic()}}" class="form-control" placeholder="Ketik disini" />
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Bagian/Jabatan </label>
+                                <input type="text" name="jabatan" value="{{jabatan()}}" class="form-control" placeholder="Ketik disini" />
+                            </div>
+                        </fieldset>
+                    </div>
+                </form>
+                <div class="col-md-12" style="margin-top:2%">
+                    <a href="javascript:;" class="btn btn-success" onclick="simpan_ubah_vendor()">Update</a>
+                </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="col-lg-8">
             <div class="panel panel-inverse" data-sortable-id="ui-modal-notification-2">
                 <div class="panel-heading">
                     <div class="panel-heading-btn">

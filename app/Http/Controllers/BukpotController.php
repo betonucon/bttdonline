@@ -237,6 +237,7 @@ class BukpotController extends Controller
             echo'ok';
         }
     }
+    
     public function simpan_ppn(request $request){
         error_reporting(0);
 

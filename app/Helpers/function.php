@@ -86,6 +86,22 @@ function npwp(){
    $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
    return $data['npwp'];
 }
+function no_tlp(){
+   $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
+   return $data['no_tlp'];
+}
+function pic(){
+   $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
+   return $data['pic'];
+}
+function jabatan(){
+   $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
+   return $data['jabatan'];
+}
+function email_vendor(){
+   $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
+   return $data['email'];
+}
 function keuangan($bulan,$tahun){
    $data=App\Bttd::whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->sum('Amount');
    return $data;

@@ -30,6 +30,7 @@
                 <div class="panel-body">
                     <div class="btn-group" style="margin-bottom:10px;">
                         <button class="btn btn-xs btn-primary" onclick="tambah()"><i class="fa fa-plus"></i> Tambah</button>
+                        <button class="btn btn-xs btn-primary" onclick="upload_data()"><i class="fa fa-plus"></i> Upload</button>
                         <button class="btn btn-xs btn-danger" onclick="hapus()"><i class="fa fa-eraser"></i> Hapus</button>
                     </div>
                     <form method="post"  enctype="multipart/form-data" id="my_data_all">
@@ -91,6 +92,35 @@
                                 <div class="modal-footer">
                                     <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
                                     <a href="javascript:;" class="btn btn-success" onclick="simpan()">Simpan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="modal-upload">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Upload Link E-bukpot</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                <form method="post"  action="{{url('spt/simpan_upload')}}" style="display: flex;" enctype="multipart/form-data" id="my_data_upload">
+                                    @csrf
+                                    <div class="col-md-12">
+                                        <fieldset>
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">File Excel </label>
+                                                <input type="file" name="file" class="form-control"  placeholder="Ketik disini"/>
+                                            </div>
+                                            
+                                        </fieldset>
+                                    </div>
+                                    
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+                                    <a href="javascript:;" class="btn btn-success" onclick="simpan_upload()">Simpan</a>
                                 </div>
                             </div>
                         </div>
@@ -157,6 +187,9 @@
     function tambah(){
         $('#modal-tambah').modal('show');
     }
+    function upload_data(){
+        $('#modal-upload').modal('show');
+    }
     $('#mulai').datepicker({
         format: 'yyyy-mm-dd'
     });
@@ -182,6 +215,33 @@
         $.ajax({
                 type: 'POST',
                 url: "{{url('spt/simpan')}}",
+                data: new FormData(form),
+                contentType: false,
+                cache: false,
+                processData:false,
+                beforeSend: function() {
+                    document.getElementById("loadnya").style.width = "100%";
+                },
+                success: function(msg){
+                    
+                    if(msg=='ok'){
+                        location.reload();
+                    }else{
+                    document.getElementById("loadnya").style.width = "0px";
+                        $('#modal-notif').modal('show');
+                        $('#notif').html(msg);
+                    }
+                            
+                    
+                }
+        });
+    
+    }
+    function simpan_upload(){
+        var form=document.getElementById('my_data_upload');
+        $.ajax({
+                type: 'POST',
+                url: "{{url('spt/simpan_upload')}}",
                 data: new FormData(form),
                 contentType: false,
                 cache: false,

@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Tagihan;
+use App\Detailtagihan;
 use App\Spt;
+use App\Imports\SptImport;
 use Illuminate\Support\Facades\Auth;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 class MasterController  extends Controller
 {
@@ -15,6 +18,16 @@ class MasterController  extends Controller
         $menu_detail=name();
         $data=Tagihan::orderBy('name','Asc')->paginate(20);
         return view('tagihan.index',compact('menu','menu_detail','data'));
+       
+    }
+    public function index_detail(request $request){
+        
+        $name=Tagihan::where('id',$request->id)->first();
+        $menu='Tagihan =>'.$name['name'];
+        $menu_detail=name();
+        $id=$request->id;
+        $data=Detailtagihan::where('tagihan_id',$request->id)->orderBy('name','Asc')->paginate(20);
+        return view('tagihan.index_detail',compact('menu','menu_detail','data','id'));
        
     }
     public function index_spt(request $request){
@@ -46,6 +59,21 @@ class MasterController  extends Controller
                     </select>
                 </div>
                 
+                
+                
+            </div>
+            
+        ';
+    }
+    public function ubah_detail(request $request){
+        $data = Detailtagihan::where('id',$request->id)->first();
+        echo'
+            <input type="hidden" name="id" value="'.$data['id'].'">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Nama </label>
+                    <input type="text" name="name" class="form-control" value="'.$data['name'].'">
+                </div>
                 
                 
             </div>
@@ -135,6 +163,21 @@ class MasterController  extends Controller
         
 
     }
+    public function simpan_upload(request $request){
+        error_reporting(0);
+
+        if (trim($request->file) == '') {$error[] = '- Upload file terlebih dahulu';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+            
+		
+            $filess = $request->file('file');
+            $nama_file = 'SPT'.rand().$filess->getClientOriginalName();
+            $filess->move('_file_excel',$nama_file);
+            Excel::import(new SptImport, public_path('/_file_excel/'.$nama_file));
+            echo'ok';
+        }
+    }
     public function simpan(request $request){
         if (trim($request->name) == '') {$error[] = '- Masukan Nama Tagihan';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
@@ -142,6 +185,22 @@ class MasterController  extends Controller
             
                 $data           = New Tagihan;
                 $data->name   = $request->name;
+                $data->save();
+                if($data){
+                    echo'ok';
+                }
+                 
+            
+        }
+    }
+    public function simpan_detail(request $request){
+        if (trim($request->name) == '') {$error[] = '- Masukan Nama Tagihan';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+            
+                $data           = New Detailtagihan;
+                $data->name   = $request->name;
+                $data->tagihan_id   = $request->id;
                 $data->save();
                 if($data){
                     echo'ok';
@@ -201,6 +260,22 @@ class MasterController  extends Controller
             
         }
     }
+    public function simpan_ubah_detail(request $request){
+        if (trim($request->name) == '') {$error[] = '- Masukan Nama Tagihan';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+            
+            
+                $data           = Detailtagihan::find($request->id);
+                $data->name   = $request->name;
+                $data->save();
+                if($data){
+                   echo'ok';
+                }
+                 
+            
+        }
+    }
 
     
 
@@ -211,6 +286,22 @@ class MasterController  extends Controller
             
             for($x=0;$x<$jum;$x++){
                 $cek=Tagihan::where('id',$_POST['id'][$x])->delete();
+                
+            }
+
+            echo'ok';
+        }else{
+            echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />-Pilih Data Yang akan dihapus</p>';
+        }
+
+    }
+    public function hapus_detail(request $request){
+        error_reporting(0);
+        $jum=count($request->id);
+        if($jum>0){
+            
+            for($x=0;$x<$jum;$x++){
+                $cek=Detailtagihan::where('id',$_POST['id'][$x])->delete();
                 
             }
 

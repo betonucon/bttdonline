@@ -53,7 +53,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Tanggal Faktur Pajak</label>
                                                     <div class="input-group" >
-                                                        <input type="text" name="InvoiceDate" id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
+                                                        <input type="text" name="InvoiceDate" readonly id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
                                                         <span class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                         </span>
@@ -61,11 +61,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Faktur Pajak</label>
-                                                    <input type="text"  onkeypress="return hanyaAngka(event)" name="Reference" id="Reference" class="form-control"  placeholder="Ketik disini" />
+                                                    <input type="text"  maxlength="20" onkeypress="return hanyaAngka(event)" name="Reference" id="Reference" class="form-control"  placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nomor Faktur Pajak Tanpa Menggunakan Titik</small>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Nilai Faktur Pajak (PPn 10%)	</label><br>
+                                                    <label for="exampleInputEmail1">Nilai Faktur Pajak (PPN 10%)	</label><br>
                                                     <select name="DocCurrency" onchange="cari_matauang(this.value)" style="display:inline;width:20%" class="form-control" >
                                                         <option value="">Pilih-----</option>
                                                         @foreach(matauang() as $mata)
@@ -111,8 +111,8 @@
                                                     
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email / Telp / Fax Vendor </label>
-                                                    <input type="text" name="email" class="form-control" placeholder="Ketik disini" />
+                                                    <label for="exampleInputEmail1">No Telepon/Handphone Aktif </label>
+                                                    <input type="text" name="email" class="form-control" value="{{no_tlp()}}" placeholder="Ketik disini" />
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Tagihan</label><br>
@@ -166,7 +166,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Tanggal Invoice</label>
                                                     <div class="input-group" >
-                                                        <input type="text" name="InvoiceDate" id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
+                                                        <input type="text" readonly name="InvoiceDate" id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
                                                         <span class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                         </span>
@@ -213,7 +213,7 @@
                                                 </div>
                                                 
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Email / Telp / Fax Vendor </label>
+                                                    <label for="exampleInputEmail1">No Telepon/Handphone Aktif </label>
                                                     <input type="text" name="email" class="form-control" placeholder="Ketik disini" />
                                                 </div>
                                                 <div class="form-group">

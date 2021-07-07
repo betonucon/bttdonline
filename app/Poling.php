@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Spt extends Model
+class Poling extends Model
 {
-    protected $table = 'spt';
+    protected $table = 'poling';
     public $timestamps = false;
-    protected $fillable = ['LIFNR','link','tanggal'];
     function vendor(){
         return $this->belongsTo('App\Vendor','LIFNR','LIFNR');
     }
-
 }

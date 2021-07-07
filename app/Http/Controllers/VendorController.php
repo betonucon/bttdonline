@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Vendor;
 use App\Bank;
+use App\Poling;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 class VendorController extends Controller
@@ -264,7 +266,10 @@ class VendorController extends Controller
         }
     }
     public function simpan_npwp(request $request){
+        if (trim($request->no_tlp) == '') {$error[] = '- Masukan No Telepon/Handphone';}
         if (trim($request->npwp) == '') {$error[] = '- Masukan No NPWP';}
+        if (trim($request->pic) == '') {$error[] = '- Masukan Nama Penanggung Jawab';}
+        if (trim($request->jabatan) == '') {$error[] = '- Masukan Nama Jabatan';}
         if (trim($request->email) == '') {$error[] = '- Masukan Email';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
@@ -273,12 +278,51 @@ class VendorController extends Controller
                 $data           = Vendor::where('LIFNR',Auth::user()['username'])->first();
                 $data->npwp   = $request->npwp;
                 $data->email   = $request->email;
+                $data->no_tlp   = $request->no_tlp;
+                $data->pic   = $request->pic;
+                $data->jabatan   = $request->jabatan;
                 $data->save();
                 if($data){
                     echo'ok';
                 }
                  
             
+        }
+    }
+    public function simpan_ubah_vendor(request $request){
+        if (trim($request->no_tlp) == '') {$error[] = '- Masukan No Telepon/Handphone';}
+        if (trim($request->npwp) == '') {$error[] = '- Masukan No NPWP';}
+        if (trim($request->pic) == '') {$error[] = '- Masukan Nama Penanggung Jawab';}
+        if (trim($request->jabatan) == '') {$error[] = '- Masukan Nama Jabatan';}
+        if (trim($request->email) == '') {$error[] = '- Masukan Email';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+            
+            
+                $data           = Vendor::where('LIFNR',Auth::user()['username'])->first();
+                $data->npwp   = $request->npwp;
+                $data->email   = $request->email;
+                $data->no_tlp   = $request->no_tlp;
+                $data->pic   = $request->pic;
+                $data->jabatan   = $request->jabatan;
+                $data->save();
+                if($data){
+                    echo'ok';
+                }
+                 
+            
+        }
+    }
+    public function poling(request $request){
+        $data   = New Poling;
+        $data->LIFNR =Auth::user()['username'];
+        $data->tanggal =date('Y-m-d');
+        $data->sts =$request->sts;
+        $data->save();
+
+        if($data){
+            Auth::logout();
+return redirect('/');
         }
     }
     public function simpan_password(request $request){

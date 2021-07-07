@@ -27,11 +27,37 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal-poling">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Kepuasan Pelayanan</h4>
+                <button type="button" class="close" >×</button>
+            </div>
+            <div class="modal-body">
+                
+                    <fieldset>
+                        <div class="form-group" style="text-align:center">
+                            <h3>Pilih Poling Kepuasan Pengguna</h3>
+                            <span class="btn btn-primary btn-sm" onclick="pilih_poling(1)">Sangat Puas</span>
+                            <span class="btn btn-success btn-sm" onclick="pilih_poling(2)">Puas</span>
+                            <span class="btn btn-danger btn-sm" onclick="pilih_poling(3)">Tidak Puas</span>
+                        </div>
+                        
+                    </fieldset>
+                
+            </div>
+            <div class="modal-footer">
+                &nbsp;
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="modal-npwp">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">NPWP</h4>
+                <h4 class="modal-title">Lengkapi Data</h4>
                 <button type="button" class="close" >×</button>
             </div>
             <div class="modal-body">
@@ -39,12 +65,25 @@
                     @csrf
                     <fieldset>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">No Telepon/Handphone </label>
+                            <input type="text" name="no_tlp" class="form-control" placeholder="Ketik disini" />
+                        </div>
+                        
+                        <div class="form-group">
                             <label for="exampleInputEmail1">NPWP </label>
                             <input type="text" name="npwp" class="form-control" placeholder="Ketik disini" />
                         </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">Email </label>
                             <input type="text" name="email" value="{{emailnya()}}" class="form-control" placeholder="Ketik disini" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Nama PIC (Karyawan yang bertanggung jawab atas tagihan vendor) </label>
+                            <input type="text" name="pic" class="form-control" placeholder="Ketik disini" />
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Bagian/Jabatan </label>
+                            <input type="text" name="jabatan" class="form-control" placeholder="Ketik disini" />
                         </div>
                     </fieldset>
                 </form>

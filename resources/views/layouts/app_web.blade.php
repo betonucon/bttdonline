@@ -43,7 +43,7 @@
         padding:3px 3px 3px 5px !important;
     }
 	th{
-		background:aqua !important;
+		background:#ffffff !important;
 		font-size:11px !important;
 		color:#000 !important;
 	}
@@ -174,10 +174,17 @@
 					
 						<a href="javascript:;" class="dropdown-item">Setting</a>
 						<div class="dropdown-divider"></div>
+						@if(Auth::user()['role_id']==7)
+						<a href="#" onclick="poling()" class="dropdown-item">Log Out</a>
+						
+						@else
 						<a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="dropdown-item">Log Out</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 							@csrf
 						</form>
+
+						@endif
+						
 					</div>
 				</li>
 			</ul>
@@ -186,7 +193,7 @@
 		<!-- end #header -->
 		
 		<!-- begin #sidebar -->
-		<div id="sidebar" class="sidebar" style="background-image: linear-gradient(to right top, #051937, #002265, #1f387b, #212d5f, #181050);"> 
+		<div id="sidebar" class="sidebar" style="background: #fff;"> 
 			<!-- begin sidebar scrollbar -->
 			<div data-scrollbar="true" data-height="100%">
 				<!-- begin sidebar user -->
@@ -343,6 +350,9 @@
 			FormPlugins.init();
 			TableManageResponsive.init();
 		});
+		function poling(){
+			$('#modal-poling').modal('show');
+		}
 		function hanyaAngka(evt) {
 		  var charCode = (evt.which) ? evt.which : event.keyCode
 		   if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -354,12 +364,14 @@
 			$('#example').dataTable( {
 				"paging":   false,
 				"responsive": true,
-				"ordering": false,
+				"ordering": true,
 				"info":     false
 			} );
 			@if(Auth::user()['role_id']==1 || Auth::user()['role_id']==2 || Auth::user()['role_id']==3)
 				@if(cek_password()>0)
 					$('#modal-password').modal({backdrop: 'static', keyboard: false});
+					
+					
 				@endif
 
 			@endif
@@ -380,6 +392,36 @@
 			$.ajax({
 					type: 'POST',
 					url: "{{url('vendor/simpan_npwp')}}",
+					data: new FormData(form),
+					contentType: false,
+					cache: false,
+					processData:false,
+					beforeSend: function() {
+						document.getElementById("loadnya").style.width = "100%";
+					},
+					success: function(msg){
+						
+						if(msg=='ok'){
+							location.reload();
+						}else{
+							document.getElementById("loadnya").style.width = "0px";
+							$('#modal-notif').modal('show');
+							$('#notif').html(msg);
+						}
+								
+						
+					}
+			});
+		
+		}
+		function pilih_poling(a){
+			location.assign("{{url('poling')}}?sts="+a);
+		}
+		function simpan_ubah_vendor(){
+			var form=document.getElementById('my_data_ubah_vendor');
+			$.ajax({
+					type: 'POST',
+					url: "{{url('vendor/simpan_ubah_vendor')}}",
 					data: new FormData(form),
 					contentType: false,
 					cache: false,
