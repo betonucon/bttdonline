@@ -108,6 +108,9 @@ class BttdController extends Controller
         
        
     }
+    public function nilai(request $request){
+        echo number_format($request->a,0);
+    }
     public function index_officer(request $request){
         if(Auth::user()['role_id']==3){
             $menu='Daftar BTTD';
@@ -312,7 +315,6 @@ class BttdController extends Controller
                         if(move_uploaded_file($file_tmp, $lokasi.$filename)){
                             $data           = New Bttd;
                             $data->LIFNR   = Auth::user()['username']; 
-                            $data->InvoiceDate   = $request->InvoiceDate; 
                             $data->Reference   = $request->Reference;
                             $data->Amount   = $request->Amount;
                             $data->AmountInvoice   = $request->AmountInvoice;
@@ -321,7 +323,7 @@ class BttdController extends Controller
                             $data->kategori   = $request->kategori;
                             $data->HeaderText   = $request->HeaderText;
                             $data->DocCurrency   = $request->DocCurrency;
-                            $data->InvoiceDate   = $request->InvoiceDate;
+                            $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
                             $data->nama_bank   = $request->nama_bank;
                             $data->tagihan_id   = $request->tagihan_id;
                             $data->no_tlp   = $request->email;
@@ -382,7 +384,7 @@ class BttdController extends Controller
             if($request->file==''){
                 $data           = Bttd::find($request->id);
                 $data->LIFNR   = Auth::user()['username']; 
-                $data->InvoiceDate   = $request->InvoiceDate; 
+                $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
                 $data->Reference   = $request->Reference;
                 $data->Amount   = $request->Amount;
                 $data->AmountInvoice   = $request->AmountInvoice;
@@ -391,7 +393,6 @@ class BttdController extends Controller
                 $data->kategori   = $request->kategori;
                 $data->HeaderText   = $request->HeaderText;
                 $data->DocCurrency   = $request->DocCurrency;
-                $data->InvoiceDate   = $request->InvoiceDate;
                 $data->nama_bank   = $request->nama_bank;
                 $data->tagihan_id   = $request->tagihan_id;
                 $data->no_tlp   = $request->email;
@@ -411,7 +412,6 @@ class BttdController extends Controller
                 if($cek[1]=='pdf'){
                     $data           = Bttd::find($request->id);
                     $data->LIFNR   = Auth::user()['username']; 
-                    $data->InvoiceDate   = $request->InvoiceDate; 
                     $data->Reference   = $request->Reference;
                     $data->Amount   = $request->Amount;
                     $data->AmountInvoice   = $request->AmountInvoice;
@@ -420,7 +420,7 @@ class BttdController extends Controller
                     $data->kategori   = $request->kategori;
                     $data->HeaderText   = $request->HeaderText;
                     $data->DocCurrency   = $request->DocCurrency;
-                    $data->InvoiceDate   = $request->InvoiceDate;
+                    $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
                     $data->nama_bank   = $request->nama_bank;
                     $data->tagihan_id   = $request->tagihan_id;
                     $data->no_tlp   = $request->email;
@@ -603,11 +603,11 @@ class BttdController extends Controller
                         }
                         echo'
                             <tr>
-                                <td width="5%"><input type="hidden" class="form-control contrl"  value="'.$x.'" name="urut[]">'.$x.'</td>
-                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$discount.'" name="discount[]" onkeyup="cek_discount('.$x.',this.value)" id="discount'.$x.'"></td>
-                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$qty.'" name="qty[]" onkeyup="cek_qty('.$x.',this.value)" id="qty'.$x.'"></td>
-                                <td width="35%"><input type="number" class="form-control contrl"  value="'.$harga_satuan.'" name="harga_satuan[]" onkeyup="hitung_total_harga('.$x.',this.value)" id="harga_satuan'.$x.'"></td>
-                                <td><input type="number" readonly class="form-control contrl"  value="'.$total_harga.'" name="total_harga[]" id="total_harga'.$x.'"></td>
+                                <td width="5%" style="vertical-align:top"><input type="hidden" class="form-control contrl"  value="'.$x.'" name="urut[]">'.$x.'</td>
+                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$discount.'" name="discount[]" onkeyup="cek_discount('.$x.',this.value)" id="discount'.$x.'"><label style="font-style:italic;color:blue" id="discountnilai'.$x.'">'.number_format($discount,0).'</label></td>
+                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$qty.'" name="qty[]" onkeyup="cek_qty('.$x.',this.value)" id="qty'.$x.'"><label style="font-style:italic;color:blue" id="qtynilai'.$x.'"></label></td>
+                                <td width="35%"><input type="number" class="form-control contrl"  value="'.$harga_satuan.'" name="harga_satuan[]" onkeyup="hitung_total_harga('.$x.',this.value)" id="harga_satuan'.$x.'"><label style="font-style:italic;color:blue" id="harga_satuannilai'.$x.'">'.number_format($harga_satuan,0).'</label></td>
+                                <td><input type="number" readonly class="form-control contrl"  value="'.$total_harga.'" name="total_harga[]" id="total_harga'.$x.'"><label style="font-style:italic;color:blue" id="total_harganilai'.$x.'">'.number_format($total_harga,0).'</label></td>
                             </tr>
 
                         ';
@@ -624,16 +624,47 @@ class BttdController extends Controller
             function cek_discount(a,nilai){
                 $("#total_harga"+a).val(0);
                 $("#harga_satuan"+a).val(0);
+                $("#harga_satuannilai"+a).html(0);
+                $.ajax({
+                    type: "GET",
+                    url: "'.url('bttd/nilai').'",
+                    data: "a="+nilai,
+                    success: function(msg){
+                        $("#discountnilai"+a).html(msg);
+                        
+                    }
+                }); 
+                
             }
             function cek_qty(a,nilai){
                 $("#total_harga"+a).val(0);
                 $("#harga_satuan"+a).val(0);
+                $("#harga_satuannilai"+a).html(0);
+                $("#qtynilai"+a).html(nilai);
             }
             function hitung_total_harga(a,nilai){
                 var discount=$("#discount"+a).val();
                 var qty=$("#qty"+a).val();
                 var total_harga=(parseInt(qty)*parseInt(nilai))-parseInt(discount);
                     $("#total_harga"+a).val(total_harga);
+                    $.ajax({
+                        type: "GET",
+                        url: "'.url('bttd/nilai').'",
+                        data: "a="+nilai,
+                        success: function(msg){
+                            $("#harga_satuannilai"+a).html(msg);
+                            
+                        }
+                    }); 
+                    $.ajax({
+                        type: "GET",
+                        url: "'.url('bttd/nilai').'",
+                        data: "a="+total_harga,
+                        success: function(msg){
+                            $("#total_harganilai"+a).html(msg);
+                            
+                        }
+                    }); 
             }
         </script>
     ';   

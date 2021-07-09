@@ -53,7 +53,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Tanggal Faktur Pajak</label>
                                                     <div class="input-group" >
-                                                        <input type="text" name="InvoiceDate" readonly id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
+                                                        <input type="text" name="InvoiceDate" readonly id="mulai" class="form-control" value="" placeholder="dd-mm-yyyy">
                                                         <span class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                         </span>
@@ -72,7 +72,8 @@
                                                             <option value="{{$mata['name']}}">{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="AmountInvoice" onkeypress="return hanyaAngka(event)" style="display:inline;width:78%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="AmountInvoice" onkeypress="return hanyaAngka(event)" onkeyup="cek_amountinvoicenilai(this.value)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -106,7 +107,8 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
                                                     <input type="text" id="matauanginvoice" disabled style="display:inline;width:15%" class="form-control" >
-                                                    <input type="text" name="Amount"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount"  onkeypress="return hanyaAngka(event)" onkeyup="cek_amountnilai(this.value)" style="display:inline;width:43%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text"  disabled  style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -166,7 +168,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Tanggal Invoice</label>
                                                     <div class="input-group" >
-                                                        <input type="text" readonly name="InvoiceDate" id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
+                                                        <input type="text" readonly name="InvoiceDate" id="mulai" class="form-control" value="" placeholder="dd-mm-yyyy">
                                                         <span class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                         </span>
@@ -206,8 +208,9 @@
                                                             <option value="{{$mata['name']}}">{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:78%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="hidden" name="AmountInvoice"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -318,10 +321,10 @@
         $('#modal-tambah').modal('show');
     }
     $('#mulai').datepicker({
-        format: 'yyyy-mm-dd'
+        format: 'dd-mm-yyyy'
     });
     $('#sampai').datepicker({
-        format: 'yyyy-mm-dd'
+        format: 'dd-mm-yyyy'
     });
     function cari_matauang(a){
         $('#matauanginvoice').val(a);
@@ -331,6 +334,15 @@
     }
     function tampilkan_Amount(a){
         $('#Amount').val(a);
+        $.ajax({
+            type: 'GET',
+            url: "{{url('bttd/nilai')}}",
+            data: "a="+a,
+            success: function(msg){
+                $('#AmountInvoicenilai').val(msg);
+                
+            }
+        }); 
     }
     function cek_kategori(a){
         if(a==1){
@@ -358,6 +370,34 @@
                 }
             }); 
         }
+        
+    }
+    function cek_amountinvoicenilai(a){
+            
+            $.ajax({
+                type: 'GET',
+                url: "{{url('bttd/nilai')}}",
+                data: "a="+a,
+                success: function(msg){
+                    $('#AmountInvoicenilai').val(msg);
+                    
+                }
+            }); 
+       
+        
+    }
+    function cek_amountnilai(a){
+            
+            $.ajax({
+                type: 'GET',
+                url: "{{url('bttd/nilai')}}",
+                data: "a="+a,
+                success: function(msg){
+                    $('#Amountnilai').val(msg);
+                    
+                }
+            }); 
+       
         
     }
     function tampilkan_tagihan(a){

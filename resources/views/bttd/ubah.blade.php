@@ -54,7 +54,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Tanggal Faktur Pajak</label>
                                                     <div class="input-group" >
-                                                        <input type="text" name="InvoiceDate" value="{{$data['InvoiceDate']}}"  id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
+                                                        <input type="text" name="InvoiceDate" value="{{date('d-m-Y',strtotime($data['InvoiceDate']))}}"  id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
                                                         <span class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                         </span>
@@ -73,7 +73,9 @@
                                                             <option value="{{$mata['name']}}"  @if($data['DocCurrency']==$mata['name']) selected @endif>{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="AmountInvoice" value="{{$data['Amount']}}" onkeypress="return hanyaAngka(event)" style="display:inline;width:78%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="AmountInvoice" value="{{$data['Amount']}}" onkeyup="cek_amountinvoicenilai(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" value="{{number_format($data['Amount'],0)}}" class="form-control" placeholder="Ketik disini" />
+                                                    
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -107,7 +109,8 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
                                                     <input type="text" id="matauanginvoice" value="{{$data['DocCurrency']}}" disabled style="display:inline;width:15%" class="form-control" >
-                                                    <input type="text" name="Amount" value="{{$data['AmountInvoice']}}"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount" value="{{$data['AmountInvoice']}}" onkeyup="cek_amountnilai(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:43%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text"  disabled  value="{{number_format($data['AmountInvoice'],0)}}" style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -167,7 +170,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Tanggal Invoice</label>
                                                     <div class="input-group" >
-                                                        <input type="text" name="InvoiceDate" value="{{$data['InvoiceDate']}}" value="{{$data['']}}" id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
+                                                        <input type="text" name="InvoiceDate" value="{{date('d-m-Y',strtotime($data['InvoiceDate']))}}" value="{{$data['']}}" id="mulai" class="form-control" value="" placeholder="yyyy-mm-dd">
                                                         <span class="input-group-append">
                                                             <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                                                         </span>
@@ -207,8 +210,10 @@
                                                             <option value="{{$mata['name']}}"  @if($data['DocCurrency']==$mata['name']) selected @endif>{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="Amount" value="{{$data['AmountInvoice']}}" onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:78%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount" onkeyup="cek_amountnilai(this.value)" value="{{$data['AmountInvoice']}}" onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:78%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="hidden" name="AmountInvoice" value="{{$data['Reference']}}" id="Amount" onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text"  disabled  style="display:inline;width:36%" id="Amountnilai" class="form-control" placeholder="Ketik disini" />
+                                                    
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
                                                 </div>
@@ -357,10 +362,10 @@
         $('#modal-tambah').modal('show');
     }
     $('#mulai').datepicker({
-        format: 'yyyy-mm-dd'
+        format: 'dd-mm-yyyy'
     });
     $('#sampai').datepicker({
-        format: 'yyyy-mm-dd'
+        format: 'dd-mm-yyyy'
     });
     function cari_matauang(a){
         $('#matauanginvoice').val(a);
@@ -370,6 +375,34 @@
     }
     function tampilkan_Amount(a){
         $('#Amount').val(a);
+    }
+    function cek_amountinvoicenilai(a){
+            
+            $.ajax({
+                type: 'GET',
+                url: "{{url('bttd/nilai')}}",
+                data: "a="+a,
+                success: function(msg){
+                    $('#AmountInvoicenilai').val(msg);
+                    
+                }
+            }); 
+       
+        
+    }
+    function cek_amountnilai(a){
+            
+            $.ajax({
+                type: 'GET',
+                url: "{{url('bttd/nilai')}}",
+                data: "a="+a,
+                success: function(msg){
+                    $('#Amountnilai').val(msg);
+                    
+                }
+            }); 
+       
+        
     }
     function kategori(a){
         if(a==1){

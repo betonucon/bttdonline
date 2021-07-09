@@ -1,6 +1,9 @@
 /node_modules
 /public/hot
 /public/storage
+/public/_file_excel
+/public/_file_pengumuman
+/public/_file_tagihan
 /storage/*.key
 /vendor
 .env

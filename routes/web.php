@@ -96,6 +96,7 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::get('/bttd/print', 'BttdController@print');
     Route::get('/bttd/view_data', 'BttdController@view_data');
     Route::get('/bttd/cetak', 'BttdController@cetak');
+    Route::get('/bttd/nilai', 'BttdController@nilai');
     Route::get('/bttd/proses_cetak', 'BttdController@proses_cetak');
     Route::post('/bttd/hapus', 'BttdController@hapus');
     Route::post('/bttd/simpan_revisi', 'BttdController@simpan_revisi');
