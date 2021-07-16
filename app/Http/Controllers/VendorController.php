@@ -322,7 +322,7 @@ class VendorController extends Controller
 
         if($data){
             Auth::logout();
-return redirect('/');
+            return redirect('/');
         }
     }
     public function simpan_password(request $request){

@@ -136,10 +136,9 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Struk Transportir </label>
                                                     <div class="input-prepend input-group">
-                                                        <span  onclick="buat_struk()" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;">
-                                                            <i class="fa fa-calculator"></i>
+                                                        <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
+                                                            <i class="fa fa-calculator"></i> Buat Struk
                                                         </span>
-                                                        <input type="text" class="form-control" placeholder="password" >
                                                     </div>
                                                     <small class="f-s-12 text-grey-darker">Klik icon calculator kemudian isi nilai sesuai dokumen</small>
                                                 </div>
@@ -240,10 +239,9 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Struk Transportir </label>
                                                     <div class="input-prepend input-group">
-                                                        <span  onclick="buat_struk()" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;">
-                                                            <i class="fa fa-calculator"></i>
+                                                        <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
+                                                            <i class="fa fa-calculator"></i> Buat Struk
                                                         </span>
-                                                        <input type="text" class="form-control" placeholder="password" >
                                                     </div>
                                                     <small class="f-s-12 text-grey-darker">Klik icon calculator kemudian isi nilai sesuai dokumen</small>
                                                 </div>

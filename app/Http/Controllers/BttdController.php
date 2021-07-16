@@ -171,7 +171,7 @@ class BttdController extends Controller
         if(Auth::user()['role_id']==7){
             $menu='Ubah BTTD';
             $menu_detail=name();
-            if($request->kategori=='nonfaktur'){
+            if($request->kategori=='2'){
                 $kategori='nonfaktur';
             }else{
                 $kategori='faktur';
@@ -577,11 +577,11 @@ class BttdController extends Controller
                 </div>
                 <table width="100%">
                     <tr>
-                        <th width="5%">NO</th>
-                        <th width="15%">Discount</th>
-                        <th width="15%">Qty</th>
-                        <th width="35%">Harga Satuan</th>
-                        <th >Jumlah</th>
+                        <th  class="th" width="5%">NO</th>
+                        <th  class="th" width="15%">Discount</th>
+                        <th  class="th" width="15%">Qty</th>
+                        <th  class="th" width="35%">Harga Satuan</th>
+                        <th  class="th" >Jumlah</th>
                     </tr>
                 </table>
                 <div style="overflow-y:scroll;height:400px">
@@ -603,11 +603,11 @@ class BttdController extends Controller
                         }
                         echo'
                             <tr>
-                                <td width="5%" style="vertical-align:top"><input type="hidden" class="form-control contrl"  value="'.$x.'" name="urut[]">'.$x.'</td>
-                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$discount.'" name="discount[]" onkeyup="cek_discount('.$x.',this.value)" id="discount'.$x.'"><label style="font-style:italic;color:blue" id="discountnilai'.$x.'">'.number_format($discount,0).'</label></td>
-                                <td width="15%"><input type="number" class="form-control contrl"  value="'.$qty.'" name="qty[]" onkeyup="cek_qty('.$x.',this.value)" id="qty'.$x.'"><label style="font-style:italic;color:blue" id="qtynilai'.$x.'"></label></td>
-                                <td width="35%"><input type="number" class="form-control contrl"  value="'.$harga_satuan.'" name="harga_satuan[]" onkeyup="hitung_total_harga('.$x.',this.value)" id="harga_satuan'.$x.'"><label style="font-style:italic;color:blue" id="harga_satuannilai'.$x.'">'.number_format($harga_satuan,0).'</label></td>
-                                <td><input type="number" readonly class="form-control contrl"  value="'.$total_harga.'" name="total_harga[]" id="total_harga'.$x.'"><label style="font-style:italic;color:blue" id="total_harganilai'.$x.'">'.number_format($total_harga,0).'</label></td>
+                                <td width="5%" class="ttdstruk" style="vertical-align:top"><input type="hidden" class="form-control contrl"  value="'.$x.'" name="urut[]">'.$x.'</td>
+                                <td width="15%" class="ttdstruk"><input type="number" class="form-control contrl"  value="'.$discount.'" name="discount[]" onkeyup="cek_discount('.$x.',this.value)" id="discount'.$x.'"><label style="color:#585858;padding-left:1%" id="discountnilai'.$x.'">'.number_format($discount,0).'</label></td>
+                                <td width="15%" class="ttdstruk" style="vertical-align: top;"><input type="number" class="form-control contrl"  value="'.$qty.'" name="qty[]" onkeyup="cek_qty('.$x.',this.value)" id="qty'.$x.'"><label style="color:#585858;padding-left:1%" id="qtynilai'.$x.'"></label></td>
+                                <td width="35%" class="ttdstruk"><input type="number" class="form-control contrl"  value="'.$harga_satuan.'" name="harga_satuan[]" onkeyup="hitung_total_harga('.$x.',this.value)" id="harga_satuan'.$x.'"><label style="color:#585858;padding-left:1%" id="harga_satuannilai'.$x.'">'.number_format($harga_satuan,0).'</label></td>
+                                <td class="ttdstruk"><input type="number" readonly class="form-control contrl"  value="'.$total_harga.'" name="total_harga[]" id="total_harga'.$x.'"><label style="color:#585858;padding-left:1%" id="total_harganilai'.$x.'">'.number_format($total_harga,0).'</label></td>
                             </tr>
 
                         ';
@@ -615,6 +615,18 @@ class BttdController extends Controller
                     echo'
                 </table>
                 </div>
+                <style>
+                    .th{
+                        background: #7a7a86 !important;
+                        padding: 1%;
+                        color: #fff !important;
+                    }
+                    .ttdstruk{
+                        border-bottom: solid 1px #d8d8e6;
+                        padding:2px;
+                        background: #efefe1 !important;
+                    }
+                </style>
 
             ';
         }

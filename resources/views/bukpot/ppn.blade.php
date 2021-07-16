@@ -55,7 +55,11 @@
                                 
                                 <tr class="odd gradeX">
                                     <td class="ttd">{{($no+1)}}</td>
-                                    <td class="ttd"><input type="checkbox" name="id[]" value="{{$o['id']}}"></td>
+                                    <td class="ttd">
+                                        @if($o['sts']==0)
+                                        <input type="checkbox" name="id[]" value="{{$o['id']}}">
+                                        @endif
+                                    </td>
                                     <td class="ttd">{{$o['HeaderText']}}</td>
                                     <td class="ttd"><b>{{$o['LIFNR']}}</b><br>{{$o['vendor']['name']}}</td>
                                     <td class="ttd">{{$o['Reference']}}</td>
@@ -93,7 +97,7 @@
                                                 <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
                                             </div>
                                             
-                                           
+                                            <a href="{{url('file_excel/importppn.xlsx')}}"><i class="fa fa-download"></i> Download Format PPN</a>
                                         </fieldset>
                                     </div>
                                     

@@ -134,10 +134,9 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Struk Transportir </label>
                                                     <div class="input-prepend input-group">
-                                                        <span  onclick="buat_struk()" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;">
-                                                            <i class="fa fa-calculator"></i>
+                                                        <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
+                                                            <i class="fa fa-calculator"></i> Buat Struk
                                                         </span>
-                                                        <input type="text" class="form-control" placeholder="password" >
                                                     </div>
                                                     <small class="f-s-12 text-grey-darker">Klik icon calculator kemudian isi nilai sesuai dokumen</small>
                                                 </div>
@@ -178,7 +177,7 @@
                                                     <label for="exampleInputEmail1">No. Kwitansi / Memo Dinas</label>
                                                     <input type="text"  name="HeaderText" onkeyup="tampilkan_Reference(this.value)" class="form-control"  placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Nomor Kwitansi / Memo Dinas ditulis tanpa spasi</small>
-                                                    <input type="text"  name="Reference" id="Reference" class="form-control"  placeholder="Ketik disini" />
+                                                    <input type="hidden"  name="Reference" id="Reference" class="form-control"  placeholder="Ketik disini" />
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nomor : PO/Kontrak/Ket.Pembayaran</label>
@@ -209,7 +208,7 @@
                                                         @endforeach
                                                     </select>
                                                     <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="hidden" name="AmountInvoice"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="hidden" name="AmountInvoice" id="AmountInvoice"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
@@ -237,10 +236,10 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Struk Transportir </label>
                                                     <div class="input-prepend input-group">
-                                                        <span  onclick="buat_struk()" title="Click here to show/hide password" class="add-on input-group-addon" style="cursor: pointer;">
-                                                            <i class="fa fa-calculator"></i>
+                                                        <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
+                                                            <i class="fa fa-calculator"></i> Buat Struk
                                                         </span>
-                                                        <input type="text" class="form-control" placeholder="password" >
+                                                       
                                                     </div>
                                                     <small class="f-s-12 text-grey-darker">Klik icon calculator kemudian isi nilai sesuai dokumen</small>
                                                 </div>
@@ -333,7 +332,7 @@
         $('#Reference').val(a);
     }
     function tampilkan_Amount(a){
-        $('#Amount').val(a);
+        $('#AmountInvoice').val(a);
         $.ajax({
             type: 'GET',
             url: "{{url('bttd/nilai')}}",
@@ -458,10 +457,12 @@
                     
                     if(msg=='ok'){
                         document.getElementById("loadnya").style.width = "0px";
+                        $('#modal-struk').modal('hide');
                     }else{
                         document.getElementById("loadnya").style.width = "0px";
-                        $('#modal-notif').modal('show');
-                        $('#notif').html(msg);
+                        $('#modal-struk').modal('hide');
+                        // $('#modal-notif').modal('show');
+                        // $('#notif').html(msg);
                     }
                             
                     

@@ -56,7 +56,11 @@
                                 
                                 <tr class="odd gradeX">
                                     <td class="ttd">{{($no+1)}}</td>
-                                    <td class="ttd"><input type="checkbox" name="id[]" value="{{$o['id']}}"></td>
+                                    <td class="ttd">
+                                        @if($o['sts']==0)
+                                        <input type="checkbox" name="id[]" value="{{$o['id']}}">
+                                        @endif
+                                    </td>
                                     <td class="ttd">{{$o['Docno']}}</td>
                                     <td class="ttd">{{$o['DateDocno']}}</td>
                                     <td class="ttd">{{$o['HeaderText']}}</td>
@@ -93,7 +97,7 @@
                                                 <label for="exampleInputEmail1">File Excel Bukpot PPH </label>
                                                 <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
                                             </div>
-                                            
+                                            <a href="{{url('file_excel/importpph.xlsx')}}"><i class="fa fa-download"></i> Download Format PPH</a>
                                            
                                         </fieldset>
                                     </div>
