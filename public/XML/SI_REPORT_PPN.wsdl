@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:p1="http://REPORT_PPN" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="SI_REPORT_PPN" targetNamespace="http://REPORT_PPN">
+	<wsdl:documentation/>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://REPORT_PPN" xmlns="http://REPORT_PPN" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:element name="MT_REPORT_PPN" type="DT_REPORT_PPN"/>
+			<xsd:complexType name="DT_REPORT_PPN">
+				<xsd:annotation>
+					<xsd:appinfo source="http://sap.com/xi/VersionID">83faeb38ba1d11e7cfe8000000114fd6</xsd:appinfo>
+				</xsd:annotation>
+				<xsd:sequence>
+					<xsd:element name="REPORT_PPN" minOccurs="0" maxOccurs="unbounded">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="BELNR" type="xsd:string"/>
+								<xsd:element name="BKTXT" type="xsd:string"/>
+								<xsd:element name="LIFNR" type="xsd:string"/>
+								<xsd:element name="NAME1" type="xsd:string"/>
+								<xsd:element name="XBLNR" type="xsd:string"/>
+								<xsd:element name="BLDAT" type="xsd:string"/>
+								<xsd:element name="WRBTR" type="xsd:string"/>
+								<xsd:element name="DMBTR" type="xsd:string"/>
+								<xsd:element name="AUGBL" type="xsd:string"/>
+							</xsd:sequence>
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:sequence>
+			</xsd:complexType>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="MT_REPORT_PPN">
+		<wsdl:documentation/>
+		<wsdl:part name="MT_REPORT_PPN" element="p1:MT_REPORT_PPN"/>
+	</wsdl:message>
+	<wsdl:portType name="SI_REPORT_PPN">
+		<wsdl:documentation/>
+		<wsdl:operation name="SI_REPORT_PPN">
+			<wsdl:documentation/>
+			<wsp:Policy>
+				<wsp:PolicyReference URI="#OP_SI_REPORT_PPN"/>
+			</wsp:Policy>
+			<wsdl:input message="p1:MT_REPORT_PPN"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="SI_REPORT_PPNBinding" type="p1:SI_REPORT_PPN">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+		<wsdl:operation name="SI_REPORT_PPN">
+			<soap:operation soapAction="http://sap.com/xi/WebService/soap1.1" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+			<wsdl:input>
+				<soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+			</wsdl:input>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="SI_REPORT_PPNService">
+		<wsdl:port name="SI_REPORT_PPNPort" binding="p1:SI_REPORT_PPNBinding">
+			<soap:address location="http://localhost/ks/bttd_online/public/XML/SI_REPORT_PPN.php?wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsp:UsingPolicy wsdl:required="false"/>
+	<wsp:Policy wsu:Id="OP_SI_REPORT_PPN"/>
+</wsdl:definitions>

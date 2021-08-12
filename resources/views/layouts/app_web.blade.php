@@ -353,6 +353,11 @@
 		function poling(){
 			$('#modal-poling').modal('show');
 		}
+		function lihatfilegd(file){
+			var file='<iframe src="'+file+'" height="550" width="100%"></iframe>';
+			$('#modal-lihat-file').modal('show');
+			$('#lihat-file').html(file);
+		}
 		function hanyaAngka(evt) {
 		  var charCode = (evt.which) ? evt.which : event.keyCode
 		   if (charCode > 31 && (charCode < 48 || charCode > 57))

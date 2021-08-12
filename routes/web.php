@@ -14,11 +14,52 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('share', function() {
+    $filename = '20210806075018.pdf';
+
+    // Store a demo file
+    
+    // Get the file to find the ID
+    $dir = '/';
+    $recursive = false; // Get subdirectories also?
+    $contents = collect(Storage::cloud()->listContents($dir, $recursive));
+    $file = $contents
+        ->where('type', '=', 'file')
+        ->where('filename', '=', pathinfo($filename, PATHINFO_FILENAME))
+        ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
+        ->first(); // there can be duplicate file names!
+
+    // Change permissions
+    // - https://developers.google.com/drive/v3/web/about-permissions
+    // - https://developers.google.com/drive/v3/reference/permissions
+    // $service = Storage::cloud()->getAdapter()->getService();
+    // $permission = new \Google_Service_Drive_Permission();
+    // $permission->setRole('reader');
+    // $permission->setType('anyone');
+    // $permission->setAllowFileDiscovery(false);
+    // $permissions = $service->permissions->create($file['basename'], $permission);
+
+    return Storage::cloud()->url($file['path']);
+});
 
 Auth::routes();
 
+Route::get('testgoogle', function() {
+    Storage::disk('google')->put('testsssaaaa.txt', 'HelloWorld');
+});
 
+Route::get('putgoogle', function() {
+    Storage::cloud()->put('test.txt', 'Hello World');
+    return 'File was saved to Google Drive';
+});
+Route::get('/uploadgoogle', 'UploadController@index');
+Route::post('/test-upload', 'UploadController@testupload');
 Route::get('/register', 'Auth\LoginController@login');
+
+
+Route::get('/wsdlppn', 'WsdlController@ppn');
+
+
 
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/', 'HomeController@index');

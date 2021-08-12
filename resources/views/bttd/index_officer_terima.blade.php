@@ -80,7 +80,7 @@
                                        <b>Tempo:</b>{{$o['tempo']}}
                                     </td>
                                     <td class="ttd">
-                                        <a href="{{url('_file_tagihan/'.$o['file'])}}" target="_blank" title="file tagihan"><span class="btn btn-xs btn-warning" ><i class="fa fa-clone"></i></span></a>
+                                    <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
                                     <td class="ttd">
                                         <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>

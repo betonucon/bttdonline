@@ -13,6 +13,40 @@ function barcode($id){
    $d->setStorPath(__DIR__.'/cache/');
    return $d->getBarcodePNGPath($id, 'PDF417');
 }
+function proses_upload($filename,$file){
+   $documentFiles = Storage::disk('google')->files('\\');
+   foreach ($documentFiles as $key => $documentFile){
+
+      if ($key == 0) {
+         $path = Storage::disk('google')->get($documentFile);
+         $file_ftp = Storage::disk(‘google’)->put($documentFile, $path);
+      }
+   }
+   
+}
+
+function linkdrive($filename){
+   $dir = '/';
+   $recursive = false; // Get subdirectories also?
+   $contents = collect(Storage::cloud()->listContents($dir, $recursive));
+   $file = $contents
+       ->where('type', '=', 'file')
+       ->where('filename', '=', pathinfo($filename, PATHINFO_FILENAME))
+       ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
+       ->first(); // there can be duplicate file names!
+   return Storage::cloud()->url($file['path']);
+}
+function hapuslinkdrive($filename){
+   $dir = '/';
+   $recursive = false; // Get subdirectories also?
+   $contents = collect(Storage::cloud()->listContents($dir, $recursive));
+   $file = $contents
+       ->where('type', '=', 'file')
+       ->where('filename', '=', pathinfo($filename, PATHINFO_FILENAME))
+       ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
+       ->first(); // there can be duplicate file names!
+   return Storage::cloud()->delete($file['path']);
+}
 function bulnya($id){
    if($id>9){
       $data=$id;

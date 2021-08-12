@@ -55,6 +55,7 @@
                                     <th class="text-nowrap" width="9%" ></th>
                                     <th class="text-nowrap" width="4%" ></th>
                                     <th class="text-nowrap" width="4%" ></th>
+                                    <th class="text-nowrap" width="4%" ></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,6 +77,9 @@
                                     <td class="ttd"><b>Dibuat :</b> {{tgl($o['InvoiceDate'])}}<br><b>Diterima :</b> {{tgl($o['diterima'])}}</td>
                                     <td class="ttd" style="background:{{$o['rolenya']['warna']}} !important;text-align:center">
                                        <b><i>{{$o['rolenya']['name']}}</i></b>
+                                    </td>
+                                    <td class="ttd">
+                                    <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
                                     <td class="ttd">
                                         <span class="btn btn-xs btn-warning" ><i class="fa fa-clone"></i></span>

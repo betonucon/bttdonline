@@ -305,14 +305,14 @@ class BttdController extends Controller
                 echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-No Faktur Pajak atau Invoice Sudah terdaftar</p>';
             }else{
                 if($cekstruk>0){
-                    $image = $request->file('file');
-                    $imageFileName =$request->Reference.'.'. $image->getClientOriginalExtension();
-                    $filePath =$imageFileName;
-                    $file = \Storage::disk('google');
+                    $cek=explode('/',$_FILES['file']['type']);
+                    $file_tmp=$_FILES['file']['tmp_name'];
+                    $file=explode('.',$_FILES['file']['name']);
+                    $filename=$request->Reference.'.'.$cek[1];
+                    $lokasi='_file_tagihan/';
                     
-                    
-                    if($image->getClientOriginalExtension()=='pdf'){
-                        if($file->put($filePath, file_get_contents($image))){
+                    if($cek[1]=='pdf'){
+                        if(move_uploaded_file($file_tmp, $lokasi.$filename)){
                             $data           = New Bttd;
                             $data->LIFNR   = Auth::user()['username']; 
                             $data->Reference   = $request->Reference;
@@ -330,8 +330,7 @@ class BttdController extends Controller
                             $data->email   = email_vendor();
                             $data->lokasi   = 7;
                             $data->sts   = 1;
-                            $data->linknya   = linkdrive($imageFileName);
-                            $data->file   = $imageFileName;
+                            $data->file   = $filename;
                             
                             $data->save();
                             if($data){
@@ -404,47 +403,35 @@ class BttdController extends Controller
                     echo'ok';
                 }
             }else{
-                    $image = $request->file('file');
-                    $imageFileName =$request->Reference.'.'. $image->getClientOriginalExtension();
-                    $filePath =$imageFileName;
-                    $file = \Storage::disk('google');
-                    
-                    
-                    if($image->getClientOriginalExtension()=='pdf'){
-                        // echo hapuslinkdrive($imageFileName);
-                        if(hapuslinkdrive($imageFileName)==1 || hapuslinkdrive($imageFileName)==null){
-                            if($file->put($filePath, file_get_contents($image))){
-                                $data           = Bttd::find($request->id);
-                                $data->LIFNR   = Auth::user()['username']; 
-                                $data->Reference   = $request->Reference;
-                                $data->Amount   = $request->Amount;
-                                $data->AmountInvoice   = $request->AmountInvoice;
-                                $data->PurchaseOrder   = $request->PurchaseOrder;
-                                $data->PartBank   = $request->PartBank;
-                                $data->kategori   = $request->kategori;
-                                $data->HeaderText   = $request->HeaderText;
-                                $data->DocCurrency   = $request->DocCurrency;
-                                $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
-                                $data->nama_bank   = $request->nama_bank;
-                                $data->tagihan_id   = $request->tagihan_id;
-                                $data->no_tlp   = $request->email;
-                                $data->email   = email_vendor();
-                                $data->linknya   = linkdrive($imageFileName);
-                                $data->file   = $imageFileName;
-                                $data->sts   = 1;
-                                $data->save();
-                                if($data){
-                                    echo'ok';
-                                }
-                            }else{
-                                echo'Gagal';
-                            }
-                        }else{
-                            echo'Gagal Hapus';
-                        }
-                    }else{
-                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
-                    }
+                $cek=explode('/',$_FILES['file']['type']);
+                $file_tmp=$_FILES['file']['tmp_name'];
+                $file=explode('.',$_FILES['file']['name']);
+                $filename=$request->Reference.'.'.$cek[1];
+                $lokasi='_file_tagihan/';
+                
+                if($cek[1]=='pdf'){
+                    $data           = Bttd::find($request->id);
+                    $data->LIFNR   = Auth::user()['username']; 
+                    $data->Reference   = $request->Reference;
+                    $data->Amount   = $request->Amount;
+                    $data->AmountInvoice   = $request->AmountInvoice;
+                    $data->PurchaseOrder   = $request->PurchaseOrder;
+                    $data->PartBank   = $request->PartBank;
+                    $data->kategori   = $request->kategori;
+                    $data->HeaderText   = $request->HeaderText;
+                    $data->DocCurrency   = $request->DocCurrency;
+                    $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
+                    $data->nama_bank   = $request->nama_bank;
+                    $data->tagihan_id   = $request->tagihan_id;
+                    $data->no_tlp   = $request->email;
+                    $data->email   = email_vendor();
+                    $data->file   = $filename;
+                    $data->sts   = 1;
+                    $data->save();
+
+                }else{
+                    echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
+                }
             }    
             
         }

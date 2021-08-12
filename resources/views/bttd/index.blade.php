@@ -73,7 +73,7 @@
                                        <b><i>{{$o['rolenya']['name']}}</i></b>
                                     </td>
                                     <td class="ttd">
-                                        <a href="{{url('_file_tagihan/'.$o['file'])}}" target="_blank" title="file tagihan"><span class="btn btn-xs btn-warning" ><i class="fa fa-clone"></i></span></a>
+                                        <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
                                     <td class="ttd">
                                         <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}},`{{$o['kategori']}}`)"><i class="fa fa-edit"></i></span>
