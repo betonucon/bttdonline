@@ -1,90 +1,64 @@
 <?php
 include_once('config.php');
 include_once('functions.php');
+connect();
 
-	if ( stristr(@$_SERVER["HTTP_ACCEPT"],"application/xml")) {
-		header("Content-type: application/xml, utf-8"); } else {
-		header("Content-type: text/xml");
-	}
+// if ( stristr($_SERVER['HTTP_ACCEPT'],"application/xml")) {
+//   		header("Content-type: application/xml"); } else {
+//   		header("Content-type: text/xml");
+// }
+echo $_SERVER['HTTP_ACCEPT'];
 
-	function object2array($object) {
-		if (is_object($object)) {
-			foreach ($object as $key => $value) {
-				$array[$key] = $value;
-			}
-		}
-		else {
-			$array = $object;
-		}
-		return $array;
-	} 
- 		
-	function subCode($string, $param){
-		switch($param){
-			case 1: $kd = substr($string, 0, 2);break;
-			case 2: $kd = substr($string, 2, 1).".";break;
-			case 3: $kd = substr($string, 3, 3)."-";break;
-			case 4: $kd = substr($string, 6, 2).".";break;
-			case 5: $kd = substr($string, 8, 8);break;
-		}
-	  return $kd;
-	}
-
-	function getCode($kode){
-		for($i=1;$i<=strlen($kode);$i++){
-			$cd .= subCode($kode, $i);
-		}		
-	 	return $cd;
-	}	 
-
-    function getmaster($isi){
-    	foreach ($isi as $key1 => $value1) { 
-     		$field .= $key1.","; 
-            if ($key1=='LIFNR'){
-               $val .="'".substr($value1,4)."'".","; 
-            }else{
-                $val .=  "'".$value1."'".",";
-            } 
+function object2array($object) {
+    if (is_object($object)) {
+        foreach ($object as $key => $value) {
+            $array[$key] = $value;
         }
-        $date1 = date('Ymd');	
-    	$date1 = ('2012-12-12');
-    	$date = new DateTime($date1);
-    	$date->add(new DateInterval('P6D'));
-    	$date2 = $date->format('Ymd');
-    	
-    	$field 	= substr($field,0,strlen($field)-1);
-    	$val 	= substr($val,0,strlen($val)-1);
-     
-    	$sql_m 	= "INSERT INTO bttd_ppn ($field) VALUES ($val);"; 
-    	return $sql_m;
-    }  
+    }
+    else {
+        $array = $object;
+    }
+    return $array;
+} 
+ 		
+ 
 
-	function SI_REPORT_PPN($data) {
-		$data = object2Array($data);
-		
-		foreach ($data as $key => $value) {
-			if (is_object($data)){
-				
-			}elseif(is_array($data)){
-				foreach ($data as $key => $value) {
-					
-						$mst	= getmaster($value);
-						$hsl 	= mysqli_query($koneksi,$mst);	
-						
-					
-				}
-				
-			}else{
-				$myv	= print_r($data, TRUE);
-				// $hsl 	= mysql_query('INSERT INTO log_data (log_dt) VALUES ("NON =>'.$myv.'")');
-			}
-		}
-		return (array(response => "Received in Web : $v".$vmard));
-	}
+function SI_REPORT_PPN($data) {
+	$datanya = object2Array($data);
+	
+	// foreach ($data as $key => $value) {
+	// 	if (is_object($data)){
+			
+	// 	}elseif(is_array($data)){
+	// 		foreach ($data as $key => $value) {
+	// 			if (is_object($value)){
+	// 				$mst	= getmaster($value);
+	// 				$hsl 	= mysql_query($mst);	
+	// 				$hsl 	= mysql_query('INSERT INTO log_data (tgl_trans,log_dt) VALUES ("'.date('YmdHis').'","Object=>'.$mst.'")');
+	// 			}elseif(is_array($value)){
+	// 				$jml = sizeof($value);
+	// 				for ($i=0;$i<=$jml-1;$i++){
+	// 					$mst	= getmaster($value[$i]);
+	// 					$hsl 	= mysql_query($mst);	
+	// 					$hsl 	= mysql_query('INSERT INTO log_data (tgl_trans,log_dt) VALUES ("'.date('YmdHis').'","Array=>'.$mst.'")');
+	// 				}
+	// 			}else{
+	// 				$hsl 	= mysql_query('INSERT INTO log_data (log_dt) VALUES ("Non->'.$myv.'")');
+	// 			}
+	// 		}
+			
+	// 	}else{
+	// 		$myv	= print_r($data, TRUE);
+	// 		$hsl 	= mysql_query('INSERT INTO log_data (log_dt) VALUES ("NON =>'.$myv.'")');
+	// 	}
+	// }
+	
+	return (array(response => "Received in Web : ".$datanya));
+}
 
-	$server = new SoapServer("SI_REPORT_PPN.wsdl");
-	echo $server->addFunction("SI_REPORT_PPN");
-	$server->handle();
+$server = new SoapServer("SI_REPORT_PPN.wsdl");
+$server->addFunction("SI_REPORT_PPN");
+$server->handle();
 
 ?>
 
