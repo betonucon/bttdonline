@@ -302,70 +302,70 @@ class BttdController extends Controller
     }
     
     public function yang_simpan(request $request){
-        if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur Pajak/Invoice';}
-        if (trim($request->Reference) == '') {$error[] = '- Masukan No Faktur Pajak';}
-        if (trim($request->Amount) == '') {$error[] = '- Masukan Nilai  Invoice';}
-        if (trim($request->AmountInvoice) == '') {$error[] = '- Masukan Nilai Faktur';}
-        if (trim($request->PurchaseOrder) == '') {$error[] = '- Masukan Nomor PO';}
-        if (trim($request->PartBank) == '') {$error[] = '- Pilih Nomor Rekening';}
-        if (trim($request->HeaderText) == '') {$error[] = '- Masukan No Invoice';}
-        if (trim($request->DocCurrency) == '') {$error[] = '- Pilih Mata Yang';}
-        if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur/Invoice';}
-        if (trim($request->nama_bank) == '') {$error[] = '- Masukan Nama BANK';}
-        if (trim($request->tagihan_id) == '') {$error[] = '- Pilih Jenis Tagihan';}
-        if (trim($request->email) == '') {$error[] = '- Masukan Nomor Telepon/Handphone';}
-        if (trim($request->file) == '') {$error[] = '- Upload dokumen tagihan';}
-        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
-        else{
-            $cek=Bttd::where('HeaderText',$request->HeaderText)->orWhere('Reference',$request->Reference)->count();
-            $cekstruk=Struk::where('Reference',$request->Reference)->count();
-            if($cek>0){
-                echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-No Faktur Pajak atau Invoice Sudah terdaftar</p>';
-            }else{
-                if($cekstruk>0){
-                    $image = $request->file('file');
-                    $imageFileName =$request->Reference.'.'. $image->getClientOriginalExtension();
-                    $filePath =$imageFileName;
-                    $file = \Storage::disk('google');
+        // if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur Pajak/Invoice';}
+        // if (trim($request->Reference) == '') {$error[] = '- Masukan No Faktur Pajak';}
+        // if (trim($request->Amount) == '') {$error[] = '- Masukan Nilai  Invoice';}
+        // if (trim($request->AmountInvoice) == '') {$error[] = '- Masukan Nilai Faktur';}
+        // if (trim($request->PurchaseOrder) == '') {$error[] = '- Masukan Nomor PO';}
+        // if (trim($request->PartBank) == '') {$error[] = '- Pilih Nomor Rekening';}
+        // if (trim($request->HeaderText) == '') {$error[] = '- Masukan No Invoice';}
+        // if (trim($request->DocCurrency) == '') {$error[] = '- Pilih Mata Yang';}
+        // if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur/Invoice';}
+        // if (trim($request->nama_bank) == '') {$error[] = '- Masukan Nama BANK';}
+        // if (trim($request->tagihan_id) == '') {$error[] = '- Pilih Jenis Tagihan';}
+        // if (trim($request->email) == '') {$error[] = '- Masukan Nomor Telepon/Handphone';}
+        // if (trim($request->file) == '') {$error[] = '- Upload dokumen tagihan';}
+        // if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        // else{
+        //     $cek=Bttd::where('HeaderText',$request->HeaderText)->orWhere('Reference',$request->Reference)->count();
+        //     $cekstruk=Struk::where('Reference',$request->Reference)->count();
+        //     if($cek>0){
+        //         echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-No Faktur Pajak atau Invoice Sudah terdaftar</p>';
+        //     }else{
+        //         if($cekstruk>0){
+        //             $image = $request->file('file');
+        //             $imageFileName =$request->Reference.'.'. $image->getClientOriginalExtension();
+        //             $filePath =$imageFileName;
+        //             $file = \Storage::disk('google');
                     
                     
-                    if($image->getClientOriginalExtension()=='pdf'){
-                        if($file->put($filePath, file_get_contents($image))){
-                            $data           = New Bttd;
-                            $data->LIFNR   = Auth::user()['username']; 
-                            $data->Reference   = $request->Reference;
-                            $data->Amount   = $request->Amount;
-                            $data->AmountInvoice   = $request->AmountInvoice;
-                            $data->PurchaseOrder   = $request->PurchaseOrder;
-                            $data->PartBank   = $request->PartBank;
-                            $data->kategori   = $request->kategori;
-                            $data->HeaderText   = $request->HeaderText;
-                            $data->DocCurrency   = $request->DocCurrency;
-                            $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
-                            $data->nama_bank   = $request->nama_bank;
-                            $data->tagihan_id   = $request->tagihan_id;
-                            $data->no_tlp   = $request->email;
-                            $data->email   = email_vendor();
-                            $data->lokasi   = 7;
-                            $data->sts   = 1;
-                            $data->linknya   = linkdrive($imageFileName);
-                            $data->file   = $imageFileName;
+        //             if($image->getClientOriginalExtension()=='pdf'){
+        //                 if($file->put($filePath, file_get_contents($image))){
+        //                     $data           = New Bttd;
+        //                     $data->LIFNR   = Auth::user()['username']; 
+        //                     $data->Reference   = $request->Reference;
+        //                     $data->Amount   = $request->Amount;
+        //                     $data->AmountInvoice   = $request->AmountInvoice;
+        //                     $data->PurchaseOrder   = $request->PurchaseOrder;
+        //                     $data->PartBank   = $request->PartBank;
+        //                     $data->kategori   = $request->kategori;
+        //                     $data->HeaderText   = $request->HeaderText;
+        //                     $data->DocCurrency   = $request->DocCurrency;
+        //                     $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
+        //                     $data->nama_bank   = $request->nama_bank;
+        //                     $data->tagihan_id   = $request->tagihan_id;
+        //                     $data->no_tlp   = $request->email;
+        //                     $data->email   = email_vendor();
+        //                     $data->lokasi   = 7;
+        //                     $data->sts   = 1;
+        //                     $data->linknya   = linkdrive($imageFileName);
+        //                     $data->file   = $imageFileName;
                             
-                            $data->save();
-                            if($data){
-                                echo'ok';
-                            }
-                        }else{
+        //                     $data->save();
+        //                     if($data){
+        //                         echo'ok';
+        //                     }
+        //                 }else{
 
-                        }
-                    }else{
-                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
-                    }
-                }else{
-                    echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Isi nilai Struk</p>';
-                } 
-            }
-        }
+        //                 }
+        //             }else{
+        //                 echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
+        //             }
+        //         }else{
+        //             echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Isi nilai Struk</p>';
+        //         } 
+        //     }
+        // }
     }
     
 
