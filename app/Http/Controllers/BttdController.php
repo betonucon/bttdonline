@@ -301,7 +301,7 @@ class BttdController extends Controller
         
     }
     
-    public function simpanxxx(request $request){
+    public function yang_simpan(request $request){
         if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur Pajak/Invoice';}
         if (trim($request->Reference) == '') {$error[] = '- Masukan No Faktur Pajak';}
         if (trim($request->Amount) == '') {$error[] = '- Masukan Nilai  Invoice';}
