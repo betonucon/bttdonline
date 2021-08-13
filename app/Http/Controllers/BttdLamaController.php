@@ -13,7 +13,7 @@ use PDF;
 use App\Detailtagihan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-class BttdController extends Controller
+class BttdLamaController extends Controller
 {
     public function index(request $request){
         if(Auth::user()['role_id']==7){
