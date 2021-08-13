@@ -283,7 +283,7 @@ class BttdController extends Controller
         ';
 
     }
-    public function simpan(request $request){
+    public function Lama_simpan(request $request){
         
             $image = $request->file('file');
             $imageFileName =$request->Reference.'.'. $image->getClientOriginalExtension();
@@ -301,7 +301,7 @@ class BttdController extends Controller
         
     }
     
-    public function yang_simpan(request $request){
+    public function simpan(request $request){
         if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur Pajak/Invoice';}
         if (trim($request->Reference) == '') {$error[] = '- Masukan No Faktur Pajak';}
         if (trim($request->Amount) == '') {$error[] = '- Masukan Nilai  Invoice';}
