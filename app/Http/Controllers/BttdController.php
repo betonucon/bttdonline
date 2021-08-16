@@ -430,7 +430,7 @@ class BttdController extends Controller
                     
                     if($image->getClientOriginalExtension()=='pdf'){
                         // echo hapuslinkdrive($imageFileName);
-                        if(hapuslinkdrive($imageFileName)==1 || hapuslinkdrive($imageFileName)==null){
+                        if(hapuslinkdrive($imageFileName)){
                             if($file->put($filePath, file_get_contents($image))){
                                 $data           = Bttd::find($request->id);
                                 $data->LIFNR   = Auth::user()['username']; 
