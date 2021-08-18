@@ -52,6 +52,7 @@
                                     <th class="text-nowrap" width="10%" >Nilai Invoice </th>
                                     <th class="text-nowrap" width="15%" >Tanggal </th>
                                     <th class="text-nowrap" width="9%" ></th>
+                                    <th class="text-nowrap" width="4%" >Dok</th>
                                     <th class="text-nowrap" width="4%" >File</th>
                                     <th class="text-nowrap" width="4%" ></th>
                                 </tr>
@@ -76,8 +77,12 @@
                                         <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
                                     <td class="ttd">
+                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>
+                                    </td>
+                                    <td class="ttd">
                                         <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}},`{{$o['kategori']}}`)"><i class="fa fa-edit"></i></span>
                                     </td>
+                                    
                                 </tr>
                             @endforeach
                             </tbody>
@@ -85,6 +90,23 @@
                     </form>
                     {{ $data->links() }}
                     <!-- #modal-dialog -->
+                    <div class="modal" id="modal-tampilkan">
+                        <div class="modal-dialog" id="modalbesar">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Dokumen</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="tampilkanprint">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Tutup</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal fade" id="modal-tambah">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -195,7 +217,20 @@
     $(document).ready(function() {
         
     });
-
+    function tampilkan(a){
+        
+        $.ajax({
+            type: 'GET',
+            url: "{{url('bttd/proses_cetak')}}",
+            data: "id="+a,
+            success: function(msg){
+                $('#tampilkanprint').html(msg);
+                $('#modal-tampilkan').modal('show');
+                
+            }
+        }); 
+                    
+    }
     function tambah(){
         location.assign("{{url('bttd/baru')}}?kategori=faktur");
     }

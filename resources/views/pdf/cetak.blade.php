@@ -267,7 +267,7 @@
                 </tr>
             </table>
         </div>
-        @if($data['no_voucher']!='')
+        
         <div class="isistruk">
             <table width="100%" border="0">
                 <tr>
@@ -403,6 +403,6 @@
             
             
         </div>
-        @endif
+        
     </body>
 </html>
