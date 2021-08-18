@@ -19,6 +19,19 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Hash;
 class BukpotController extends Controller
 {
+    public function SI_REPORT_PPN($data = array())
+    {
+        foreach ($data as $key => $value) {
+            $sap = new Ppn;
+            $sap->HeaderText = $value->LIFNR;
+            $sap->Reference = $value->LIFNR;
+            $sap->Docno = $value->LIFNR;
+            $sap->AmountPph = $value->LIFNR;
+            $sap->tanggal_turun = date('Y-m-d H:i:s');
+            $sap->AmountDpp = $value->LIFNR;
+            $sap->save();
+         }
+    }
     public function index(request $request){
         if(Auth::user()['role_id']==2){
             $menu='Bukti Potong PPH';

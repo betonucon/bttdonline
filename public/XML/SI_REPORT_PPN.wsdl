@@ -53,7 +53,7 @@
 	</wsdl:binding>
 	<wsdl:service name="SI_REPORT_PPNService">
 		<wsdl:port name="SI_REPORT_PPNPort" binding="p1:SI_REPORT_PPNBinding">
-			<soap:address location="http://localhost/ks/bttd_online/public/XML/SI_REPORT_PPN.php?wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+			<soap:address location="http://localhost/ks/bttd_online/public/api/uploadppn?wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
 		</wsdl:port>
 	</wsdl:service>
 	<wsp:UsingPolicy wsdl:required="false"/>
