@@ -2,8 +2,10 @@
     <head>
         <title></title>
         <style>
+            
             html{
                 margin: 1% 2% 1% 2%;
+                font-family: Tahoma;
             }
             .headernya{
                 width:100%;
@@ -41,6 +43,11 @@
             .ttd{
                 font-size:13px;
                 padding-left:3px;
+            }
+            .ttdp{
+                font-size:13px;
+                padding-left:3px;
+                border:solid 1px #fff;
             }
             .footer {
                 width: 100%;
@@ -172,25 +179,25 @@
                 </tr>
                 <tr>
                     <td>
-                        <font style="color:#000;font-size:14px;display:block">DOKUMEN YANG DISERAHKAN KEPADA BAGIAN PAJAK:</font>
+                        <font style="color:#000;font-size:14px;display:block"><u>Diisi Oleh Officer VP:</u></font>
                     </td>
                 </tr>
             </table>
             <table width="70%" border="1">
                 <tr>
-                    <th width="5%" class="tth">No</th>
-                    <th width="60%" class="tth" style="text-transform: uppercase !important;">Nama Dokumen</th>
-                    <th class="tth">Keterangan</th>
+                    <td class="ttdp" width="3%">-</td>
+                    <td class="ttdp" width="30%">No Dokumen</td>
+                    <td class="ttdp" >: </td>
                 </tr>
                 <tr>
-                    <td class="ttd">1</td>
-                    <td class="ttd">Faktur Pajak Asli</td>
-                    <td class="ttd" style="text-align:center"></td>
+                    <td class="ttdp">-</td>
+                    <td class="ttdp">Tanggal Jatuh Tempo</td>
+                    <td class="ttdp" >:</td>
                 </tr>
                 <tr>
-                    <td class="ttd">2</td>
-                    <td class="ttd">SPT Masa Copy</td>
-                    <td class="ttd" style="text-align:center"></td>
+                    <td class="ttdp">-</td>
+                    <td class="ttdp">Paraf Pemroses</td>
+                    <td class="ttdp" >:</td>
                 </tr>
             </table>
             <hr>
