@@ -4,8 +4,6 @@
 /public/_file_excel
 /public/_file_pengumuman
 /public/_file_tagihan
-/public/SAPtoWEB
-/public/WEBtoSAP
 /storage/*.key
 /vendor
 .env
