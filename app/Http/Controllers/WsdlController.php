@@ -14,5 +14,22 @@ class WsdlController extends Controller
         $server->handle();
     }
 
+    public function parsing_txt(){
+        error_reporting(0);
+        $contents = file_get_contents('SAPtoWEB/test.txt');
+        $rows = explode("\n", trim($contents));
+        foreach($rows as $x=>$row) {
+            if($x==0){
+
+            }else{
+                $results= explode('|', trim($row));
+                echo $results[0].'-'.$results[1].'-'.$results[2].'-'.$results[3].'<br>';
+                
+            }
+        }
+        
+        
+    }
+
     
 }

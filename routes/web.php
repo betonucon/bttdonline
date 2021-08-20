@@ -58,6 +58,7 @@ Route::get('/register', 'Auth\LoginController@login');
 
 
 Route::get('/wsdlppn', 'WsdlController@ppn');
+Route::get('/parsing_txt', 'WsdlController@parsing_txt');
 
 
 
