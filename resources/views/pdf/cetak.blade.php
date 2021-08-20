@@ -235,8 +235,7 @@
                 </tr>
             </table>
             <hr>
-        </div>
-        <div class="footer">
+            <div class="footer">
             <table width="100%" border="0">
                 <tr>
                     <td width="30%">
@@ -274,6 +273,8 @@
                 </tr>
             </table>
         </div>
+        </div>
+        
         
         <div class="isistruk">
             <table width="100%" border="0">
