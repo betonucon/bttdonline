@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Bank;
 use Illuminate\Http\Request;
 use App\Http\Controllers\BukpotController;
 class WsdlController extends Controller
