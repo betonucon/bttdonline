@@ -29,7 +29,7 @@
                 </div>
                 <div class="panel-body" >
                     
-                    <form method="post" onkeypress="return event.keyCode != 13"  style="display:flex" enctype="multipart/form-data" id="my_data">
+                    <form method="post" action="{{url('bttd/simpan_ubah')}}" style="display:flex" enctype="multipart/form-data" id="my_data">
                         @csrf
                             <input type="hidden" name="id" value="{{$data['id']}}">
                             @if($kategori=='faktur')
@@ -67,9 +67,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Faktur Pajak (PPN 10%)	</label><br>
-                                                    <input type="text" readonly name="DocCurrency" onkeyup="cari_matauang(this.value)" value="IDR" style="display:inline;width:20%" class="form-control" >
-                                                    
-
+                                                    <select name="DocCurrency" onchange="cari_matauang(this.value)" style="display:inline;width:20%" class="form-control" >
+                                                        <option value="IDR">IDR</option>
+                                                        @foreach(matauang() as $mata)
+                                                            <option value="{{$mata['name']}}"  @if($data['DocCurrency']==$mata['name']) selected @endif>{{$mata['name']}}</option>
+                                                        @endforeach
+                                                    </select>
                                                     <input type="text" name="AmountInvoice" value="{{$data['Amount']}}" onkeyup="cek_amountinvoicenilai(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" value="{{number_format($data['Amount'],0)}}" class="form-control" placeholder="Ketik disini" />
                                                     
@@ -200,8 +203,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
-                                                    <input type="text" readonly name="DocCurrency" onkeyup="cari_matauang(this.value)" value="IDR" style="display:inline;width:18%" class="form-control" >
-                                                    
+                                                    <select name="DocCurrency" style="display:inline;width:18%" class="form-control" >
+                                                        <option value="IDR">IDR</option>
+                                                        @foreach(matauang() as $mata)
+                                                            <option value="{{$mata['name']}}"  @if($data['DocCurrency']==$mata['name']) selected @endif>{{$mata['name']}}</option>
+                                                        @endforeach
+                                                    </select>
                                                     <input type="text" name="Amount" onkeyup="cek_amountnilai(this.value)" value="{{$data['AmountInvoice']}}" onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:43%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="hidden" name="AmountInvoice" value="{{$data['AmountInvoice']}}" id="Amount" onkeypress="return hanyaAngka(event)" style="display:inline;width:40%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="text"  disabled  style="display:inline;width:36%" id="Amountnilai" class="form-control" value="{{uang($data['AmountInvoice'])}}" placeholder="Ketik disini" />

@@ -29,7 +29,7 @@
                 </div>
                 <div class="panel-body" >
                     
-                    <form method="post"  onkeypress="return event.keyCode != 13"  class="fomrnya" enctype="multipart/form-data" id="my_data">
+                    <form method="post"  class="fomrnya" enctype="multipart/form-data" id="my_data">
                         @csrf
                             @if($kategori=='faktur')
                                         <div class="col-md-6">
@@ -66,8 +66,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Faktur Pajak (PPN 10%)	</label><br>
-                                                    <input type="text" readonly name="DocCurrency" onkeyup="cari_matauang(this.value)" value="IDR" style="display:inline;width:20%" class="form-control" >
-                                                    
+                                                    <select name="DocCurrency" onchange="cari_matauang(this.value)" style="display:inline;width:20%" class="form-control" >
+                                                        <option value="IDR">IDR</option>
+                                                        @foreach(matauang() as $mata)
+                                                            <option value="{{$mata['name']}}">{{$mata['name']}}</option>
+                                                        @endforeach
+                                                    </select>
                                                     <input type="text" name="AmountInvoice" onkeypress="return hanyaAngka(event)" onkeyup="cek_amountinvoicenilai(this.value)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
@@ -102,7 +106,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
-                                                    <input type="text" id="matauanginvoice" disabled value="IDR" style="display:inline;width:15%" class="form-control" >
+                                                    <input type="text" id="matauanginvoice" value="IDR" disabled style="display:inline;width:15%" class="form-control" >
                                                     <input type="text" name="Amount"  onkeypress="return hanyaAngka(event)" onkeyup="cek_amountnilai(this.value)" style="display:inline;width:43%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="text"  disabled  style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
@@ -197,7 +201,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
-                                                    <input type="text" readonly name="DocCurrency" value="IDR" style="display:inline;width:20%" class="form-control" >
+                                                    <select name="DocCurrency" style="display:inline;width:20%" class="form-control" >
+                                                        <option value="IDR">IDR</option>
+                                                        @foreach(matauang() as $mata)
+                                                            <option value="{{$mata['name']}}">{{$mata['name']}}</option>
+                                                        @endforeach
+                                                    </select>
                                                     <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="hidden" name="AmountInvoice" id="AmountInvoice"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" />
@@ -237,7 +246,6 @@
                                             </fieldset>
                                         </div>
                             @endif
-                            
                     </form>
                     <div class="col-md-12">
                         <div id="tampilkantagihan">
