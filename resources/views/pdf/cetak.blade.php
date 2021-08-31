@@ -126,21 +126,26 @@
                 </tr>
                 <tr>
                     <td class="ttd">7</td>
-                    <td class="ttd">No. Kwitansi & No.PO/Kontrak</td>
-                    <td class="ttd">{{$data['HeaderText']}} - {{$data['PurchaseOrder']}}</td>
+                    <td class="ttd">No. Kwitansi</td>
+                    <td class="ttd">{{$data['HeaderText']}}</td>
                 </tr>
                 <tr>
                     <td class="ttd">8</td>
+                    <td class="ttd">No.PO/Kontrak</td>
+                    <td class="ttd">{{$data['PurchaseOrder']}}</td>
+                </tr>
+                <tr>
+                    <td class="ttd">9</td>
                     <td class="ttd">Email / Telp / Fax Vendor</td>
                     <td class="ttd">{{$data['vendor']['email']}} / {{$data['no_tlp']}}</td>
                 </tr>
                 <tr>
-                    <td class="ttd">9</td>
+                    <td class="ttd">10</td>
                     <td class="ttd">No. Rekening</td>
                     <td class="ttd">{{$data['PartBank']}}</td>
                 </tr>
                 <tr>
-                    <td class="ttd">10</td>
+                    <td class="ttd">11</td>
                     <td class="ttd">Nama Bank</td>
                     <td class="ttd">{{$data['nama_bank']}}</td>
                 </tr>
@@ -260,14 +265,21 @@
                     <tr>
                         <td align="left" colspan="3">
                             <font style="color:#000;font-size:12px;display:block;font-style:italic">
-                                1.Dokumen ini hanya berlaku sebagai bukti penyerahan tagihan yang sah apabila telah diotorisasi oleh PT. Krakatau Steel (Persero) Tbk.
+                                1.Dokumen ini hanya berlaku sebagai bukti penyerahan tagihan yang sah apabila telah diotorisasi oleh PT Krakatau Steel (Persero) Tbk..
                             </font>
                         </td>
                     </tr>
                     <tr>
                         <td align="left" colspan="3">
                             <font style="color:#000;font-size:12px;display:block;font-style:italic">
-                                2.PT. Krakatau Steel (Persero) Tbk tidak bertanggung jawab
+                                2.PT Krakatau Steel (Persero) Tbk tidak bertanggung jawab atas penyalahgunaan dan pemanfaatan dokumen ini kepada pihak lain.
+                            </font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" colspan="3">
+                            <font style="color:#000;font-size:12px;display:block;font-style:italic">
+                                3.Dokumen ini dokumen elektronik, tidak perlu tanda tangan.
                             </font>
                         </td>
                     </tr>
