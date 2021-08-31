@@ -16,18 +16,23 @@ class WsdlController extends Controller
 
     public function parsing_txt(){
         error_reporting(0);
-        $contents = file_get_contents('SAPtoWEB/test.txt');
+        $contents = file_get_contents('SAPtoWEB/TESTING VENDOR MASTER.txt');
         $rows = explode("\n", trim($contents));
-        foreach($rows as $x=>$row) {
-            if($x==0){
+        // dd($rows);
+        $delete=Bank::delete();
+        if($delete){
+            foreach($rows as $x=>$row) {
+                if($x==0){
 
-            }else{
-                $results= explode('|', trim($row));
-                echo $results[0].'-'.$results[1].'-'.$results[2].'-'.$results[3].'<br>';
-                
+                }else{
+                    $results= explode('|', trim($row));
+                    echo $results[0].'-'.$results[1].'-'.$results[2].'-'.$results[3].'<br>';
+                    
+                }
             }
+        }else{
+            echo'error';
         }
-        
         
     }
 
