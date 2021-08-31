@@ -324,12 +324,13 @@ class BttdController extends Controller
             }else{
                 if($cekstruk>0){
                     $image = $request->file('file');
+                    $size = $image->getSize();
                     $imageFileName =$request->Reference.'.'. $image->getClientOriginalExtension();
                     $filePath =$imageFileName;
-                    $file = \Storage::disk('google');
+                    $file = \Storage::disk('public_uploads');
                     
                     
-                    if($image->getClientOriginalExtension()=='pdf'){
+                    if($image->getClientOriginalExtension()=='pdf' && $size<'554881'){
                         if($file->put($filePath, file_get_contents($image))){
                             $data           = New Bttd;
                             $data->LIFNR   = Auth::user()['username']; 
@@ -348,7 +349,7 @@ class BttdController extends Controller
                             $data->email   = email_vendor();
                             $data->lokasi   = 7;
                             $data->sts   = 1;
-                            $data->linknya   = linkdrive($imageFileName);
+                            $data->linknya   = $imageFileName;
                             $data->file   = $imageFileName;
                             
                             $data->save();
@@ -359,7 +360,7 @@ class BttdController extends Controller
 
                         }
                     }else{
-                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
+                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf | Ukuran file Maximal 500kb</p>';
                     }
                 }else{
                     echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Isi nilai Struk</p>';
@@ -425,10 +426,11 @@ class BttdController extends Controller
                     $image = $request->file('file');
                     $imageFileName =$request->Reference.'.'. $image->getClientOriginalExtension();
                     $filePath =$imageFileName;
-                    $file = \Storage::disk('google');
+                    $file = \Storage::disk('public_uploads');
                     
+                    $size = $image->getSize();
+                    if($image->getClientOriginalExtension()=='pdf' && $size<'554881'){
                     
-                    if($image->getClientOriginalExtension()=='pdf'){
                         // echo hapuslinkdrive($imageFileName);
                         if(hapuslinkdrive($imageFileName)){
                             if($file->put($filePath, file_get_contents($image))){
@@ -447,7 +449,7 @@ class BttdController extends Controller
                                 $data->tagihan_id   = $request->tagihan_id;
                                 $data->no_tlp   = $request->email;
                                 $data->email   = email_vendor();
-                                $data->linknya   = linkdrive($imageFileName);
+                                $data->linknya   = $imageFileName;
                                 $data->file   = $imageFileName;
                                 $data->sts   = 1;
                                 $data->save();
@@ -461,7 +463,7 @@ class BttdController extends Controller
                             echo'Gagal Hapus';
                         }
                     }else{
-                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf</p>';
+                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf | Ukuran file Maximal 500kb</p>';
                     }
             }    
             
@@ -569,6 +571,7 @@ class BttdController extends Controller
                         <option value="0"'; if(datastruk($request->Reference)['tarif']==0){echo'selected';} echo'>0%</option>
                         <option value="1.5"'; if(datastruk($request->Reference)['tarif']=='1.5'){echo'selected';} echo'>1.5%</option>
                         <option value="2"'; if(datastruk($request->Reference)['tarif']==2){echo'selected';} echo'>2%</option>
+                        <option value="3"'; if(datastruk($request->Reference)['tarif']==3){echo'selected';} echo'>3%</option>
                         <option value="4"'; if(datastruk($request->Reference)['tarif']==4){echo'selected';} echo'>4%</option>
                         <option value="6"'; if(datastruk($request->Reference)['tarif']==6){echo'selected';} echo'>6%</option>
                     </select>';

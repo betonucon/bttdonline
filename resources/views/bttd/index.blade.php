@@ -71,7 +71,7 @@
                                     <td class="ttd">{{uang($o['Amount'])}}</td>
                                     <td class="ttd"><b>Dibuat :</b> {{tgl($o['InvoiceDate'])}}<br><b>Diterima : </b>{{tgl($o['diterima'])}}</td>
                                     <td class="ttd" style="background:{{$o['rolenya']['warna']}} !important;text-align:center">
-                                       <b><i>{{$o['rolenya']['name']}}</i></b>
+                                       <b><i>@if($o['lokasi']==7) Vendor @else DITERIMA @endif</i></b>
                                     </td>
                                     <td class="ttd">
                                         <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>

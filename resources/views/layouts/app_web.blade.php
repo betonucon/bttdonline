@@ -354,7 +354,7 @@
 			$('#modal-poling').modal('show');
 		}
 		function lihatfilegd(file){
-			var file='<iframe src="'+file+'" height="550" width="100%"></iframe>';
+			var file='<iframe src="_file_tagihan/'+file+'" height="550" width="100%"></iframe>';
 			$('#modal-lihat-file').modal('show');
 			$('#lihat-file').html(file);
 		}

@@ -47,7 +47,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app'),
         ],
-
+        'public_uploads' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/_file_tagihan',
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),

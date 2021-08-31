@@ -206,7 +206,7 @@ function materai($nilai){
    if($nilai>9000000){
       $data=10000;
    }else{
-      $data=5000;
+      $data=6000;
    }
    return $data;
 }

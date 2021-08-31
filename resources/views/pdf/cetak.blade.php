@@ -200,8 +200,8 @@
                     <td class="ttdp" >:</td>
                 </tr>
             </table>
-            <hr>
-            <table width="100%" border="0">
+            
+            <!-- <table width="100%" border="0">
                 <tr>
                     <td colspan="2">
                         <font style="color:#000;font-size:12px;display:block;font-style:italic">Catatan :</font>
@@ -233,46 +233,46 @@
                         </font>
                     </td>
                 </tr>
-            </table>
-            <hr>
+            </table> -->
+            
             <div class="footer">
-            <table width="100%" border="0">
-                <tr>
-                    <td width="30%">
-                        <font style="color:#000;font-size:12px;display:block">
-                            Diserahkan oleh <br><br><br><br><br>
-                            Nama :.................................... <br>
-                            <hr style="border: dotted 2px #000">
-                            
-                        </font>
-                    </td>
-                    <td width="40%">
-                    </td>
-                    <td align="center">
-                        <font style="color:#000;font-size:12px;display:block">
-                            Diterima oleh <br><br><br><br><br>
-                            Nama :.................................... <br>
-                            <hr style="border: dotted 2px #000">
-                            
-                        </font>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="left" colspan="3">
-                        <font style="color:#000;font-size:12px;display:block;font-style:italic">
-                            1.Dokumen ini hanya berlaku sebagai bukti penyerahan tagihan yang sah apabila telah diotorisasi oleh PT. Krakatau Steel (Persero) Tbk.
-                        </font>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="left" colspan="3">
-                        <font style="color:#000;font-size:12px;display:block;font-style:italic">
-                            2.PT. Krakatau Steel (Persero) Tbk tidak bertanggung jawab
-                        </font>
-                    </td>
-                </tr>
-            </table>
-        </div>
+                <table width="100%" border="0">
+                    <!-- <tr>
+                        <td width="30%">
+                            <font style="color:#000;font-size:12px;display:block">
+                                Diserahkan oleh <br><br><br><br><br>
+                                Nama :.................................... <br>
+                                <hr style="border: dotted 2px #000">
+                                
+                            </font>
+                        </td>
+                        <td width="40%">
+                        </td>
+                        <td align="center">
+                            <font style="color:#000;font-size:12px;display:block">
+                                Diterima oleh <br><br><br><br><br>
+                                Nama :.................................... <br>
+                                <hr style="border: dotted 2px #000">
+                                
+                            </font>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <td align="left" colspan="3">
+                            <font style="color:#000;font-size:12px;display:block;font-style:italic">
+                                1.Dokumen ini hanya berlaku sebagai bukti penyerahan tagihan yang sah apabila telah diotorisasi oleh PT. Krakatau Steel (Persero) Tbk.
+                            </font>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="left" colspan="3">
+                            <font style="color:#000;font-size:12px;display:block;font-style:italic">
+                                2.PT. Krakatau Steel (Persero) Tbk tidak bertanggung jawab
+                            </font>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         
         
