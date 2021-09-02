@@ -8,6 +8,7 @@ use App\Vendor;
 use App\Traking;
 use App\Struk;
 use App\Bttd;
+use App\Bank;
 use App\Tagihan;
 use PDF;
 use App\Detailtagihan;
@@ -111,6 +112,7 @@ class BttdController extends Controller
     public function nilai(request $request){
         echo number_format($request->a,0);
     }
+    
     public function index_officer(request $request){
         if(Auth::user()['role_id']==3){
             $menu='Daftar BTTD';
@@ -122,6 +124,13 @@ class BttdController extends Controller
         }
         
         
+       
+    }
+
+    public function cari_nama_bank(request $request){
+        
+        $data=Bank::where('norek',$request->norek)->first();
+        echo $data['nmbank'];   
        
     }
     public function index_officer_terima(request $request){

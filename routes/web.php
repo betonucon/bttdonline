@@ -59,6 +59,7 @@ Route::get('/register', 'Auth\LoginController@login');
 
 Route::get('/wsdlppn', 'WsdlController@ppn');
 Route::get('/parsing_txt', 'WsdlController@parsing_txt');
+Route::get('/parsing_txt_ZFI004N', 'WsdlController@parsing_txt_ZFI004N');
 
 
 
@@ -66,6 +67,7 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
     Route::get('/waktu', 'HomeController@waktu');
+    Route::get('/cari_nama_bank', 'BttdController@cari_nama_bank');
 });
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/poling', 'VendorController@poling');

@@ -79,12 +79,12 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Rekening</label><br>
-                                                    <select name="PartBank" style="display:inline;width:30%" class="form-control" >
+                                                    <select name="PartBank" onchange="cari_nama_bank(this.value)" style="display:inline;width:40%" class="form-control" >
                                                         @foreach(rekening_vendor() as $rekven)
-                                                            <option value="{{$rekven['norek']}}">{{$rekven['norek']}}</option>
+                                                            <option value="{{$rekven['norek']}}">[{{$rekven['matauang']}}] {{$rekven['norek']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="nama_bank"  style="display:inline;width:68%" class="form-control" placeholder="Nama BANK" />
+                                                    <input type="text" name="nama_bank"  id="nama_bank" style="display:inline;width:58%" class="form-control" placeholder="Nama BANK" />
                                                     <small class="f-s-12 text-grey-darker">Nama Bank sesuai nomor rekening</small>
                                                 </div>
                                                 
@@ -190,12 +190,12 @@
                                             <fieldset>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Rekening</label><br>
-                                                    <select name="PartBank" style="display:inline;width:30%" class="form-control" >
+                                                    <select name="PartBank" onchange="cari_nama_bank(this.value)" style="display:inline;width:40%" class="form-control" >
                                                         @foreach(rekening_vendor() as $rekven)
-                                                            <option value="{{$rekven['norek']}}">{{$rekven['norek']}}</option>
+                                                            <option value="{{$rekven['norek']}}">[{{$rekven['matauang']}}] {{$rekven['norek']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="nama_bank"  style="display:inline;width:68%" class="form-control" placeholder="Nama BANK" />
+                                                    <input type="text" name="nama_bank" id="nama_bank" style="display:inline;width:58%" class="form-control" placeholder="Nama BANK" />
                                                     <small class="f-s-12 text-grey-darker">Nama Bank sesuai nomor rekening</small>
                                                     
                                                 </div>
@@ -339,6 +339,17 @@
             data: "a="+a,
             success: function(msg){
                 $('#AmountInvoicenilai').val(msg);
+                
+            }
+        }); 
+    }
+    function cari_nama_bank(a){
+        $.ajax({
+            type: 'GET',
+            url: "{{url('cari_nama_bank')}}",
+            data: "norek="+a,
+            success: function(msg){
+                $('#nama_bank').val(msg);
                 
             }
         }); 
