@@ -176,6 +176,41 @@ function dokumen($bulan,$tahun){
    $data=App\Bttd::whereMonth('diterima',$bulan)->whereYear('diterima',$tahun)->count('Amount');
    return $data;
 }
+function chat_vendor($id){
+   $data=App\Chat::where('from',$id)->orWhere('to',$id)->get();
+   return $data;
+}
+function daftar_chat(){
+   $data=App\Chat::select('from')->where('from','!=','admin')->groupBy('from')->get();
+   return $data;
+}
+function cek_user($id){
+   if($id=='admin'){
+      $nama='Admin';
+   }else{
+      $data=App\Vendor::where('LIFNR',$id)->first();
+      $nama='<b>['.$id.']  '.$data['name'].'</b>';
+   }
+   
+   return $nama;
+}
+function notif_chat_vendor($from){
+   $data=App\Chat::where('from',$from)->orWhere('to',$from)->orderBy('waktu','Desc')->firstOrfail();
+   return $data;
+}
+function notif_chat_baru(){
+   if(Auth::user()['role_id']==7){
+      $data=App\Chat::where('to',Auth::user()['username'])->where('from','admin')->where('sts',0)->count();
+   }else{
+      $data=App\Chat::where('to','admin')->where('sts',0)->count();
+   }
+   
+   return $data;
+}
+function jumlah_chat_vendor(){
+   $data=App\Chat::where('from',Auth::user()['username'])->orWhere('to',Auth::user()['username'])->count();
+   return $data;
+}
 function emailnya(){
    $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
    return $data['email'];

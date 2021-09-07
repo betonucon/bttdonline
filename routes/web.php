@@ -64,6 +64,10 @@ Route::get('/parsing_txt_ZFI004N', 'WsdlController@parsing_txt_ZFI004N');
 
 
 Route::group(['middleware'    => 'auth'],function(){
+    Route::get('/chat/lihat', 'ChatController@lihat');
+    Route::get('/chat/kirim_chat', 'ChatController@kirim_chat');
+});
+Route::group(['middleware'    => 'auth'],function(){
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
     Route::get('/waktu', 'HomeController@waktu');

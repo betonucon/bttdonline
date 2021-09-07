@@ -107,6 +107,12 @@
 			max-width: 90% !important;
 			margin-top:0px;
 		}
+		#isi-chat{
+			width:100%;
+			height:400px;
+			overflow-y:scroll;
+			margin-bottom:1%;
+		}
 		.fomrnya{
 			display:flex;
 		}
@@ -156,15 +162,58 @@
 			
 			<!-- begin header-nav -->
 			<ul class="navbar-nav navbar-right">
-				<li>
-					<form class="navbar-form">
-						<div class="form-group">
-							
-							
-						</div>
-					</form>
-				</li>
+				<!-- <li>
+				<a href="#" data-bs-toggle="dropdown" class="navbar-link dropdown-toggle icon show" aria-expanded="true">
+<i class="fa fa-bell"></i>
+<span class="badge">5</span>
+</a>
+				</li> -->
 				
+				
+				<li class="dropdown navbar-user">
+					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
+						<i class="fa fa-comment"></i><b>{{notif_chat_baru()}}</b>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						
+
+						@if(Auth::user()['role_id']==7)
+							@if(jumlah_chat_vendor()>0)
+								<a href="javascript:;" onclick="lihat_chat()" class="dropdown-item media">
+									<div class="media-body">
+										<h6 class="media-heading">Admin</h6>
+										@if(notif_chat_baru()>0)
+											<p style="margin-bottom: 0px;font-weight:bold">{{substr(notif_chat_vendor(Auth::user()['username'])->chat,0,40)}}..</p>
+											<div class="text-muted fs-10px"><b>{{notif_chat_vendor(Auth::user()['username'])->waktu}}</b></div>
+										@else
+											<p style="margin-bottom: 0px;">{{substr(notif_chat_vendor(Auth::user()['username'])->chat,0,40)}}..</p>
+											<div class="text-muted fs-10px">{{notif_chat_vendor(Auth::user()['username'])->waktu}}</div>
+										@endif
+										
+									</div>
+								</a>
+							@else
+								<div class="dropdown-footer text-center">
+									<a href="javascript:;" onclick="lihat_chat()" class="text-decoration-none"><i class="fa fa-comment"></i> Buat Chat</a>
+								</div>
+
+							@endif
+						@else
+							@foreach(daftar_chat() as $daftar_chat)
+								<a href="javascript:;" onclick="lihat_chat_admin(`{{$daftar_chat['from']}}`)" class="dropdown-item media">
+									<div class="media-body">
+										<h6 class="media-heading">{!!cek_user($daftar_chat['from'])!!}</h6>
+										<p style="margin-bottom: 0px;">{{substr(notif_chat_vendor($daftar_chat['from'])->chat,0,40)}}..</p>
+									</div>
+								</a>
+							@endforeach
+							<div class="dropdown-footer text-center">
+								<a href="javascript:;" class="text-decoration-none">View more</a>
+							</div>
+						@endif
+						
+					</div>
+				</li>
 				<li class="dropdown navbar-user">
 					<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
 						<img src="{{url('img/akun.png')}}" alt="" /> 
@@ -205,7 +254,7 @@
 								<img src="{{url('img/akun.png')}}" alt="" />
 							</div>
 							<div class="info">
-								<b class="caret pull-right"></b>
+								<!-- <b class="fa fa-comment pull-right">Live Chat</b>  -->
 									{{rolepengguna()}}
 								<small>{{Auth::user()['username']}}<br>{{Auth::user()['name']}}</small>
 							</div>
@@ -349,9 +398,76 @@
 			TableManageDefault.init();
 			FormPlugins.init();
 			TableManageResponsive.init();
+			
 		});
+		
 		function poling(){
 			$('#modal-poling').modal('show');
+		}
+		function kirim_chat(){
+			var pesan=$('#pesan').val();
+			var to=$('#to').val();
+			
+			$.ajax({
+				type: 'GET',
+				url: "{{url('chat/kirim_chat')}}",
+				data: "pesan="+pesan+"&to="+to,
+				success: function(msg){
+					
+					var tempheight = $('#isi-chat').height();
+					$('#isi-chat').animate({
+						scrollTop: 99999999
+						//scrollTop: $(".scroll-bottom").offset().top
+					}, 'slow');
+					$.ajax({
+						type: 'GET',
+						url: "{{url('chat/lihat')}}",
+						data: "from="+msg,
+						success: function(data){
+							$('#isi-chat').html(data);
+							$('#pesan').val('');
+							
+							
+						}
+					}); 
+				}
+			}); 
+		}
+		function lihat_chat(){
+			var tempheight = $('#isi-chat').height();
+			$('#isi-chat').animate({
+				scrollTop: 99999999
+				//scrollTop: $(".scroll-bottom").offset().top
+			}, 'slow');
+			$.ajax({
+				type: 'GET',
+				url: "{{url('chat/lihat')}}",
+				data: "from={{Auth::user()->username}}",
+				success: function(msg){
+					$('#isi-chat').html(msg);
+					
+					
+					
+				}
+			}); 
+			$('#modal-chat').modal('show');
+		}
+		function lihat_chat_admin(a){
+			var tempheight = $('#isi-chat').height();
+			$('#isi-chat').animate({
+				scrollTop: 99999999
+				//scrollTop: $(".scroll-bottom").offset().top
+			}, 'slow');
+			$.ajax({
+				type: 'GET',
+				url: "{{url('chat/lihat')}}",
+				data: "from="+a,
+				success: function(msg){
+					$('#to').val(a);
+					$('#isi-chat').html(msg);
+				}
+			}); 
+			$('#modal-chat').modal('show');
 		}
 		function lihatfilegd(file){
 			var file='<iframe src="_file_tagihan/'+file+'" height="550" width="100%"></iframe>';

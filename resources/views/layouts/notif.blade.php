@@ -15,6 +15,31 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="modal-chat">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Live Chat</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="isi-chat"></div>
+                
+            </div>
+            <div class="modal-footer">
+                <div class="form-group" style="width: 100%;">
+                    <div class="input-group">
+                        <input type="text" id="pesan" class="form-control" value="" placeholder="Ketik pesan.....">
+                        <span class="input-group-append">
+                            <input type="hidden" id="to">
+                            <span class="btn btn-primary" onclick="kirim_chat()">Kirim</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="modal-password">
     <div class="modal-dialog">
         <div class="modal-content">
