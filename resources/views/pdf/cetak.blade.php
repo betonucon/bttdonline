@@ -70,7 +70,10 @@
                         <font style="color:#000;font-size:15px;display:block">TELP : (0254)372203, FAX : 372342</font>
                         <font style="color:#000;font-size:15px;display:block">JL. AUSTRALIA II NO 1 KAWASAN INDUSTRI KIEC-CILEGON</font>
                     </td>
-                    <td width="14%">{!! barcoderider($data['HeaderText'],3,3)!!}</td>
+                    <?php
+                        $qrcd='https://app.krakatausteel.com/bttdonline/public/bttd/cari?INV='.$data['Reference'];
+                    ?>
+                    <td width="14%">{!! barcoderider($qrcd,3,3)!!}</td>
                 </tr>
             </table>
         </div>
