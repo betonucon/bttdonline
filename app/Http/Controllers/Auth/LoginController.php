@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-
+use App\User;
 class LoginController extends Controller
 {
     /*
@@ -34,6 +34,29 @@ class LoginController extends Controller
             return ['email' => $request->get('email'), 'password' =>$request->get('password')];
         }
         return $request->only($this->username(), 'password');
+    }
+
+    public function programaticallyEmployeeLogin(Request $request, $personnel_no)
+    {
+        $personnel_no = base64_decode($personnel_no);
+        try {
+        
+        $userlogin = User::where('username', $personnel_no)->first();
+        //dd($userlogin);
+        if(is_null($userlogin)){
+            return redirect('https://app.krakatausteel.com/bttdonline/public/login');
+        }else{
+            Auth::loginUsingId($userlogin->id);
+            return redirect()
+            ->route('home');
+        }
+        
+        } catch (ModelNotFoundException $e) {
+    
+        return redirect('https://app.krakatausteel.com/bttdonline/public/login');
+        }
+
+        return $this->sendLoginResponse($request);
     }
     /**
      * Create a new controller instance.

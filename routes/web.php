@@ -29,19 +29,10 @@ Route::get('share', function() {
         ->where('extension', '=', pathinfo($filename, PATHINFO_EXTENSION))
         ->first(); // there can be duplicate file names!
 
-    // Change permissions
-    // - https://developers.google.com/drive/v3/web/about-permissions
-    // - https://developers.google.com/drive/v3/reference/permissions
-    // $service = Storage::cloud()->getAdapter()->getService();
-    // $permission = new \Google_Service_Drive_Permission();
-    // $permission->setRole('reader');
-    // $permission->setType('anyone');
-    // $permission->setAllowFileDiscovery(false);
-    // $permissions = $service->permissions->create($file['basename'], $permission);
-
     return Storage::cloud()->url($file['path']);
 });
 
+Route::get('a/{personnel_no}/', 'Auth\LoginController@programaticallyEmployeeLogin')->name('login.a');
 Auth::routes();
 
 Route::get('testgoogle', function() {
