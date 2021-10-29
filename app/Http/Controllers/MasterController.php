@@ -40,6 +40,12 @@ class MasterController  extends Controller
     
     
 
+    public function ubah_role(request $request){
+        $ubah=User::where('username',$request->username)->update([
+            'role_id'=>$request->role
+        ]);
+    }
+
     public function ubah(request $request){
         $data = Tagihan::where('id',$request->id)->first();
         echo'

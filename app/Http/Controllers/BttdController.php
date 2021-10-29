@@ -119,7 +119,8 @@ class BttdController extends Controller
             $menu_detail=name();
             $data=Bttd::with(['vendor','rolenya'])->where('sts_officer',0)->where('lokasi',3)->orderBy('lokasi','Desc')->paginate(20);
             return view('bttd.index_officer',compact('menu','menu_detail','data'));
-        }else{
+        }
+        else{
             return view('error');
         }
         
@@ -139,7 +140,16 @@ class BttdController extends Controller
             $menu_detail=name();
             $data=Bttd::with(['vendor','rolenya'])->where('sts_officer',1)->where('lokasi',3)->orderBy('sts_sap','Asc')->paginate(20);
             return view('bttd.index_officer_terima',compact('menu','menu_detail','data'));
-        }else{
+        }
+        elseif(Auth::user()['role_id']==4 || Auth::user()['role_id']==5 || Auth::user()['role_id']==6){
+            $menu='Daftar BTTD';
+            $menu_detail=name();
+            $data=Bttd::with(['vendor','rolenya'])->orderBy('lokasi','Desc')->paginate(20);
+            return view('bttd.index_all',compact('menu','menu_detail','data'));
+        }
+        
+        
+        else{
             return view('error');
         }
         
@@ -603,6 +613,7 @@ class BttdController extends Controller
                             <option value="0">0%</option>
                             <option value="1.5">1.5%</option>
                             <option value="2">2%</option>
+                            <option value="2">3%</option>
                             <option value="4">4%</option>
                             <option value="6">6%</option>
                         </select>';

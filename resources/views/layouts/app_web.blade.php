@@ -221,12 +221,14 @@
 					</a>
 					<div class="dropdown-menu dropdown-menu-right">
 					
-						<a href="javascript:;" class="dropdown-item">Setting</a>
+						
 						<div class="dropdown-divider"></div>
 						@if(Auth::user()['role_id']==7)
 						<a href="#" onclick="poling()" class="dropdown-item">Log Out</a>
 						
 						@else
+						<a href="javascript:;" onclick="ubah_role(`{{Auth::user()->username}}`,2)" class="dropdown-item">Loket</a>
+						<a href="javascript:;" onclick="ubah_role(`{{Auth::user()->username}}`,3)" class="dropdown-item">Officer</a>
 						<a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="dropdown-item">Log Out</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
 							@csrf
@@ -404,6 +406,22 @@
 		function poling(){
 			$('#modal-poling').modal('show');
 		}
+
+		function ubah_role(username,role){
+			$.ajax({
+				type: 'GET',
+				url: "{{url('ubah_role')}}",
+				data: "username="+username+"&role="+role,
+				beforeSend: function() {
+                    document.getElementById("loadnya").style.width = "100%";
+                },
+				success: function(msg){
+					location.assign("{{url('home')}}");
+					
+				}
+			}); 
+		}
+
 		function kirim_chat(){
 			var pesan=$('#pesan').val();
 			var to=$('#to').val();

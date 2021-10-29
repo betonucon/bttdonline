@@ -61,6 +61,7 @@ Route::group(['middleware'    => 'auth'],function(){
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/', 'HomeController@index');
     Route::get('/home', 'HomeController@index');
+    Route::get('/ubah_role', 'MasterController@ubah_role');
     Route::get('/waktu', 'HomeController@waktu');
     Route::get('/cari_nama_bank', 'BttdController@cari_nama_bank');
 });
