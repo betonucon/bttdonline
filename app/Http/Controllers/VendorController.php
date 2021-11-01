@@ -32,7 +32,7 @@ class VendorController extends Controller
         }else{
             $menu='Rekening Vendor';
             $menu_detail=name();
-            $data=Bank::with(['vendor'])->where('bank_key','!=','DUMMY')->orderBy('LIFNR','Asc')->paginate(20);
+            $data=Bank::where('matauang','!=','')->orderBy('LIFNR','Asc')->paginate(20);
             return view('vendor.bank',compact('menu','menu_detail','data'));
         }
         
