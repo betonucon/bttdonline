@@ -32,8 +32,12 @@
                         <!-- <button class="btn btn-xs btn-primary" onclick="tambah()"><i class="fa fa-plus"></i> Tambah</button>
                         <button class="btn btn-xs btn-success"onclick="cetak()"><i class="fa fa-print"></i> Cetak</button>
                         <button class="btn btn-xs btn-danger" onclick="hapus()"><i class="fa fa-eraser"></i> Hapus</button> -->
+                        <div class="input-group m-b-10">
+                            <input type="text" class="form-control" id="textname">
+                            <div class="input-group-append"><span class="input-group-text" onclick="cari_data()"><i class="fa fa-search"></i> Cari</span></div>
+                        </div>
                     </div>
-                    <table id="example" class="table table-striped table-bordered">
+                    <table id="myTable" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th width="3%">NO</th>
@@ -173,14 +177,20 @@
 
 @push('ajax')
 <script>
-      $(document).ready(function() {
-         
-      });
+    $('#myTable').DataTable( {
+			responsive: true,
+			paging: false,
+			info: false,
+			ordering:false,
+			searching:false,
+			lengthChange: false,
+	});
 
       function tambah(){
           $('#modal-tambah').modal('show');
       }
-      function ubah(a){
+
+    function ubah(a){
         $.ajax({
             type: 'GET',
             url: "{{url('vendor/ubah')}}",
@@ -192,6 +202,11 @@
             }
         }); 
         
+    }
+
+    function cari_data(){
+        var name=$('#textname').val();
+        location.assign("{{url('vendor')}}?name="+name);
     }
 
     function simpan_ubah(){

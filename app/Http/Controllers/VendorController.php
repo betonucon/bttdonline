@@ -18,7 +18,12 @@ class VendorController extends Controller
         }else{
             $menu='Daftar Vendor';
             $menu_detail=name();
-            $data=Vendor::orderBy('name','Asc')->paginate(20);
+            $cek=strlen($request->name);
+            if($cek>0){
+                $data=Vendor::where('name','LIKE','%'.$request->name.'%')->orWhere('LIFNR','LIKE','%'.$request->name.'%')->orderBy('name','Asc')->paginate(50);
+            }else{
+                $data=Vendor::orderBy('name','Asc')->paginate(20); 
+            }
             return view('vendor.index',compact('menu','menu_detail','data'));
         }
         
@@ -32,7 +37,13 @@ class VendorController extends Controller
         }else{
             $menu='Rekening Vendor';
             $menu_detail=name();
-            $data=Bank::where('matauang','!=','')->orderBy('LIFNR','Asc')->paginate(20);
+            $cek=strlen($request->name);
+            if($cek>0){
+                $data=Bank::where('LIFNR','LIKE','%'.$request->name.'%')->where('matauang','!=','')->orderBy('LIFNR','Asc')->paginate(20);
+            }else{
+                $data=Bank::where('matauang','!=','')->orderBy('LIFNR','Asc')->paginate(20);
+            }
+            
             return view('vendor.bank',compact('menu','menu_detail','data'));
         }
         
