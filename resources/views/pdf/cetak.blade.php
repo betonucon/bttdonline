@@ -63,7 +63,7 @@
         <div class="headernya">
             <table width="100%" border="0">
                 <tr>
-                    <td width="20%"><img src="{{url('img/logoks.png')}}" width="90%" height="70px"></td>
+                    <td width="20%"><img src="https://app.krakatausteel.com/bttdonline/public/img/logoks.png" width="90%" height="70px"></td>
                     <td>
                         <font style="font-weight:bold;color:blue;font-size:18px;display:block">PT. KRAKATAU STEEL (Persero) Tbk.</font>
                         <font style="font-weight:bold;color:#000;font-size:15px;display:block">DIVISI TAX & VERIFICATION</font>
