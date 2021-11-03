@@ -46,6 +46,7 @@
                                 <th>Nama</th>
                                 <th width="20%" >Email </th>
                                 <th width="20%" >NPWP </th>
+                                <th width="4%" >Reset</th>
                                 <th width="4%" ></th>
                             </tr>
                         </thead>
@@ -60,6 +61,9 @@
                                 <td class="ttd">{{$o['name']}}</td>
                                 <td class="ttd">{{$o['email']}}</td>
                                 <td class="ttd">{{$o['npwp']}}</td>
+                                <td class="ttd">
+                                    <span class="btn btn-xs btn-primary" onclick="reset_password(`{{$o['LIFNR']}}`)">Reset</span>
+                                </td>
                                 <td class="ttd">
                                     <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}})"><i class="fa fa-edit"></i></span>
                                 </td>
@@ -198,6 +202,18 @@
             success: function(msg){
                 $('#modal-ubah').modal('show');
                 $('#tampilkan_ubah').html(msg);
+                
+            }
+        }); 
+        
+    }
+    function reset_password(a){
+        $.ajax({
+            type: 'GET',
+            url: "{{url('vendor/reset_password')}}",
+            data: "username="+a,
+            success: function(msg){
+               location.reload();
                 
             }
         }); 

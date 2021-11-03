@@ -47,7 +47,7 @@
         <div class="header">
                 <table width="100%" border="0">
                     <tr>
-                        <td width="20%"><img src="{{url('img/logo.png')}}" style="width:100%;height:60px"></td>
+                        <td width="20%"><img src="{{public_path('img/logoks.png')}}" style="width:100%;height:60px"></td>
                         <td width="70%" style="text-align:center;text-transform:uppercase">
                             <h2>KUPON</h2>
                             <h4>PENGAMBILAN BUKTI POTONG PPH</h4>

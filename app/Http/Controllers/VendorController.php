@@ -206,6 +206,14 @@ class VendorController extends Controller
             
         }
     }
+    public function reset_password(request $request){
+        $data=User::where('username',$request->username)->where('role_id',7)->update([
+            'password'=>Hash::make($request->username),
+            'sts_password'=>null,
+        ]);
+        echo'ok';
+    }
+
     public function simpan_bank(request $request){
         if (trim($request->LIFNR) == '') {$error[] = '- Masukan Kode Vendor';}
         if (trim($request->bank_key) == '') {$error[] = '- Masukan Nama Bank';}

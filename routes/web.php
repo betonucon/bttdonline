@@ -68,6 +68,7 @@ Route::group(['middleware'    => 'auth'],function(){
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/poling', 'VendorController@poling');
     Route::get('/vendor', 'VendorController@index');
+    Route::get('/vendor/reset_password', 'VendorController@reset_password');
     Route::get('/vendor/ubah', 'VendorController@ubah');
     Route::get('/vendor/view_data', 'VendorController@view_data');
     Route::post('/vendor/hapus', 'VendorController@hapus');
