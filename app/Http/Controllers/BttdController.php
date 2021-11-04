@@ -20,7 +20,12 @@ class BttdController extends Controller
         if(Auth::user()['role_id']==7){
             $menu='Daftar BTTD';
             $menu_detail=name();
-            $data=Bttd::with(['vendor','rolenya'])->where('sts',1)->where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->paginate(20);
+            if($request->parameter==''){
+                $data=Bttd::where('sts',1)->where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->paginate(20);
+            }else{
+                $data=Bttd::where('sts',1)->where('LIFNR',Auth::user()['username'])->where($request->parameter,$request->kata)->orderBy('id','Desc')->paginate(500);
+            }
+            
             return view('bttd.index',compact('menu','menu_detail','data'));
         }else{
             return view('error');
@@ -75,10 +80,20 @@ class BttdController extends Controller
         $menu='Daftar BTTD dikembalikan';
         $menu_detail=name();
         if(Auth::user()['role_id']==7){
-            $data=Bttd::with(['vendor','rolenya'])->where('sts',2)->where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->paginate(20);
+            if($request->parameter==''){
+                $data=Bttd::where('sts',2)->where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->paginate(20);
+            }else{
+                $data=Bttd::where('sts',2)->where('LIFNR',Auth::user()['username'])->where($request->parameter,$request->kata)->orderBy('id','Desc')->paginate(500);
+            }
+            
         }
         else{
-            $data=Bttd::with(['vendor','rolenya'])->where('sts',2)->orderBy('id','Desc')->paginate(20);
+            
+            if($request->parameter==''){
+                $data=Bttd::where('sts',2)->orderBy('id','Desc')->paginate(20);
+            }else{
+                $data=Bttd::where('sts',2)->where($request->parameter,$request->kata)->orderBy('id','Desc')->paginate(500);
+            }
         }
         
         return view('bttd.index_dikembalikan',compact('menu','menu_detail','data'));
@@ -100,7 +115,12 @@ class BttdController extends Controller
         if(Auth::user()['role_id']==2){
             $menu='Daftar BTTD';
             $menu_detail=name();
-            $data=Bttd::with(['vendor','rolenya'])->where('sts',1)->where('lokasi',7)->orderBy('lokasi','Desc')->paginate(20);
+            if($request->parameter==''){
+                $data=Bttd::where('sts',1)->where('lokasi',7)->orderBy('id','Desc')->paginate(20);
+            }else{
+                $data=Bttd::where('sts',1)->where('lokasi',7)->where($request->parameter,$request->kata)->orderBy('id','Desc')->paginate(500);
+            }
+            
             return view('bttd.index_loket',compact('menu','menu_detail','data'));
         }else{
             return view('error');
@@ -117,7 +137,12 @@ class BttdController extends Controller
         if(Auth::user()['role_id']==3){
             $menu='Daftar BTTD';
             $menu_detail=name();
-            $data=Bttd::with(['vendor','rolenya'])->where('sts_officer',0)->where('lokasi',3)->orderBy('lokasi','Desc')->paginate(20);
+            if($request->parameter==''){
+                $data=Bttd::where('sts_officer',0)->where('lokasi',3)->orderBy('id','Desc')->paginate(20);
+            }else{
+                $data=Bttd::where('sts_officer',0)->where('lokasi',3)->where($request->parameter,$request->kata)->orderBy('id','Desc')->paginate(500);
+            }
+            
             return view('bttd.index_officer',compact('menu','menu_detail','data'));
         }
         else{
@@ -138,13 +163,23 @@ class BttdController extends Controller
         if(Auth::user()['role_id']==3){
             $menu='Daftar BTTD Officer';
             $menu_detail=name();
-            $data=Bttd::with(['vendor','rolenya'])->where('sts_officer',1)->where('lokasi',3)->orderBy('sts_sap','Asc')->paginate(20);
+            if($request->parameter==''){
+                $data=Bttd::where('sts_officer',1)->where('lokasi',3)->orderBy('sts_sap','Asc')->paginate(20);
+            }else{
+                $data=Bttd::where('sts_officer',1)->where('lokasi',3)->where($request->parameter,$request->kata)->orderBy('lokasi','Desc')->paginate(500);
+            }
+            
             return view('bttd.index_officer_terima',compact('menu','menu_detail','data'));
         }
         elseif(Auth::user()['role_id']==4 || Auth::user()['role_id']==5 || Auth::user()['role_id']==6){
             $menu='Daftar BTTD';
             $menu_detail=name();
-            $data=Bttd::with(['vendor','rolenya'])->orderBy('lokasi','Desc')->paginate(20);
+            
+            if($request->parameter==''){
+                $data=Bttd::orderBy('lokasi','Desc')->paginate(20);
+            }else{
+                $data=Bttd::where($request->parameter,$request->kata)->orderBy('lokasi','Desc')->paginate(500);
+            }
             return view('bttd.index_all',compact('menu','menu_detail','data'));
         }
         

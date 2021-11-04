@@ -38,9 +38,13 @@
                         - Klik ceklis pada dokumen yang akan diterima.<br>
                         - Klik Icon Terima.
                     </div>
+                    <div style="margin-bottom:10px;width:100%;display: flow-root;">
+                        <button class="btn btn-sm btn-primary" style="float:right;" onclick="filter_data()"><i class="fa fa-filter"></i> Cari</button>
+                        <button class="btn btn-sm btn-success" style="float:right;margin-right:1%" onclick="perbaharui()"><i class="fa fa-sync-alt"></i> Reload</button>
+                    </div>
                     <form method="post"  enctype="multipart/form-data" id="my_data_all">
                     @csrf
-                        <table id="example" class="table table-striped table-bordered">
+                        <table id="dataexample" class="table table-striped table-bordered">
                         
                             <thead>
                                 <tr>
@@ -93,6 +97,33 @@
                     <!-- #modal-dialog -->
                     
                     <!-- #modal-without-animation -->
+                    <div class="modal" id="modal-cari">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Cari</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Kategori</label>
+                                        <select id="parameter" class="form-control">
+                                            <option value="LIFNR">Kode Vendor</option>
+                                            <option value="Reference">Nomor Faktur</option>
+                                            <option value="HeaderText">Nomor Invoice</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Kata Kunci</label>
+                                        <input type="text" id="kata" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="javascript:;" onclick="cari_data()" class="btn btn-primary" >Terapkan</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="modal" id="modal-tampilkan">
                         <div class="modal-dialog" id="modalbesar">
                             <div class="modal-content">
@@ -126,11 +157,32 @@
 @push('ajax')
 <script>
     $(document).ready(function() {
-        
+       
+			$('#dataexample').dataTable( {
+				"paging":   false,
+				"responsive": true,
+				"searching": false,
+				"ordering": false,
+				"info":     false
+			} );
     });
 
-    function revisi(){
-        $('#modal-revisi').modal('show');
+    function perbaharui(){
+        location.assign("{{url('officer')}}");
+    }
+    function filter_data(){
+        $('#modal-cari').modal('show');
+    }
+    function cari_data(){
+        var parameter=$('#parameter').val();
+        var kata=$('#kata').val();
+        if(kata==''){
+            alert('Masukan kata kunci')
+        }else{
+            location.assign("{{url('officer')}}?kata="+kata+"&parameter="+parameter);
+        }
+            
+        
     }
 
     function tampilkan(a){
@@ -148,10 +200,7 @@
                     
     }
 
-    function ubah(a,b){
-        location.assign("{{url('bttd/ubah')}}?kategori="+b+"&id="+a);
-        
-    }
+    
 
     
     function simpan_terima(){
