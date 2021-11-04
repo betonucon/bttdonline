@@ -227,6 +227,9 @@
 						<a href="#" onclick="poling()" class="dropdown-item">Log Out</a>
 						
 						@else
+						@if(Auth::user()['username']=='12345678')
+						<a href="javascript:;" onclick="ubah_role(`{{Auth::user()->username}}`,1)" class="dropdown-item">Administrator</a>
+						@endif
 						<a href="javascript:;" onclick="ubah_role(`{{Auth::user()->username}}`,2)" class="dropdown-item">Loket</a>
 						<a href="javascript:;" onclick="ubah_role(`{{Auth::user()->username}}`,3)" class="dropdown-item">Officer</a>
 						<a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="dropdown-item">Log Out</a>
