@@ -299,7 +299,7 @@
         var form=document.getElementById('my_data_all');
         $.ajax({
                 type: 'POST',
-                url: "{{url('pengguna/hapus')}}",
+                url: "{{url('bttd/hapus')}}",
                 data: new FormData(form),
                 contentType: false,
                 cache: false,
