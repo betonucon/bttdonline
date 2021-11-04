@@ -110,12 +110,12 @@
                 <tr>
                     <td class="ttd">3</td>
                     <td class="ttd">Nilai Faktur Pajak (PPN 10%)</td>
-                    <td class="ttd">{{$data['Amount']}}</td>
+                    <td class="ttd">{{$data['AmountInvoice']}}</td>
                 </tr>
                 <tr>
                     <td class="ttd">4</td>
                     <td class="ttd">Nilai Kwitansi / Invoice (DPP + PPN)</td>
-                    <td class="ttd">{{$data['AmountInvoice']}}</td>
+                    <td class="ttd">{{$data['Amount']}}</td>
                 </tr>
                 <tr>
                     <td class="ttd">5</td>
