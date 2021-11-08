@@ -181,7 +181,39 @@ class VendorController extends Controller
         
 
     }
+
     public function simpan(request $request){
+        if (trim($request->username) == '') {$error[] = '- Masukan Kode Vendor';}
+        if (trim($request->name) == '') {$error[] = '- Masukan Nama Vendor';}
+        if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
+        else{
+            
+            $cek=User::where('username',$request->username)->count();
+            if($cek>0){
+                echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />- Kode Vendor / Email Sudah terdaftar</p>';
+            }else{
+                $data           = New Vendor;
+                $data->name   = $request->name;
+                $data->email   = $request->email;
+                $data->LIFNR   = $request->username;
+                $data->save();
+                if($data){
+                    $user           = New User;
+                    $user->email   = $request->email;
+                    $user->username   = $request->username;
+                    $user->password   = Hash::make($request->username);
+                    $user->name   = $request->name;
+                    $user->role_id   = 7;
+                    $user->save();
+                    echo'ok';
+                }
+            }
+                
+                 
+            
+        }
+    }
+    public function simpan_lama(request $request){
         if (trim($request->name) == '') {$error[] = '- Masukan Nama Vendor';}
         if (trim($request->email) == '') {$error[] = '- Masukan Email Vendor';}
         if (trim($request->npwp) == '') {$error[] = '- Masukan No NPWP';}

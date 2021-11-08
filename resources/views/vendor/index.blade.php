@@ -35,6 +35,7 @@
                         <div class="input-group m-b-10">
                             <input type="text" class="form-control" id="textname">
                             <div class="input-group-append"><span class="input-group-text" onclick="cari_data()"><i class="fa fa-search"></i> Cari</span></div>
+                            <div class="input-group-append"><span class="input-group-text" onclick="tambah()" style="background:blue;color:#fff"><i class="fa fa-plus"></i> Tambah</span></div>
                         </div>
                     </div>
                     <table id="myTable" class="table table-striped table-bordered">
@@ -78,45 +79,37 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Modal Dialog</h4>
+                                    <h4 class="modal-title">Tambah</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body">
                                 <form method="post"  style="display: flex;" enctype="multipart/form-data" id="my_data">
                                     @csrf
-                                    <div class="col-md-6">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">NIK </label>
+                                    <div class="col-xl-10 offset-xl-1">
+                                        <div class="form-group row m-b-10">
+                                            <label class="col-lg-3 text-lg-right col-form-label">Kode Vendor</label>
+                                            <div class="col-lg-9 col-xl-4">
                                                 <input type="text" name="username" class="form-control" placeholder="Ketik disini" />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Nama </label>
+                                            
+                                        </div>
+                                        <div class="form-group row m-b-10">
+                                            <label class="col-lg-3 text-lg-right col-form-label">Nama Vendor</label>
+                                            <div class="col-lg-9 col-xl-9">
                                                 <input type="text" name="name" class="form-control" placeholder="Ketik disini" />
                                             </div>
-                                           
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <fieldset>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email </label>
+                                            
+                                        </div>
+                                        <div class="form-group row m-b-10">
+                                            <label class="col-lg-3 text-lg-right col-form-label">Email</label>
+                                            <div class="col-lg-9 col-xl-7">
                                                 <input type="text" name="email" class="form-control" placeholder="Ketik disini" />
                                             </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Role Akses </label>
-                                                <select name="role" class="form-control" placeholder="Ketik disini">
-                                                    <option value="">Pilih Role Akses---</option>
-                                                    <option value="2">LOKET</option>
-                                                    <option value="3">OFFICER</option>
-                                                    <option value="4">SPV</option>
-                                                    <option value="5">SPT</option>
-                                                    <option value="6">MANAGER</option>
-                                                </select>
-                                            </div>
                                             
-                                        </fieldset>
-                                    </div>
+                                        </div>
+                                     </div>
+
+                                    
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -223,6 +216,34 @@
     function cari_data(){
         var name=$('#textname').val();
         location.assign("{{url('vendor')}}?name="+name);
+    }
+
+    function simpan(){
+        var form=document.getElementById('my_data');
+        $.ajax({
+                type: 'POST',
+                url: "{{url('vendor/simpan')}}",
+                data: new FormData(form),
+                contentType: false,
+                cache: false,
+                processData:false,
+                beforeSend: function() {
+                    document.getElementById("loadnya").style.width = "100%";
+                },
+                success: function(msg){
+                    
+                    if(msg=='ok'){
+                    location.reload();
+                    }else{
+                    document.getElementById("loadnya").style.width = "0px";
+                    $('#modal-notif').modal('show');
+                    $('#notif').html(msg);
+                    }
+                            
+                    
+                }
+        });
+    
     }
 
     function simpan_ubah(){
