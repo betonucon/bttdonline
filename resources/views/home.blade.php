@@ -21,7 +21,7 @@
                     {{total_dokumen()}}	
                 </div>
                 <div class="stats-link">
-                    <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+                    <a href="javascript:;">&nbsp; </a>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
                     {{npwp()}}	
                 </div>
                 <div class="stats-link">
-                    <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+                    <a href="javascript:;">&nbsp; </a>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
                     
                 </div>
                 <div class="stats-link">
-                    <a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
+                    <a href="javascript:;">&nbsp; </a>
                 </div>
             </div>
         </div>
@@ -175,6 +175,7 @@
                             <p>
                             Kawasan Industri PTKS, Gedung Logistik (Persero Tbk) Blok G1 No. 1, Jalan Australia II No. 1, Warnasari, Citangkil, Warnasari, Kec. Citangkil, Kota Cilegon, Banten 42443
                             </p>
+                            <span class="btn btn-sm btn-primary" onclick="view_spt(`{{file_spt()}}`)">Link Download SPT</span>
                         </div>
                     </div>
                     
@@ -297,6 +298,13 @@
             });
         }, 1000);
     });
+
+    function view_spt(file){
+        var file='<iframe src="_file_tagihan/'+file+'" height="550" width="100%"></iframe>';
+			$('#modal-lihat-spt').modal('show');
+			$('#lihat-file-spt').html(file);
+       
+    }
     
     
 </script>

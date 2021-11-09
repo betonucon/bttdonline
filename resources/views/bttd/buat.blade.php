@@ -61,7 +61,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">No Faktur Pajak</label>
-                                                    <input type="text"  maxlength="20" onkeypress="return hanyaAngka(event)" name="Reference" id="Reference" class="form-control"  placeholder="Ketik disini" />
+                                                    <input type="text"  maxlength="16" onkeypress="return hanyaAngka(event)" name="Reference" id="Reference" class="form-control"  placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nomor Faktur Pajak Tanpa Menggunakan Titik</small>
                                                 </div>
                                                 <div class="form-group">
@@ -72,9 +72,8 @@
                                                             <option value="{{$mata['name']}}">{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="AmountInvoice" onkeypress="return hanyaAngka(event)" onkeyup="cek_amountinvoicenilai(this.value)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
+                                                    <input type="text" name="AmountInvoice" onkeypress="return hanyaAngkaTitik(event)" onkeyup="cek_amountinvoicenilai(this.value)" style="display:inline;width:72%" class="form-control" placeholder="Ketik disini" />
+                                                    <small class="f-s-12 text-grey-darker">Format Nilai Faktur Pajak hanya Menggunakan Titik dan Angka</small>
                                                     
                                                 </div>
                                                 <div class="form-group">
@@ -84,7 +83,7 @@
                                                             <option value="{{$rekven['norek']}}">[{{$rekven['matauang']}}] {{$rekven['norek']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="nama_bank"  id="nama_bank" style="display:inline;width:58%" class="form-control" placeholder="Nama BANK" />
+                                                    <input type="text" name="nama_bank"  id="nama_bank" style="display:inline;width:58%" value="{{nama_rekening_vendor()}}" class="form-control" placeholder="Nama BANK" />
                                                     <small class="f-s-12 text-grey-darker">Nama Bank sesuai nomor rekening</small>
                                                 </div>
                                                 
@@ -107,9 +106,9 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
                                                     <input type="text" id="matauanginvoice" value="IDR" disabled style="display:inline;width:15%" class="form-control" >
-                                                    <input type="text" name="Amount"  onkeypress="return hanyaAngka(event)" onkeyup="cek_amountnilai(this.value)" style="display:inline;width:43%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="text"  disabled  style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
+                                                    <input type="text" name="Amount"  onkeypress="return hanyaAngkaTitik(event)" onkeyup="cek_amountnilai(this.value)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <!-- <input type="text"  disabled  style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" /> -->
+                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice hanya Menggunakan Titik dan Angka</small>
                                                     
                                                 </div>
                                                 <div class="form-group">
@@ -129,10 +128,10 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Dokumen Tagihan </label>
                                                     <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf</small>
+                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf && Max 500kb</small>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Struk Transportir </label>
+                                                    <label for="exampleInputEmail1">Buat Struk  </label>
                                                     <div class="input-prepend input-group">
                                                         <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
                                                             <i class="fa fa-calculator"></i> Buat Struk
@@ -195,7 +194,7 @@
                                                             <option value="{{$rekven['norek']}}">[{{$rekven['matauang']}}] {{$rekven['norek']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="nama_bank" id="nama_bank" style="display:inline;width:58%" class="form-control" placeholder="Nama BANK" />
+                                                    <input type="text" name="nama_bank" id="nama_bank" value="{{nama_rekening_vendor()}}" style="display:inline;width:58%" class="form-control" placeholder="Nama BANK" />
                                                     <small class="f-s-12 text-grey-darker">Nama Bank sesuai nomor rekening</small>
                                                     
                                                 </div>
@@ -207,10 +206,10 @@
                                                             <option value="{{$mata['name']}}">{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="hidden" name="AmountInvoice" id="AmountInvoice"  onkeypress="return hanyaAngka(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
+                                                    <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngkaTitik(event)" style="display:inline;width:72%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="hidden" name="AmountInvoice" id="AmountInvoice"  onkeypress="return hanyaAngkaTitik(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <!-- <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" /> -->
+                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice  Menggunakan Titik</small>
                                                     
                                                 </div>
                                                 
@@ -231,10 +230,10 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Dokumen Tagihan </label>
                                                     <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf</small>
+                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf && Max 500kb</small>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Struk Transportir </label>
+                                                    <label for="exampleInputEmail1">Buat Struk  </label>
                                                     <div class="input-prepend input-group">
                                                         <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
                                                             <i class="fa fa-calculator"></i> Buat Struk
@@ -320,10 +319,12 @@
         $('#modal-tambah').modal('show');
     }
     $('#mulai').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true,
     });
     $('#sampai').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true
     });
     function cari_matauang(a){
         $('#matauanginvoice').val(a);
@@ -439,7 +440,8 @@
                 success: function(msg){
                     
                     if(msg=='ok'){
-                        location.assign("{{url('bttd/')}}");
+                        document.getElementById("loadnya").style.width = "0px";
+                        $('#modal-poling').modal({backdrop: 'static', keyboard: false});
                     }else{
                         document.getElementById("loadnya").style.width = "0px";
                         $('#modal-notif').modal('show');

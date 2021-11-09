@@ -217,17 +217,29 @@ class MasterController  extends Controller
     }
     public function simpan_spt(request $request){
         if (trim($request->LIFNR) == '') {$error[] = '- Masukan Nama Vendor';}
-        if (trim($request->link) == '') {$error[] = '- Masukan Link SPT';}
+        if (trim($request->file) == '') {$error[] = '- Upload file SPT';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
+            $image = $request->file('file');
+            $size = $image->getSize();
+            $imageFileName ='SPT'.$request->LIFNR.date('ymdhis').'.'. $image->getClientOriginalExtension();
+            $filePath =$imageFileName;
+            $file = \Storage::disk('public_uploads');
             
-                $data           = New Spt;
-                $data->link   = $request->link;
-                $data->LIFNR   = $request->LIFNR;
-                $data->save();
-                if($data){
-                    echo'ok';
+            
+            if($image->getClientOriginalExtension()=='pdf' && $size<'554881'){
+                if($file->put($filePath, file_get_contents($image))){
+                    $data           = New Spt;
+                    $data->link   = $imageFileName;
+                    $data->LIFNR   = $request->LIFNR;
+                    $data->save();
+                    if($data){
+                        echo'ok';
+                    }
                 }
+            }else{
+                echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf | Ukuran file Maximal 500kb</p>';
+            }
                  
             
         }

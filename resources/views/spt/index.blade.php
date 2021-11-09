@@ -78,11 +78,11 @@
                                         <fieldset>
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Kode Vendor </label>
-                                                <input name="LIFNR" class="form-control"  placeholder="Ketik disini"/>
+                                                <input name="LIFNR" type="text" class="form-control"  placeholder="Ketik disini"/>
                                             </div>
                                             <div class="form-group">
-                                                <label for="exampleInputEmail1">Link SPT </label>
-                                                <input name="link" class="form-control"  placeholder="Ketik disini"/>
+                                                <label for="exampleInputEmail1">File Pdf </label>
+                                                <input name="file" type="file" class="form-control"  placeholder="Ketik disini"/>
                                             </div>
                                             
                                         </fieldset>

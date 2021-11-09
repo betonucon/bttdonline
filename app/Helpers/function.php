@@ -288,8 +288,22 @@ function total_dokumen(){
    return $data;
 }
 function rekening_vendor(){
-   $data=App\Bank::where('LIFNR',Auth::user()['username'])->get();
+   $data=App\Bank::where('LIFNR',Auth::user()['username'])->orderBy('id','Asc')->get();
    return $data;
+}
+
+function ubah_uang($uang){
+   $patr='/([^0-9]+)/';
+   $data=preg_replace($patr,'',$uang);
+   return $data;
+}
+function nama_rekening_vendor(){
+   $data=App\Bank::where('LIFNR',Auth::user()['username'])->orderBy('id','Asc')->firstOrfail();
+   return $data['nmbank'];
+}
+function file_spt(){
+   $data=App\Spt::where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->firstOrfail();
+   return $data['link'];
 }
 
 ?>

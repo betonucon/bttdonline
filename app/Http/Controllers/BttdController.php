@@ -389,8 +389,8 @@ class BttdController extends Controller
                             $data           = New Bttd;
                             $data->LIFNR   = Auth::user()['username']; 
                             $data->Reference   = $request->Reference;
-                            $data->Amount   = $request->Amount;
-                            $data->AmountInvoice   = $request->AmountInvoice;
+                            $data->Amount   = ubah_uang($request->Amount);
+                            $data->AmountInvoice   = ubah_uang($request->AmountInvoice);
                             $data->PurchaseOrder   = $request->PurchaseOrder;
                             $data->PartBank   = $request->PartBank;
                             $data->kategori   = $request->kategori;
@@ -460,8 +460,8 @@ class BttdController extends Controller
                 $data->LIFNR   = Auth::user()['username']; 
                 $data->InvoiceDate   = date('Y-m-d',strtotime($request->InvoiceDate));
                 $data->Reference   = $request->Reference;
-                $data->Amount   = $request->Amount;
-                $data->AmountInvoice   = $request->AmountInvoice;
+                $data->Amount   = ubah_uang($request->Amount);
+                $data->AmountInvoice   = ubah_uang($request->AmountInvoice);
                 $data->PurchaseOrder   = $request->PurchaseOrder;
                 $data->PartBank   = $request->PartBank;
                 $data->kategori   = $request->kategori;
@@ -491,8 +491,8 @@ class BttdController extends Controller
                                 $data           = Bttd::find($request->id);
                                 $data->LIFNR   = Auth::user()['username']; 
                                 $data->Reference   = $request->Reference;
-                                $data->Amount   = $request->Amount;
-                                $data->AmountInvoice   = $request->AmountInvoice;
+                                $data->Amount   = ubah_uang($request->Amount);
+                                $data->AmountInvoice   = ubah_uang($request->AmountInvoice);
                                 $data->PurchaseOrder   = $request->PurchaseOrder;
                                 $data->PartBank   = $request->PartBank;
                                 $data->kategori   = $request->kategori;
@@ -664,6 +664,14 @@ class BttdController extends Controller
                 }
                 echo'
                 </div>
+                <div class="form-group">
+                    <label>Materai</label>
+                    <select class="form-control" name="materai">
+                        <option value="0">0</option>
+                        <option value="6000">6000</option>
+                        <option value="10000">10.000</option>
+                    </select>
+                </div>
                 <table width="100%">
                     <tr>
                         <th  class="th" width="5%">NO</th>
@@ -821,6 +829,7 @@ class BttdController extends Controller
                             $data->total_harga  =$_POST['total_harga'][$x];
                             $data->Reference =$request->Reference;
                             $data->denda =$request->denda;
+                            $data->materai =$request->materai;
                             $data->tarif =$request->tarif;
                             $data->save();
                         }

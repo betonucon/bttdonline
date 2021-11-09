@@ -73,10 +73,10 @@
                                                             <option value="{{$mata['name']}}"  @if($data['DocCurrency']==$mata['name']) selected @endif>{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="AmountInvoice" value="{{$data['Amount']}}" onkeyup="cek_amountinvoicenilai(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:36%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" value="{{number_format($data['Amount'],0)}}" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="AmountInvoice" value="{{$data['Amount']}}" onkeyup="cek_amountinvoicenilai(this.value)" onkeypress="return hanyaAngkaTitik(event)" style="display:inline;width:72%" class="form-control" placeholder="Ketik disini" />
+                                                    <!-- <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" value="{{number_format($data['Amount'],0)}}" class="form-control" placeholder="Ketik disini" /> -->
                                                     
-                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
+                                                    <small class="f-s-12 text-grey-darker">Format Nilai Faktur Hanya Menggunakan Titik dan Angka</small>
                                                     
                                                 </div>
                                                 <div class="form-group">
@@ -109,10 +109,9 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
                                                     <input type="text" id="matauanginvoice" value="{{$data['DocCurrency']}}" disabled style="display:inline;width:15%" class="form-control" >
-                                                    <input type="text" name="Amount" value="{{$data['AmountInvoice']}}" onkeyup="cek_amountnilai(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:43%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="text"  disabled  value="{{number_format($data['AmountInvoice'],0)}}" style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
-                                                    
+                                                    <input type="text" name="Amount" value="{{$data['AmountInvoice']}}" onkeyup="cek_amountnilai(this.value)" onkeypress="return hanyaAngkaTitik(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <!-- <input type="text"  disabled  value="{{number_format($data['AmountInvoice'],0)}}" style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" /> -->
+                                                    <small class="f-s-12 text-grey-darker">Format Nilai Invoice Hanya Menggunakan Titik dan Angka</small>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Email / Telp / Fax Vendor </label>
@@ -131,10 +130,10 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Dokumen Tagihan </label>
                                                     <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf</small>
+                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf && Max 500kb</small>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Struk Transportir </label>
+                                                    <label for="exampleInputEmail1">Buat Struk </label>
                                                     <div class="input-prepend input-group">
                                                         <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
                                                             <i class="fa fa-calculator"></i> Buat Struk
@@ -209,9 +208,9 @@
                                                             <option value="{{$mata['name']}}"  @if($data['DocCurrency']==$mata['name']) selected @endif>{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="Amount" onkeyup="cek_amountnilai(this.value)" value="{{$data['AmountInvoice']}}" onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngka(event)" style="display:inline;width:43%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount" onkeyup="cek_amountnilai(this.value)" value="{{$data['AmountInvoice']}}" onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngkaTitik(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
                                                     <input type="hidden" name="AmountInvoice" value="{{$data['AmountInvoice']}}" id="Amount" onkeypress="return hanyaAngka(event)" style="display:inline;width:40%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="text"  disabled  style="display:inline;width:36%" id="Amountnilai" class="form-control" value="{{uang($data['AmountInvoice'])}}" placeholder="Ketik disini" />
+                                                    <!-- <input type="text"  disabled  style="display:inline;width:36%" id="Amountnilai" class="form-control" value="{{uang($data['AmountInvoice'])}}" placeholder="Ketik disini" /> -->
                                                     
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice Tanpa Menggunakan Titik Kecuali Mata Uang Asing</small>
                                                     
@@ -234,10 +233,10 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Dokumen Tagihan </label>
                                                     <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf</small>
+                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf && Max 500kb</small>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="exampleInputEmail1">Struk Transportir </label>
+                                                    <label for="exampleInputEmail1">Buat Struk </label>
                                                     <div class="input-prepend input-group">
                                                         <span  onclick="buat_struk()" title="Buat Struk" class="add-on input-group-addon" style="cursor: pointer;">
                                                             <i class="fa fa-calculator"></i> Buat Struk
@@ -362,10 +361,12 @@
         $('#modal-tambah').modal('show');
     }
     $('#mulai').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true,
     });
     $('#sampai').datepicker({
-        format: 'dd-mm-yyyy'
+        format: 'dd-mm-yyyy',
+        autoclose: true,
     });
     function cari_matauang(a){
         $('#matauanginvoice').val(a);

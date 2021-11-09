@@ -372,8 +372,7 @@ class VendorController extends Controller
         $data->save();
 
         if($data){
-            Auth::logout();
-            return redirect('/');
+            return redirect('/bttd');
         }
     }
     public function simpan_password(request $request){

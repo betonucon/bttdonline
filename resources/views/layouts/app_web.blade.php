@@ -224,7 +224,10 @@
 						
 						<div class="dropdown-divider"></div>
 						@if(Auth::user()['role_id']==7)
-						<a href="#" onclick="poling()" class="dropdown-item">Log Out</a>
+						<a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();" class="dropdown-item">Log Out</a>
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+							@csrf
+						</form>
 						
 						@else
 						@if(Auth::user()['username']=='12345678')
@@ -254,7 +257,7 @@
 				<ul class="nav">
 					<li class="nav-profile">
 						<a href="javascript:;" data-toggle="nav-profile">
-							<div class="cover with-shadow"></div>
+							<div class="cover with-shadow" style="background: blue;"></div>
 							<div class="image">
 								<img src="{{url('img/akun.png')}}" alt="" />
 							</div>
@@ -406,9 +409,9 @@
 			
 		});
 		
-		function poling(){
-			$('#modal-poling').modal('show');
-		}
+		// function poling(){
+		// 	$('#modal-poling').modal('show');
+		// }
 
 		function ubah_role(username,role){
 			$.ajax({
@@ -498,6 +501,13 @@
 		function hanyaAngka(evt) {
 		  var charCode = (evt.which) ? evt.which : event.keyCode
 		   if (charCode > 31 && (charCode < 48 || charCode > 57))
+ 
+		    return false;
+		  return true;
+		}
+		function hanyaAngkaTitik(evt) {
+		  var charCode = (evt.which) ? evt.which : event.keyCode
+		   if (charCode > 31 && (charCode < 46 || charCode > 57 || charCode==47))
  
 		    return false;
 		  return true;
