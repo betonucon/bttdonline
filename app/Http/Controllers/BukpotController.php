@@ -418,7 +418,7 @@ class BukpotController extends Controller
         }
         $pdf = PDF::loadView('pdf.cetak_pph', compact('jum'));
         $pdf->setPaper('A4', 'Landscape');
-        return $pdf->stream();
+        return $pdf->download('Buktipotong'.Auth::user()['username'].'-'.date('ymd').'.pdf');
         // return view('pdf.cetak_pph', compact('jum'));
         
     }

@@ -89,7 +89,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body">
-                                <form method="post"  style="display: flex;" enctype="multipart/form-data" id="my_data">
+                                <form method="post"  style="display: flex;" action="{{url('/pph/simpan')}}" enctype="multipart/form-data" id="my_data">
                                     @csrf
                                     <div class="col-md-12">
                                         <fieldset>
