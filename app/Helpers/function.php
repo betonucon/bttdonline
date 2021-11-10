@@ -298,8 +298,14 @@ function ubah_uang($uang){
    return $data;
 }
 function nama_rekening_vendor(){
-   $data=App\Bank::where('LIFNR',Auth::user()['username'])->orderBy('id','Asc')->firstOrfail();
-   return $data['nmbank'];
+   $cek=App\Bank::where('LIFNR',Auth::user()['username'])->count();
+   if($cek>0){
+      $data=App\Bank::where('LIFNR',Auth::user()['username'])->orderBy('id','Asc')->firstOrfail();
+      return $data['nmbank'];
+   }else{
+      return "Tidak ada";
+   }
+  
 }
 function file_spt(){
    $cek=App\Spt::where('LIFNR',Auth::user()['username'])->count();
