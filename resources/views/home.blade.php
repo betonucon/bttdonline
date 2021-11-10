@@ -175,7 +175,9 @@
                             <p>
                             Kawasan Industri PTKS, Gedung Logistik (Persero Tbk) Blok G1 No. 1, Jalan Australia II No. 1, Warnasari, Citangkil, Warnasari, Kec. Citangkil, Kota Cilegon, Banten 42443
                             </p>
+                            @if(file_spt()!='no')
                             <span class="btn btn-sm btn-primary" onclick="view_spt(`{{file_spt()}}`)">Link Download SPT</span>
+                            @endif
                         </div>
                     </div>
                     

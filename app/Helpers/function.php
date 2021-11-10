@@ -302,8 +302,14 @@ function nama_rekening_vendor(){
    return $data['nmbank'];
 }
 function file_spt(){
-   $data=App\Spt::where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->firstOrfail();
-   return $data['link'];
+   $cek=App\Spt::where('LIFNR',Auth::user()['username'])->count();
+   if($cek>0){
+      $data=App\Spt::where('LIFNR',Auth::user()['username'])->orderBy('id','Desc')->firstOrfail();
+      return $data['link'];
+   }else{
+      return 'no';
+   }
+   
 }
 
 ?>
