@@ -65,8 +65,8 @@
                 <tr>
                     <td width="20%"><img src="{{public_path('img/logoks.png')}}" width="90%" height="70px"></td>
                     <td>
-                        <font style="font-weight:bold;color:blue;font-size:18px;display:block">PT. KRAKATAU STEEL (Persero) Tbk.</font>
-                        <font style="font-weight:bold;color:#000;font-size:15px;display:block">DIVISI TAX & VERIFICATION</font>
+                        <font style="font-weight:bold;color:blue;font-size:18px;display:block">PT KRAKATAU STEEL (Persero) Tbk.</font>
+                        <font style="font-weight:bold;color:#000;font-size:15px;display:block">TAX & VERIFICATION DEPARTEMEN</font>
                         <font style="color:#000;font-size:15px;display:block">TELP : (0254)372203, FAX : 372342</font>
                         <font style="color:#000;font-size:15px;display:block">JL. AUSTRALIA II NO 1 KAWASAN INDUSTRI KIEC-CILEGON</font>
                     </td>
