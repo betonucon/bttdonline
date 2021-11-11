@@ -161,7 +161,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <font style="color:#000;font-size:14px;display:block">DOKUMEN YANG DISERAHKAN KEPADA DIVISI TAX & VERIFICATION PT. KRAKATAU STEEL (Persero) Tbk:</font>
+                        <font style="color:#000;font-size:14px;display:block">DOKUMEN YANG DISERAHKAN:</font>
                     </td>
                 </tr>
             </table>
