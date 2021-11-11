@@ -58,7 +58,7 @@
                                     <th class="text-nowrap" width="15%" >Tanggal </th>
                                     <th class="text-nowrap" width="9%" ></th>
                                     <th class="text-nowrap" width="4%" >File</th>
-                                    <th class="text-nowrap" width="4%" >Print</th>
+                                    <th class="text-nowrap" width="4%" >Bttd</th>
                                     <th class="text-nowrap" width="4%" >Act</th>
                                 </tr>
                             </thead>
@@ -83,13 +83,13 @@
                                        <b>VCR:</b>{{$o['no_voucher']}}<br>
                                        <b>Tempo:</b>{{$o['tempo']}}
                                     </td>
-                                    <td class="ttd">
+                                    <td class="ttds">
                                     <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
-                                    <td class="ttd">
-                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>
+                                    <td class="ttds">
+                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-file-pdf"></i></span>
                                     </td>
-                                    <td class="ttd">
+                                    <td class="ttds">
                                         @if($o['no_voucher']=='')
                                         <span class="btn btn-xs btn-primary" title="No Voucher" onclick="buat_voucher({{$o['id']}})" ><i class="fa fa fa-tag"></i></span>
                                         @else

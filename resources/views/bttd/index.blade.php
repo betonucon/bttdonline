@@ -53,7 +53,7 @@
                                     <th class="text-nowrap" width="15%" >Tanggal </th>
                                     <th class="text-nowrap" width="9%" ></th>
                                     <th class="text-nowrap" width="4%" >Dok</th>
-                                    <th class="text-nowrap" width="4%" >File</th>
+                                    <th class="text-nowrap" width="4%" >Bttd</th>
                                     <th class="text-nowrap" width="4%" ></th>
                                 </tr>
                             </thead>
@@ -73,13 +73,13 @@
                                     <td class="ttd" style="background:{{$o['rolenya']['warna']}} !important;text-align:center">
                                        <b><i>@if($o['lokasi']==7) Vendor @else DITERIMA @endif</i></b>
                                     </td>
-                                    <td class="ttd">
+                                    <td class="ttds">
                                         <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
-                                    <td class="ttd">
-                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>
+                                    <td class="ttds">
+                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-file-pdf"></i></span>
                                     </td>
-                                    <td class="ttd">
+                                    <td class="ttds">
                                         <span class="btn btn-xs btn-success" onclick="ubah({{$o['id']}},`{{$o['kategori']}}`)"><i class="fa fa-edit"></i></span>
                                     </td>
                                     

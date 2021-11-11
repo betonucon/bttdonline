@@ -45,7 +45,7 @@
                                     <th class="text-nowrap" width="15%" >Tanggal </th>
                                     <th class="text-nowrap" width="9%" ></th>
                                     <th class="text-nowrap" width="4%" >File</th>
-                                    <th class="text-nowrap" width="4%" >Print</th>
+                                    <th class="text-nowrap" width="4%" >Bttd</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -73,7 +73,7 @@
                                     <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
                                     <td class="ttd">
-                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>
+                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-file-pdf-o"></i></span>
                                     </td>
                                     
                                    

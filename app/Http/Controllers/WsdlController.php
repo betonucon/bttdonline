@@ -14,7 +14,7 @@ class WsdlController extends Controller
         $server->handle();
     }
 
-    public function parsing_txt(){
+    public function parsing_bank(){
         error_reporting(0);
         $contents = file_get_contents('SAPtoWEB/TESTING VENDOR MASTER.txt');
         $rows = explode("\n", trim($contents));

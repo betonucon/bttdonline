@@ -49,7 +49,7 @@ Route::get('/register', 'Auth\LoginController@login');
 
 
 Route::get('/wsdlppn', 'WsdlController@ppn');
-Route::get('/parsing_txt', 'WsdlController@parsing_txt');
+Route::get('/cronjob_bank', 'WsdlController@parsing_bank');
 Route::get('/parsing_txt_ZFI004N', 'WsdlController@parsing_txt_ZFI004N');
 
 

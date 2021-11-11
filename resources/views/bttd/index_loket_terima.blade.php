@@ -79,12 +79,12 @@
                                     <td class="ttd" style="background:{{$o['rolenya']['warna']}} !important;text-align:center">
                                        <b><i>{{$o['rolenya']['name']}}</i></b>
                                     </td>
-                                    <td class="ttd">
+                                    <td class="ttds">
                                     <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                         
                                     </td>
-                                    <td class="ttd">
-                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-search"></i></span>
+                                    <td class="ttds">
+                                        <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-file-pdf"></i></span>
                                     </td>
                                 </tr>
                             @endforeach

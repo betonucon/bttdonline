@@ -42,6 +42,9 @@
     .ttd{
         padding:3px 3px 3px 5px !important;
     }
+    .ttds{
+        text-align:center;
+    }
 	th{
 		background:#ffffff !important;
 		font-size:11px !important;
@@ -516,7 +519,7 @@
 			$('#example').dataTable( {
 				"paging":   false,
 				"responsive": true,
-				"ordering": true,
+				"ordering": false,
 				"info":     false
 			} );
 			@if(Auth::user()['role_id']==1 || Auth::user()['role_id']==2 || Auth::user()['role_id']==3)
