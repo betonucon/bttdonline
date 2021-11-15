@@ -195,7 +195,12 @@ class BttdController extends Controller
         if(Auth::user()['role_id']==2){
             $menu='Daftar BTTD Diterima';
             $menu_detail=name();
-            $data=Bttd::with(['vendor','rolenya'])->where('lokasi',2)->orderBy('lokasi','Desc')->paginate(20);
+            if($request->parameter==''){
+                $data=Bttd::with(['vendor','rolenya'])->where('lokasi',2)->orderBy('lokasi','Desc')->paginate(20);
+            }else{
+                $data=Bttd::with(['vendor','rolenya'])->where('lokasi',2)->where('LIFNR',Auth::user()['username'])->where($request->parameter,$request->kata)->orderBy('id','Desc')->paginate(500);
+            }
+            
             return view('bttd.index_loket_terima',compact('menu','menu_detail','data'));
         }else{
             return view('error');
