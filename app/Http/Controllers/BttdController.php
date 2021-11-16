@@ -198,7 +198,7 @@ class BttdController extends Controller
             if($request->parameter==''){
                 $data=Bttd::where('lokasi',2)->orderBy('lokasi','Desc')->paginate(20);
             }else{
-                $data=Bttd::where('lokasi',2)->where($request->parameter,$request->kata)->orderBy('id','Desc')->paginate(500);
+                $data=Bttd::where('lokasi',2)->where($request->parameter,$request->kata)->orderBy('lokasi','Desc')->paginate(500);
             }
             
             return view('bttd.index_loket_terima',compact('menu','menu_detail','data'));

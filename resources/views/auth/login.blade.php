@@ -53,7 +53,7 @@
                 <form action="{{ route('login') }}" method="POST" class="margin-bottom-0">
                 @csrf
                     <div class="form-group m-b-20">
-                        <input type="text" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} form-control-lg" value="{{ old('email') }}" placeholder="Email Address" required />
+                        <input type="text" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} form-control-lg" value="{{ old('email') }}" placeholder="Username" required />
                         @if ($errors->has('email'))
                             Username atau password salah
                         @endif
