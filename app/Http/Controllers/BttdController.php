@@ -191,6 +191,25 @@ class BttdController extends Controller
         
        
     }
+    public function index_ba(request $request){
+        if(Auth::user()['role_id']==3){
+            $menu='Berita Acara';
+            $menu_detail=name();
+            if($request->parameter==''){
+                $data=Bttd::where('lokasi','!=',7)->orderBy('lokasi','Asc')->paginate(20);
+            }else{
+                $data=Bttd::where('lokasi','!=',7)->where($request->parameter,$request->kata)->orderBy('lokasi','Desc')->paginate(500);
+            }
+            
+            return view('bttd.index_ba',compact('menu','menu_detail','data'));
+        }
+        else{
+            return view('error');
+        }
+        
+        
+       
+    }
     public function index_loket_terima(request $request){
         if(Auth::user()['role_id']==2){
             $menu='Daftar BTTD Diterima';

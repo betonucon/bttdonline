@@ -113,7 +113,7 @@ function waktu($id){
     return $data;
 }
 function uang($id){
-    $data=number_format($id);
+    $data=number_format($id,2);
     return $data;
 }
 function npwp(){
@@ -293,9 +293,10 @@ function rekening_vendor(){
 }
 
 function ubah_uang($uang){
+   $xpl=explode('.',$uang);
    $patr='/([^0-9]+)/';
-   $data=preg_replace($patr,'',$uang);
-   return $data;
+   $data=preg_replace($patr,'',$xpl[0]);
+   return $data.'.'.$xpl[1];
 }
 function nama_rekening_vendor(){
    $cek=App\Bank::where('LIFNR',Auth::user()['username'])->count();

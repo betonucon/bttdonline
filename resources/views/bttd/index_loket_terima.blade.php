@@ -30,7 +30,7 @@
                 <div class="panel-body">
                     <div class="btn-group" style="margin-bottom:10px;">
                         <button class="btn btn-xs btn-success" onclick="simpan_kirim()"><i class="fa fa-check"></i> Kirim Dokumen</button>
-                        <button class="btn btn-xs btn-primary" onclick="revisi()"><i class="fa fa-arrow-left"></i> Revisi</button>
+                        <!-- <button class="btn btn-xs btn-primary" onclick="revisi()"><i class="fa fa-arrow-left"></i> Revisi</button> -->
                     </div>
                     <div class="alert alert-success fade show m-b-0" style="background:#e0dea5;margin-bottom:1% !important">
                         <span class="close" data-dismiss="alert">×</span>
@@ -56,9 +56,9 @@
                                     <th class="text-nowrap" width="10%" >No Invoice </th>
                                     <th class="text-nowrap" width="10%" >Nilai Invoice </th>
                                     <th class="text-nowrap" width="15%" >Tanggal </th>
-                                    <th class="text-nowrap" width="9%" ></th>
-                                    <th class="text-nowrap" width="4%" ></th>
-                                    <th class="text-nowrap" width="4%" ></th>
+                                    <th class="text-nowrap" width="9%" >Status</th>
+                                    <th class="text-nowrap" width="4%" >File</th>
+                                    <th class="text-nowrap" width="4%" >Bttd</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,7 +81,6 @@
                                     </td>
                                     <td class="ttds">
                                     <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
-                                        
                                     </td>
                                     <td class="ttds">
                                         <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-file-pdf"></i></span>

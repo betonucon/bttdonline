@@ -401,6 +401,7 @@
 	<script src="{{url('assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js')}}"></script>
 	<script src="{{url('assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js')}}"></script>
 	<script src="{{url('assets/js/demo/table-manage-responsive.demo.min.js')}}"></script>
+	
 	<script>
 		$(document).ready(function() {
 			App.init();
@@ -497,7 +498,7 @@
 			$('#modal-chat').modal('show');
 		}
 		function lihatfilegd(file){
-			var file='<iframe src="_file_tagihan/'+file+'" height="550" width="100%"></iframe>';
+			var file="<iframe src='{{url('_file_tagihan')}}/"+file+"' height='550' width='100%'></iframe>";
 			$('#modal-lihat-file').modal('show');
 			$('#lihat-file').html(file);
 		}

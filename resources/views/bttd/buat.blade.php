@@ -72,7 +72,7 @@
                                                             <option value="{{$mata['name']}}">{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="AmountInvoice" onkeypress="return hanyaAngkaTitik(event)" onkeyup="cek_amountinvoicenilai(this.value)" style="display:inline;width:72%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" id="inputmask" data-inputmask="'alias': 'currency'" name="AmountInvoice" onkeypress="return hanyaAngkaTitik(event)" onkeyup="cek_amountinvoicenilai(this.value)" style="display:inline;width:72%" class="form-control" placeholder="Ketik disini" />
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Faktur Pajak hanya Menggunakan Titik dan Angka</small>
                                                     
                                                 </div>
@@ -106,7 +106,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Nilai Invoice  / Memo Dinas</label><br>
                                                     <input type="text" id="matauanginvoice" value="IDR" disabled style="display:inline;width:15%" class="form-control" >
-                                                    <input type="text" name="Amount"  onkeypress="return hanyaAngkaTitik(event)" onkeyup="cek_amountnilai(this.value)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount"  id="inputmask2" data-inputmask="'alias': 'currency'" onkeyup="cek_amountnilai(this.value)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
                                                     <!-- <input type="text"  disabled  style="display:inline;width:40%" id="Amountnilai" class="form-control" placeholder="Ketik disini" /> -->
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice hanya Menggunakan Titik dan Angka</small>
                                                     
@@ -206,8 +206,8 @@
                                                             <option value="{{$mata['name']}}">{{$mata['name']}}</option>
                                                         @endforeach
                                                     </select>
-                                                    <input type="text" name="Amount"  onkeyup="tampilkan_Amount(this.value)" onkeypress="return hanyaAngkaTitik(event)" style="display:inline;width:72%" class="form-control" placeholder="Ketik disini" />
-                                                    <input type="hidden" name="AmountInvoice" id="AmountInvoice"  onkeypress="return hanyaAngkaTitik(event)" style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="text" name="Amount"  id="inputmask2" data-inputmask="'alias': 'currency'" onkeyup="tampilkan_Amount(this.value)" style="display:inline;width:72%" class="form-control" placeholder="Ketik disini" />
+                                                    <input type="hidden" name="AmountInvoice" id="AmountInvoice"   style="display:inline;width:83%" class="form-control" placeholder="Ketik disini" />
                                                     <!-- <input type="text"  disabled  style="display:inline;width:36%" id="AmountInvoicenilai" class="form-control" placeholder="Ketik disini" /> -->
                                                     <small class="f-s-12 text-grey-darker">Format Nilai Invoice  Menggunakan Titik</small>
                                                     
@@ -310,9 +310,11 @@
 @endsection
 
 @push('ajax')
+<script type='text/javascript' src="{{url('js/mask.js')}}"></script>
 <script>
     $(document).ready(function() {
-        
+        $("#inputmask").inputmask();
+        $("#inputmask2").inputmask();
     });
 
     function tambah(){

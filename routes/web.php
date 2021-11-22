@@ -123,6 +123,7 @@ Route::group(['middleware'    => 'auth'],function(){
 });
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/bttd', 'BttdController@index');
+    Route::get('/BeritaAcara', 'BttdController@index_ba');
     Route::get('/loket', 'BttdController@index_loket');
     Route::get('/officer', 'BttdController@index_officer');
     Route::get('/officer/terima', 'BttdController@index_officer_terima');

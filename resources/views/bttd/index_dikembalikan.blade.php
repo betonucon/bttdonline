@@ -50,7 +50,7 @@
                                     <th class="text-nowrap" width="10%" >No Invoice </th>
                                     <th class="text-nowrap" width="10%" >Nilai Invoice </th>
                                     <th class="text-nowrap" width="25%" >Keterangan </th>
-                                    <th class="text-nowrap" width="4%" ></th>
+                                    <th class="text-nowrap" width="4%" >Act</th>
                                 </tr>
                             </thead>
                             <tbody>

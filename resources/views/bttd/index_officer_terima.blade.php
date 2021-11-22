@@ -56,7 +56,7 @@
                                     <th class="text-nowrap" width="10%" >No Invoice </th>
                                     <th class="text-nowrap" width="10%" >Nilai Invoice </th>
                                     <th class="text-nowrap" width="15%" >Tanggal </th>
-                                    <th class="text-nowrap" width="9%" ></th>
+                                    <th class="text-nowrap" width="9%" >Voucher</th>
                                     <th class="text-nowrap" width="4%" >File</th>
                                     <th class="text-nowrap" width="4%" >Bttd</th>
                                     <th class="text-nowrap" width="4%" >Act</th>
