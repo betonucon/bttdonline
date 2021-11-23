@@ -82,7 +82,7 @@
                                        <b><i>{{$o['rolenya']['name']}}</i></b>
                                     </td>
                                     <td class="ttds">
-                                    <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
+                                        <span class="btn btn-xs btn-warning" onclick="lihatfilegd('{{$o['linknya']}}')"><i class="fa fa-clone"></i></span>
                                     </td>
                                     <td class="ttds">
                                         <span class="btn btn-xs btn-success" onclick="tampilkan({{$o['id']}})" ><i class="fa fa-file-pdf"></i></span>
