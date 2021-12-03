@@ -418,8 +418,8 @@ class BukpotController extends Controller
         }
         $pdf = PDF::loadView('pdf.cetak_pph', compact('jum'));
         $pdf->setPaper('A4', 'Landscape');
-        return $pdf->download('Buktipotong'.Auth::user()['username'].'-'.date('ymd').'.pdf');
-        // return view('pdf.cetak_pph', compact('jum'));
+        // return $pdf->download('Buktipotong'.Auth::user()['username'].'-'.date('ymd').'.pdf');
+        return view('pdf.cetak_pph', compact('jum'));
         
     }
     public function tampil_ppn(request $request){
