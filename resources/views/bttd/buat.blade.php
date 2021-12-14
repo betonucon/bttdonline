@@ -278,20 +278,18 @@
                         </div>
                     </div>
                     <!-- #modal-message -->
-                    <div class="modal modal-message fade" id="modal-message">
-                        <div class="modal-dialog">
+                    <div class="modal fade" id="modal-reminder" style="background: #d2d2e36e;">
+                        <div class="modal-dialog" style="margin-top: 0px;">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Modal Message Header</h4>
+                                    <h4 class="modal-title">Notifikasi</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
-                                <div class="modal-body">
-                                    <p>Text in a modal</p>
-                                    <p>Do you want to turn on location services so GPS can use your location ?</p>
+                                <div class="modal-body" style="text-align:center">
+                                    <img src="{{url('img/reminder.png')}}" style="width: 70%;height: 500px;">
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Tutup</a>
-                                    <a href="javascript:;" class="btn btn-primary">Save Changes</a>
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Mulai</a>
                                 </div>
                             </div>
                         </div>
@@ -315,6 +313,7 @@
     $(document).ready(function() {
         $("#inputmask").inputmask();
         $("#inputmask2").inputmask();
+        $('#modal-reminder').modal('show');
     });
 
     function tambah(){
