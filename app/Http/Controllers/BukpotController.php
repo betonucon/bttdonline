@@ -33,7 +33,7 @@ class BukpotController extends Controller
          }
     }
     public function index(request $request){
-        if(Auth::user()['role_id']==1){
+        if(Auth::user()['role_id']==2){
             $menu='Bukti Potong PPH';
             $menu_detail=name();
             $data=Pph::with(['vendor'])->orderBy('Docno','Asc')->paginate(20);
