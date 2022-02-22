@@ -879,6 +879,7 @@ class BttdController extends Controller
                             $data->harga_satuan  =$_POST['harga_satuan'][$x];
                             $data->total_harga  =$_POST['total_harga'][$x];
                             $data->Reference =$request->Reference;
+                            $data->materai =$request->materai;
                             $data->denda =$request->denda;
                             $data->tarif =$request->tarif;
                             $data->save();

@@ -237,13 +237,14 @@ function cek_struknya($id){
    
    return $data['struknya'];
 }
-function materai($nilai){
-   if($nilai>9000000){
-      $data=10000;
+function materai($id){
+   $data=App\Bttd::where('id',$id)->first();
+   $materai=App\Struk::where('Reference',$data['Reference'])->orderBy('id','Asc')->firstOrfail();
+   if($materai['materai']>0){
+      return $materai['materai'];
    }else{
-      $data=6000;
+      return '0';
    }
-   return $data;
 }
 function tgl_terima($id){
    $data=App\Traking::where('bttd_id',$id)->where('role_id',Auth::user()['role_id'])->first();
@@ -297,6 +298,11 @@ function ubah_uang($uang){
    $patr='/([^0-9]+)/';
    $data=preg_replace($patr,'',$xpl[0]);
    return $data.'.'.$xpl[1];
+}
+function ubah_angka($uang){
+   $patr='/([^0-9]+)/';
+   $data=preg_replace($patr,'',$uang);
+   return $data;
 }
 function nama_rekening_vendor(){
    $cek=App\Bank::where('LIFNR',Auth::user()['username'])->count();

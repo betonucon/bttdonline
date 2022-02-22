@@ -366,7 +366,7 @@
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">Materai</td>
-                        <td class="ttd" align="right" >{{uang(materai($jumtotal_harga))}}</td>
+                        <td class="ttd" align="right" >{{uang(materai($data->id))}}</td>
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">Denda</td>
@@ -374,7 +374,7 @@
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">DPP - (Materai + Denda)</td>
-                        <td class="ttd" align="right" >{{uang($jumtotal_harga-(materai($jumtotal_harga)+datastruk($data['Reference'])['denda']))}}</td>
+                        <td class="ttd" align="right" >{{uang($jumtotal_harga-(materai($data->id)+datastruk($data['Reference'])['denda']))}}</td>
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">PPH {{datastruk($data['Reference'])['tarif']}}%</td>
@@ -382,7 +382,7 @@
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">Jumlah Yang Dibayarkan</td>
-                        <td class="ttd" align="right" >{{uang(($jumtotal_harga-(materai($jumtotal_harga)+datastruk($data['Reference'])['denda']))-($jumtotal_harga*(datastruk($data['Reference'])['tarif']/100)))}}</td>
+                        <td class="ttd" align="right" >{{uang(($jumtotal_harga-(materai($data->id)+datastruk($data['Reference'])['denda']))-($jumtotal_harga*(datastruk($data['Reference'])['tarif']/100)))}}</td>
                     </tr>
                 @endif
                 @if(cek_struknya($data['tagihan_id'])==2)
