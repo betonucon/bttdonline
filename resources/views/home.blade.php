@@ -268,6 +268,23 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="modal fade" id="modal-reminder" style="background: #d2d2e36e;">
+                        <div class="modal-dialog modal-lg" style="margin-top: 0px;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Notifikasi</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                </div>
+                                <div class="modal-body" style="text-align:center">
+                                    <img src="{{url('img/grativikasi.jpg')}}" style="width: 70%;height: 500px;">
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Mulai</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <!-- #modal-alert -->
                     @include('layouts.notif')
                 </div>
@@ -283,8 +300,9 @@
 
 @push('ajax')
 <script>
+    
     $(document).ready(function() {
-        
+        $('#modal-reminder').modal('show');
         var refreshwaktu = setInterval(function()
         {
             
