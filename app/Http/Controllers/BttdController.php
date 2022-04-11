@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 use App\User;
 use App\Vendor;
@@ -33,6 +33,57 @@ class BttdController extends Controller
         
         
        
+    }
+    public function index_sap(request $request){
+       
+            $menu='Daftar BTTD';
+            $menu_detail=name();
+            if($request->tahun==""){
+                $tahun=date('Y');
+            }else{
+                $tahun=$request->tahun;
+            }
+            if($request->wapu==""){
+                $wapu=1;
+            }else{
+                $wapu=$request->wapu;
+            }
+            if($request->bulan=="" || $request->bulan=="all"){
+                $bulan='all';
+            }else{
+                $bulan=$request->bulan;
+            }
+            return view('bttd.index_sap',compact('menu','menu_detail','tahun','bulan','wapu'));
+        
+    }
+    public function index_web(request $request){
+       
+            $menu='Daftar BTTD';
+            $menu_detail=name();
+            if($request->tahun==""){
+                $tahun=date('Y');
+            }else{
+                $tahun=$request->tahun;
+            }
+            if($request->wapu==""){
+                $wapu=1;
+            }else{
+                $wapu=$request->wapu;
+            }
+            if($request->bulan=="" || $request->bulan=="all"){
+                $bulan='all';
+            }else{
+                $bulan=$request->bulan;
+            }
+            if($bulan=='all'){
+                $total=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->count();
+                $faktur=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->sum('AmountInvoice');
+            }else{
+                $total=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->count();
+                $faktur=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->sum('AmountInvoice');
+            }
+            return view('bttd.index_web',compact('menu','menu_detail','tahun','bulan','wapu','total','faktur'));
+        
     }
     public function view_traking(request $request){
         $data=Bttd::where('Reference',$request->inv)->orWhere('HeaderText',$request->inv)->first();
@@ -99,6 +150,74 @@ class BttdController extends Controller
         return view('bttd.index_dikembalikan',compact('menu','menu_detail','data'));
        
     }
+
+    public function get_officer(request $request){
+        $data=Bttd::where('sts_sap',1)->orderBy('sts_sap','Asc')->get();
+       
+        return  Datatables::of($data)->addIndexColumn()
+                ->addColumn('nama_vendor', function($data){
+                    return $data->vendor['name'];
+                })
+                ->addColumn('nilai_invoice', function($data){
+                    return uang($data->Amount);
+                })
+                ->addColumn('nilai_faktur', function($data){
+                    return uang($data->AmountInvoice);
+                })
+                ->addColumn('level_1', function($data){
+                    if($data->app_level1==""){
+                        return'';
+                    }else{
+                        return'<span class="btn btn-yellow btn-xs" onclick="view('.$data['id'].')"><i class="fas fa-check fa-fw"></i></span>';
+                    }
+                    
+                })
+                ->addColumn('level_2', function($data){
+                    if($data->app_level2==""){
+                        return'';
+                    }else{
+                        return'<span class="btn btn-yellow btn-xs" onclick="view('.$data['id'].')"><i class="fas fa-check fa-fw"></i></span>';
+                    }
+                    
+                })
+                ->addColumn('level_3', function($data){
+                    if($data->app_level3==""){
+                        return'';
+                    }else{
+                        return'<span class="btn btn-yellow btn-xs" onclick="view('.$data['id'].')"><i class="fas fa-check fa-fw"></i></span>';
+                    }
+                    
+                })
+                ->rawColumns(['level_1','level_2','level_3'])
+                ->make(true);
+    }
+    public function get_officer_web(request $request){
+        $tahun=$request->tahun;
+        $bulan=$request->bulan;
+        $wapu=$request->wapu;
+        if($request->bulan=='all'){
+            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->orderBy('InvoiceDate','Asc')->get();
+        }else{
+            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('InvoiceDate','Asc')->get();
+        }
+        return  Datatables::of($data)->addIndexColumn()
+                ->addColumn('nama_vendor', function($data){
+                    return $data->vendor['name'];
+                })
+                ->addColumn('nilai_invoice', function($data){
+                    return uang($data->Amount);
+                })
+                ->addColumn('nilai_faktur', function($data){
+                    return uang($data->AmountInvoice);
+                })
+                ->addColumn('statusnya', function($data){
+                    return'<i>'.$data['rolenya']['name'].'</i>';
+                    
+                })
+                ->rawColumns(['statusnya'])
+                ->setTotalRecords(500)->make(true);
+    }
+
     public function index_cari(request $request){
         $menu='Traking BTTD';
         $menu_detail=name();
@@ -380,6 +499,7 @@ class BttdController extends Controller
     }
     
     public function simpan(request $request){
+        
         if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur Pajak/Invoice';}
         if (trim($request->Reference) == '') {$error[] = '- Masukan No Faktur Pajak';}
         if (trim($request->Amount) == '') {$error[] = '- Masukan Nilai  Invoice';}
@@ -395,6 +515,12 @@ class BttdController extends Controller
         if (trim($request->file) == '') {$error[] = '- Upload dokumen tagihan';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
+            $wap=substr($request->Reference,0,3);
+            if($wap=='030' || $wap=='031'){
+                $wapu=1;
+            }else{
+                $wapu=2;
+            }
             $cek=Bttd::where('HeaderText',$request->HeaderText)->orWhere('Reference',$request->Reference)->count();
             $cekstruk=Struk::where('Reference',$request->Reference)->count();
             if($cek>0){
@@ -424,6 +550,7 @@ class BttdController extends Controller
                             $data->nama_bank   = $request->nama_bank;
                             $data->tagihan_id   = $request->tagihan_id;
                             $data->no_tlp   = $request->email;
+                            $data->wapu   = $wapu;
                             $data->email   = email_vendor();
                             $data->lokasi   = 7;
                             $data->sts   = 1;
@@ -479,6 +606,12 @@ class BttdController extends Controller
         if (trim($request->email) == '') {$error[] = '- Masukan Nomor Telepon/Handphone';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
+            $wap=substr($request->Reference,0,3);
+            if($wap=='030' || $wap=='031'){
+                $wapu=1;
+            }else{
+                $wapu=2;
+            }
             if($request->file==''){
                 $data           = Bttd::find($request->id);
                 $data->LIFNR   = Auth::user()['username']; 
@@ -494,6 +627,7 @@ class BttdController extends Controller
                 $data->nama_bank   = $request->nama_bank;
                 $data->tagihan_id   = $request->tagihan_id;
                 $data->no_tlp   = $request->email;
+                $data->wapu   = $wapu;
                 $data->email   = email_vendor();
                 $data->sts   = 1;
                 $data->save();
@@ -528,6 +662,7 @@ class BttdController extends Controller
                                 $data->no_tlp   = $request->email;
                                 $data->email   = email_vendor();
                                 $data->linknya   = $imageFileName;
+                                $data->wapu   = $wapu;
                                 $data->file   = $imageFileName;
                                 $data->sts   = 1;
                                 $data->save();

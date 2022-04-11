@@ -29,7 +29,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="btn-group" style="margin-bottom:10px;">
-                        <!-- <button class="btn btn-xs btn-success" onclick="simpan_terima()"><i class="fa fa-check"></i> Kirim To SAP</button> -->
+                        <button class="btn btn-xs btn-success" onclick="simpan_terima()"><i class="fa fa-check"></i> Kirim To SAP</button>
                         <!-- <button class="btn btn-xs btn-primary" onclick="revisi()"><i class="fa fa-arrow-left"></i> Revisi</button> -->
                     </div>
                     <div class="alert alert-success fade show m-b-0" style="background:#e0dea5;margin-bottom:1% !important">
@@ -49,6 +49,7 @@
                             <thead>
                                 <tr>
                                     <th width="3%">NO</th>
+                                    <th width="2%" ><input type="checkbox" onchange="pilihsemua(this)"></th>
                                     <th >Vendor</th>
                                     <th class="text-nowrap" width="10%" >No Faktur </th>
                                     <th class="text-nowrap" width="10%" >Nilai Faktur </th>
@@ -67,6 +68,11 @@
                                 
                                 <tr class="odd gradeX">
                                     <td class="ttd">{{($no+1)}}</td>
+                                    <td class="ttd" style="text-align: center;background: #f0f5d8 !important;">
+                                        @if($o['lokasi']==3)
+                                        <input type="checkbox" name="id[]" value="{{$o['id']}}">
+                                        @endif
+                                    </td>
                                     <td class="ttd"><b>{{$o['LIFNR']}}</b><br>{{$o['vendor']['name']}}</td>
                                     <td class="ttd">{{$o['Reference']}}</td>
                                     <td class="ttd">{{uang($o['AmountInvoice'])}}</td>

@@ -8,4 +8,5 @@ class Vendor extends Model
 {
     protected $table = 'vendor';
     public $timestamps = false;
+    protected $fillable = ['LIFNR','name'];
 }

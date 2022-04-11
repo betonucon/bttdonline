@@ -212,15 +212,36 @@ function jumlah_chat_vendor(){
    return $data;
 }
 function emailnya(){
-   $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
-   return $data['email'];
+   $cek=App\Vendor::where('LIFNR',Auth::user()['username'])->count();
+   if($cek>0){
+      $data=App\Vendor::where('LIFNR',Auth::user()['username'])->first();
+      return $data['email'];
+   }else{
+      return "";
+   }
 }
 function tgl($tgl){
    $data=date('d/m/y',strtotime($tgl));
    return $data;
 }
+function det_time($nik=null,$tgl=null,$time=null){
+   if($nik=="" || $nik=='0'){
+      $data=null;
+   }else{
+      $data=date('Y-m-d H:i:s',strtotime($tgl.$time));
+   }
+   return $data;
+}
 function matauang(){
    $data=App\Matauang::orderBy('name','Asc')->get();
+   return $data;
+}
+function cek_vendor($lifnr){
+   $data=App\Vendor::where('LIFNR',$lifnr)->count();
+   return $data;
+}
+function cek_bttd($kode){
+   $data=App\Bttd::where('Reference',$kode)->count();
    return $data;
 }
 function tagihan(){

@@ -12,6 +12,9 @@ class Bttd extends Model
     function vendor(){
         return $this->belongsTo('App\Vendor','LIFNR','LIFNR');
     }
+    function users(){
+        return $this->belongsTo('App\User','LIFNR','username');
+    }
 
     function rolenya(){
         return $this->belongsTo('App\Rolenya','lokasi','id');

@@ -50,6 +50,9 @@ Route::get('/register', 'Auth\LoginController@login');
 
 Route::get('/wsdlppn', 'WsdlController@ppn');
 Route::get('/cronjob_bank', 'WsdlController@parsing_bank');
+Route::get('/cronjob_vendor', 'WsdlController@parsing_vendor');
+Route::get('/cronjob_pph', 'WsdlController@parsing_pph');
+Route::get('/cronjob_voucher', 'WsdlController@parsing_voucher');
 Route::get('/parsing_txt_ZFI004N', 'WsdlController@parsing_txt_ZFI004N');
 
 
@@ -123,6 +126,10 @@ Route::group(['middleware'    => 'auth'],function(){
 });
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/bttd', 'BttdController@index');
+    Route::get('/sap', 'BttdController@index_sap');
+    Route::get('/web', 'BttdController@index_web');
+    Route::get('/bttd/get_officer', 'BttdController@get_officer');
+    Route::get('/bttd/get_officer_web', 'BttdController@get_officer_web');
     Route::get('/BeritaAcara', 'BttdController@index_ba');
     Route::get('/loket', 'BttdController@index_loket');
     Route::get('/officer', 'BttdController@index_officer');

@@ -100,6 +100,12 @@
 		</ul>
 	</li>
 @endif
+
+@if(Auth::user()['role_id']!=7)
+	<li class="has-sub"><a style="color: #6d6161;font-weight: bold;" href="{{url('web')}}"><i class="fa fa-clone"></i><span>Dokumen WEB</span></a></li>
+	<li class="has-sub"><a style="color: #6d6161;font-weight: bold;" href="{{url('sap')}}"><i class="fa fa-clone"></i><span>Dokumen SAP</span></a></li>
+	
+@endif
 @if(Auth::user()['role_id']==7)
 	<li class="nav-header" style="color: #6d6161;font-weight: bold;">DASHBOARD</li>
 	<li class="has-sub"><a style="color: #6d6161;font-weight: bold;" href="{{url('home')}}"><i class="fa fa-chart-pie"></i><span>Dashboard</span></a></li>
