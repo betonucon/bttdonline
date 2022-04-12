@@ -187,7 +187,7 @@ class BttdController extends Controller
                 })
                 ->addColumn('level_2', function($data){
                     if($data->app_level2==""){
-                        return'ww';
+                        return'';
                     }else{
                         return name_user($data->app_level2);
                     }
