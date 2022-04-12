@@ -34,6 +34,10 @@ class PenggunaController extends Controller
                     <label>Nama </label>
                     <input type="text" name="name" class="form-control" value="'.$data['name'].'">
                 </div>
+                <div class="form-group">
+                    <label>Nama Panggilan (Max 10 Karakter)</label>
+                    <input type="text" name="initial" class="form-control" value="'.$data['initial'].'">
+                </div>
                 
                 
                 
@@ -128,6 +132,7 @@ class PenggunaController extends Controller
     public function simpan(request $request){
         if (trim($request->username) == '') {$error[] = '- Masukan Username';}
         if (trim($request->name) == '') {$error[] = '- Masukan Nama Pengguna';}
+        if (trim($request->initial) == '') {$error[] = '- Masukan Nama Panggilan Max 10 Karakter';}
         if (trim($request->email) == '') {$error[] = '- Masukan Email Pengguna';}
         if (trim($request->role_id) == '') {$error[] = '- Pilih Akses Role';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
@@ -139,6 +144,7 @@ class PenggunaController extends Controller
                 $data           = New User;
                 $data->username   = $request->username;
                 $data->name   = $request->name;
+                $data->initial   = $request->initial;
                 $data->email   = $request->email;
                 $data->role_id   = $request->role_id;
                 $data->password   = Hash::make($request->username);
@@ -155,6 +161,7 @@ class PenggunaController extends Controller
     public function simpan_ubah(request $request){
         if (trim($request->name) == '') {$error[] = '- Masukan Nama Pengguna';}
         if (trim($request->email) == '') {$error[] = '- Masukan Email Pengguna';}
+        if (trim($request->initial) == '') {$error[] = '- Masukan Nama Panggilan Max 10 Karakter';}
         if (trim($request->role_id) == '') {$error[] = '- Pilih Akses Role';}
         if (isset($error)) {echo '<i class="fa fa-times-circle-o" style="font-size: 50px;"></i><br><br><p style="padding:5px;color:#000;font-size:15px"><b>Error</b>: <br />'.implode('<br />', $error).'</p>';} 
         else{
@@ -162,6 +169,7 @@ class PenggunaController extends Controller
             
                 $data           = User::find($request->id);
                 $data->name   = $request->name;
+                $data->initial   = $request->initial;
                 $data->email   = $request->email;
                 $data->role_id   = $request->role_id;
                 $data->save();

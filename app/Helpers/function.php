@@ -184,6 +184,16 @@ function daftar_chat(){
    $data=App\Chat::select('from')->where('from','!=','admin')->groupBy('from')->get();
    return $data;
 }
+function name_user($id){
+   $cek=App\User::where('username',$id)->count();
+   if($cek>0){
+      $data=App\User::where('username',$id)->first();
+      return $data['initial'];
+   }else{
+      return 'No';
+   }
+   
+}
 function cek_user($id){
    if($id=='admin'){
       $nama='Admin';

@@ -36,6 +36,7 @@
 						{ data: 'HeaderText' },
 						{ data: 'nilai_faktur' },
 						{ data: 'nilai_invoice' },
+						{ data: 'filebttd' },
 						{ data: 'statusnya' },
 						
 					],
@@ -173,20 +174,24 @@
                             <div class="col-md-4" style="background:#f6f6ff;padding-top:1%;padding-bottom:1%">
                                 <table width="100%">
                                     <tr>
-                                        <td width="30%" style="background:#f6f6ff !important;"><b>Periode</b></td>
+                                        <td width="30%" style="background:#f6f6ff !important;"><b>PERIODE</b></td>
                                         <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; @if($bulan=='all') @else {{bulan($bulan)}} @endif  {{$tahun}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="background:#f6f6ff !important;"><b>Tagihan</b></td>
+                                        <td style="background:#f6f6ff !important;"><b>TAGIHAN</b></td>
                                         <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; @if($wapu==1) WAPU @else NON WAPU @endif </td>
                                     </tr>
                                     <tr>
-                                        <td style="background:#f6f6ff !important;"><b>Total</b></td>
+                                        <td style="background:#f6f6ff !important;"><b>TOTAL DOKUMEN</b></td>
                                         <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; {{number_format($total,0)}} </td>
                                     </tr>
                                     <tr>
-                                        <td style="background:#f6f6ff !important;"><b>Nilai Faktur</b></td>
+                                        <td style="background:#f6f6ff !important;"><b>NILAI FAKTUR</b></td>
                                         <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; {{number_format($faktur,0)}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="background:#f6f6ff !important;"><b>NILAI INVOICE</b></td>
+                                        <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; {{number_format($invoice,0)}} </td>
                                     </tr>
                                 </table>
                             </div>
@@ -205,6 +210,7 @@
                                     <th>No Invoice</th>
                                     <th>Nilai Faktur</th>
                                     <th>Nilai Invoice</th>
+                                    <th width="0.2%">Bttd</th>
                                     <th width="0.2%">Status</th>
                                     
                                 </tr>

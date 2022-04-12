@@ -43,17 +43,21 @@ class BttdController extends Controller
             }else{
                 $tahun=$request->tahun;
             }
-            if($request->wapu==""){
-                $wapu=1;
-            }else{
-                $wapu=$request->wapu;
-            }
             if($request->bulan=="" || $request->bulan=="all"){
                 $bulan='all';
             }else{
                 $bulan=$request->bulan;
             }
-            return view('bttd.index_sap',compact('menu','menu_detail','tahun','bulan','wapu'));
+            if($bulan=='all'){
+                $total=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->count();
+                $faktur=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->sum('AmountInvoice');
+                $invoice=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->sum('Amount');
+            }else{
+                $total=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->count();
+                $faktur=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->sum('AmountInvoice');
+                $invoice=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->sum('Amount');
+            }
+            return view('bttd.index_sap',compact('menu','menu_detail','tahun','bulan','total','faktur','invoice'));
         
     }
     public function index_web(request $request){
@@ -78,11 +82,13 @@ class BttdController extends Controller
             if($bulan=='all'){
                 $total=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->count();
                 $faktur=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->sum('AmountInvoice');
+                $invoice=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->sum('Amount');
             }else{
                 $total=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->count();
                 $faktur=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->sum('AmountInvoice');
+                $invoice=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->sum('Amount');
             }
-            return view('bttd.index_web',compact('menu','menu_detail','tahun','bulan','wapu','total','faktur'));
+            return view('bttd.index_web',compact('menu','menu_detail','tahun','bulan','wapu','total','faktur','invoice'));
         
     }
     public function view_traking(request $request){
@@ -152,8 +158,14 @@ class BttdController extends Controller
     }
 
     public function get_officer(request $request){
-        $data=Bttd::where('sts_sap',1)->orderBy('sts_sap','Asc')->get();
-       
+        $tahun=$request->tahun;
+        $bulan=$request->bulan;
+        if($request->bulan=='all'){
+            $data=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->orderBy('InvoiceDate','Asc')->get();
+        }else{
+            $data=Bttd::where('sts_sap',1)->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('InvoiceDate','Asc')->get();
+        }
+        
         return  Datatables::of($data)->addIndexColumn()
                 ->addColumn('nama_vendor', function($data){
                     return $data->vendor['name'];
@@ -165,18 +177,19 @@ class BttdController extends Controller
                     return uang($data->AmountInvoice);
                 })
                 ->addColumn('level_1', function($data){
+                    
                     if($data->app_level1==""){
                         return'';
                     }else{
-                        return'<span class="btn btn-yellow btn-xs" onclick="view('.$data['id'].')"><i class="fas fa-check fa-fw"></i></span>';
+                        return name_user($data->app_level1);
                     }
                     
                 })
                 ->addColumn('level_2', function($data){
                     if($data->app_level2==""){
-                        return'';
+                        return'ww';
                     }else{
-                        return'<span class="btn btn-yellow btn-xs" onclick="view('.$data['id'].')"><i class="fas fa-check fa-fw"></i></span>';
+                        return name_user($data->app_level2);
                     }
                     
                 })
@@ -184,11 +197,27 @@ class BttdController extends Controller
                     if($data->app_level3==""){
                         return'';
                     }else{
-                        return'<span class="btn btn-yellow btn-xs" onclick="view('.$data['id'].')"><i class="fas fa-check fa-fw"></i></span>';
+                        return name_user($data->app_level3);
                     }
                     
                 })
-                ->rawColumns(['level_1','level_2','level_3'])
+                ->addColumn('level_4', function($data){
+                    if($data->app_level4==""){
+                        return'';
+                    }else{
+                        return name_user($data->app_level4);
+                    }
+                    
+                })
+                ->addColumn('level_5', function($data){
+                    if($data->app_level5==""){
+                        return'';
+                    }else{
+                        return name_user($data->app_level5);
+                    }
+                    
+                })
+                ->rawColumns(['level_1','level_2','level_3','level_4','level_5'])
                 ->make(true);
     }
     public function get_officer_web(request $request){
@@ -214,7 +243,11 @@ class BttdController extends Controller
                     return'<i>'.$data['rolenya']['name'].'</i>';
                     
                 })
-                ->rawColumns(['statusnya'])
+                ->addColumn('filebttd', function($data){
+                    return'<span class="btn btn-xs btn-success" onclick="tampilkan('.$data['id'].')" ><i class="fa fa-file-pdf"></i></span>';
+                    
+                })
+                ->rawColumns(['statusnya','filebttd'])
                 ->setTotalRecords(500)->make(true);
     }
 

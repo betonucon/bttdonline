@@ -100,9 +100,10 @@
 		</ul>
 	</li>
 @endif
-
+@if(Auth::user()['role_id']==8)
+	<li class="has-sub"><a style="color: #6d6161;font-weight: bold;" href="{{url('web')}}"><i class="fa fa-clone"></i><span>Faktur Pajak </span></a></li>
+@endif
 @if(Auth::user()['role_id']!=7)
-	<li class="has-sub"><a style="color: #6d6161;font-weight: bold;" href="{{url('web')}}"><i class="fa fa-clone"></i><span>Dokumen WEB</span></a></li>
 	<li class="has-sub"><a style="color: #6d6161;font-weight: bold;" href="{{url('sap')}}"><i class="fa fa-clone"></i><span>Dokumen SAP</span></a></li>
 	
 @endif

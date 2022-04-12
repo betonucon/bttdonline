@@ -19,7 +19,7 @@
 					processing: false,
 					ordering: false,
 					serverSide: false,
-					ajax:"{{ url('bttd/get_officer')}}",
+					ajax:"{{ url('bttd/get_officer')}}?tahun={{$tahun}}&bulan={{$bulan}}",
 					columns: [
 						{ data: 'DT_RowIndex', render: function (data, type, row, meta) 
 							{
@@ -28,6 +28,8 @@
 						},
 						{ data: 'LIFNR' },
 						{ data: 'nama_vendor' },
+                        { data: 'InvoiceDate' }, 
+                        { data: 'diterima' }, 
 						{ data: 'Reference' },
 						{ data: 'HeaderText' },
 						{ data: 'nilai_faktur' },
@@ -36,6 +38,8 @@
 						{ data: 'level_1' },
 						{ data: 'level_2' },
 						{ data: 'level_3' },
+						{ data: 'level_4' },
+						{ data: 'level_5' },
 						
 					],
 					language: {
@@ -46,34 +50,34 @@
 						}
 					}
 				});
-				$('#data-table-default thead th:eq(1)').each(function () {
-					var title = $(this).text();
-					$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
-				});
-				$('#data-table-default thead th:eq(2)').each(function () {
-					var title = $(this).text();
-					$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
-				});
-				$('#data-table-default thead th:eq(3)').each(function () {
-					var title = $(this).text();
-					$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
-				});
-				$('#data-table-default thead th:eq(4)').each(function () {
-					var title = $(this).text();
-					$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
-				});
-				$('#data-table-default thead th:eq(5)').each(function () {
-					var title = $(this).text();
-					$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
-				});
-				$('#data-table-default thead th:eq(6)').each(function () {
-					var title = $(this).text();
-					$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
-				});
-				$('#data-table-default thead th:eq(7)').each(function () {
-					var title = $(this).text();
-					$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
-				});
+				// $('#data-table-default thead th:eq(1)').each(function () {
+				// 	var title = $(this).text();
+				// 	$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
+				// });
+				// $('#data-table-default thead th:eq(2)').each(function () {
+				// 	var title = $(this).text();
+				// 	$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
+				// });
+				// $('#data-table-default thead th:eq(3)').each(function () {
+				// 	var title = $(this).text();
+				// 	$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
+				// });
+				// $('#data-table-default thead th:eq(4)').each(function () {
+				// 	var title = $(this).text();
+				// 	$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
+				// });
+				// $('#data-table-default thead th:eq(5)').each(function () {
+				// 	var title = $(this).text();
+				// 	$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
+				// });
+				// $('#data-table-default thead th:eq(6)').each(function () {
+				// 	var title = $(this).text();
+				// 	$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
+				// });
+				// $('#data-table-default thead th:eq(7)').each(function () {
+				// 	var title = $(this).text();
+				// 	$(this).html(title+' <input type="text" class="col-search-input" style="display:block;border: solid 1px #b9a4a4; padding: 3px; width: 100%;" placeholder="CARI ' + title + '" />');
+				// });
 				
 				
 				table.columns().every(function () {
@@ -133,23 +137,74 @@
                     <h4 class="panel-title">{{$menu}}</h4>
                 </div>
                 <div class="panel-body">
-                    
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="row row-space-12" style="background:#f6f6ff;padding-top:1%;padding-bottom:1%">
+                                <div class="col-xs-4">
+                                    <select class="form-control" id="tahun">
+                                        @for($x=2020;$x<=date('Y');$x++)
+                                            <option value="{{$x}}" @if($tahun==$x) selected @endif>{{$x}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                <div class="col-xs-6">
+                                    <select class="form-control" id="bulan">
+                                        <option value="all">Semua Bulan</option>
+                                        @for($x=1;$x<=12;$x++)
+                                            <option value="{{bulnya($x)}}" @if($bulan==$x) selected @endif >{{bulan(bulnya($x))}}</option>
+                                        @endfor
+                                    </select>
+                                </div>
+                                
+                                <div class="col-xs-2">
+                                    <span class="btn btn-success" onclick="cari()">Cari</span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-4" style="background:#f6f6ff;padding-top:1%;padding-bottom:1%">
+                            <table width="100%">
+                                <tr>
+                                    <td width="30%" style="background:#f6f6ff !important;"><b>PERIODE</b></td>
+                                    <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; @if($bulan=='all') @else {{bulan($bulan)}} @endif  {{$tahun}}</td>
+                                </tr>
+                                <tr>
+                                    <td style="background:#f6f6ff !important;"><b>TOTAL</b></td>
+                                    <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; {{number_format($total,0)}} </td>
+                                </tr>
+                                <tr>
+                                    <td style="background:#f6f6ff !important;"><b>NILAI FAKTUR</b></td>
+                                    <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; {{number_format($faktur,0)}} </td>
+                                </tr>
+                                <tr>
+                                    <td style="background:#f6f6ff !important;"><b>NILAI INVOICE</b></td>
+                                    <td style="background:#f6f6ff !important;"><b>:</b> &nbsp;&nbsp; {{number_format($invoice,0)}} </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        
+                    </div>
                     <form method="post"  enctype="multipart/form-data" id="my_data_all">
                     @csrf
-                        <table id="data-table-default" style="width:150%" class="table table-striped table-bordered table-td-valign-middle display nowrap">
+                        <table id="data-table-default" style="width:170%" class="table table-striped table-bordered table-td-valign-middle display nowrap">
 							<thead>
                                 <tr>
                                     <th>NO</th>
                                     <th>LIFNR</th>
                                     <th >NAME</th>
-                                    <th>No Faktur</th>
+                                    <th >TGL FAKTUR</th>
+                                    <th >TGL DITERIMA</th>
+                                    <th>No Faktur Pajak</th>
                                     <th>No Invoice</th>
                                     <th>Nilai Faktur</th>
                                     <th>Nilai Invoice</th>
                                     <th>Voucher</th>
-                                    <th width="0.2%">Lvl 1</th>
-                                    <th width="0.2%">Lvl 1</th>
-                                    <th width="0.2%">Lvl 1</th>
+                                    <th width="0.2%">Officer</th>
+                                    <th width="0.2%">SUPPERVISOR</th>
+                                    <th width="0.2%">SUPPERINTENDENT</th>
+                                    <th width="0.2%">MANAGER</th>
+                                    <th width="0.2%">GENERAL MANAGER</th>
                                     
                                 </tr>
                                 
@@ -238,14 +293,11 @@
     function filter_data(){
         $('#modal-cari').modal('show');
     }
-    function cari_data(){
-        var parameter=$('#parameter').val();
-        var kata=$('#kata').val();
-        if(kata==''){
-            alert('Masukan kata kunci')
-        }else{
-            location.assign("{{url('loket/terima')}}?kata="+kata+"&parameter="+parameter);
-        }
+    function cari(){
+        var bulan=$('#bulan').val();
+        var tahun=$('#tahun').val();
+        location.assign("{{url('sap')}}?bulan="+bulan+"&tahun="+tahun);
+        
     }
 
     function cetak(a){
