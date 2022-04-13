@@ -20,9 +20,9 @@ class WsdlController extends Controller
 
     public function parsing_bank(){
         error_reporting(0);
-        $contents = file_get_contents('SAPtoWeB/ZFI094_Vendor_Bank_Detail.txt');
+        $contents = file_get_contents('SAPtoWeb/ZFI094_Vendor_Bank_Detail.txt');
         $rows = explode("\n", trim($contents));
-        $file=File::copy(public_path('SAPtoWeB/ZFI094_Vendor_Bank_Detail.txt'), public_path('SAPtoWeB/arsip/ZFI094_Vendor_Bank_Detail'.date('ymd').'.txt'));
+        $file=File::copy(public_path('SAPtoWeb/ZFI094_Vendor_Bank_Detail.txt'), public_path('SAPtoWeb/arsip/ZFI094_Vendor_Bank_Detail'.date('ymd').'.txt'));
         
             foreach($rows as $x=>$row) {
                 if($x==0){
@@ -54,9 +54,9 @@ class WsdlController extends Controller
 
     public function parsing_vendor(){
         error_reporting(0);
-        $contents = file_get_contents('SAPtoWeB/ZFI094_Vendor_General_Master.txt');
+        $contents = file_get_contents('SAPtoWeb/ZFI094_Vendor_General_Master.txt');
         $rows = explode("\n", trim($contents));
-        $file=File::copy(public_path('SAPtoWeB/ZFI094_Vendor_General_Master.txt'), public_path('SAPtoWeB/arsip/ZFI094_Vendor_General_Master'.date('ymd').'.txt'));
+        $file=File::copy(public_path('SAPtoWeb/ZFI094_Vendor_General_Master.txt'), public_path('SAPtoWeb/arsip/ZFI094_Vendor_General_Master'.date('ymd').'.txt'));
         
             foreach($rows as $x=>$row) {
                 $results= explode('|', trim($row));
@@ -83,9 +83,9 @@ class WsdlController extends Controller
     }
     public function parsing_pph(){
         error_reporting(0);
-        $contents = file_get_contents('SAPtoWeB/ZFI080_E-COUPON.txt');
+        $contents = file_get_contents('SAPtoWeb/ZFI080_E-COUPON.txt');
         $rows = explode("\n", trim($contents));
-        $file=File::copy(public_path('SAPtoWeB/ZFI080_E-COUPON.txt'), public_path('SAPtoWeB/arsip/ZFI080_E-COUPON'.date('ymd').'.txt'));
+        $file=File::copy(public_path('SAPtoWeb/ZFI080_E-COUPON.txt'), public_path('SAPtoWeb/arsip/ZFI080_E-COUPON'.date('ymd').'.txt'));
             foreach($rows as $x=>$row) {
                 if($x==0){
 
@@ -120,9 +120,9 @@ class WsdlController extends Controller
     }
     public function parsing_voucher(){
         
-        $contents = file_get_contents('SAPtoWeB/ZFI004N_APPVOU.txt');
+        $contents = file_get_contents('SAPtoWeb/ZFI004N_APPVOU.txt');
         $rows = explode("\n", trim($contents));
-        // $file=File::copy(public_path('SAPtoWeB/ZFI004N_APPVOU.txt'), public_path('SAPtoWeB/arsip/ZFI004N_APPVOU'.date('ymd').'.txt'));
+        $file=File::copy(public_path('SAPtoWeb/ZFI004N_APPVOU.txt'), public_path('SAPtoWeb/arsip/ZFI004N_APPVOU'.date('ymd').'.txt'));
             foreach($rows as $x=>$row) {
                 $results= explode('|', trim($row));
                 if($x==0){
@@ -158,7 +158,7 @@ class WsdlController extends Controller
     }
     public function parsing_txt_ZFI004N(){
         error_reporting(0);
-        $contents = file_get_contents('SAPtoWeB/TESTING ZFI004N.txt');
+        $contents = file_get_contents('SAPtoWeb/TESTING ZFI004N.txt');
         $rows = explode("\n", trim($contents));
         // dd($rows);
         
