@@ -119,10 +119,10 @@ class WsdlController extends Controller
         
     }
     public function parsing_voucher(){
-        error_reporting(0);
+        // error_reporting(0);
         $contents = file_get_contents('SAPtoWEB/ZFI004N_APPVOU.txt');
         $rows = explode("\n", trim($contents));
-        $file=File::copy(public_path('SAPtoWEB/ZFI004N_APPVOU.txt'), public_path('SAPtoWEB/arsip/ZFI004N_APPVOU'.date('ymd').'.txt'));
+        // $file=File::copy(public_path('SAPtoWEB/ZFI004N_APPVOU.txt'), public_path('SAPtoWEB/arsip/ZFI004N_APPVOU'.date('ymd').'.txt'));
             foreach($rows as $x=>$row) {
                 $results= explode('|', trim($row));
                 if($x==0){
