@@ -225,9 +225,9 @@ class BttdController extends Controller
         $bulan=$request->bulan;
         $wapu=$request->wapu;
         if($request->bulan=='all'){
-            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->orderBy('InvoiceDate','Asc')->get();
+            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->orderBy('InvoiceDate','Asc')->get();
         }else{
-            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('InvoiceDate','Asc')->get();
+            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('InvoiceDate','Asc')->get();
         }
         return  Datatables::of($data)->addIndexColumn()
                 ->addColumn('nama_vendor', function($data){
@@ -247,7 +247,21 @@ class BttdController extends Controller
                     return'<span class="btn btn-xs btn-success" onclick="tampilkan('.$data['id'].')" ><i class="fa fa-file-pdf"></i></span>';
                     
                 })
-                ->rawColumns(['statusnya','filebttd'])
+                ->addColumn('masuk', function($data){
+                   
+                        if($data['sts_pajak']==1){
+                            return'<i class="fa fa-check"></i>';
+                        }else{
+                            if($data['lokasi']==3){
+                                return'<span class="btn btn-xs btn-primary" onclick="terima_pajak('.$data['id'].')" ><i class="fa fa-check"></i></span>';
+                            }else{
+                                return'<span class="btn btn-xs btn-default"><i class="fa fa-check"></i></span>';
+                            }
+                        }
+                     
+                    
+                })
+                ->rawColumns(['statusnya','filebttd','masuk'])
                 ->setTotalRecords(500)->make(true);
     }
 
@@ -623,6 +637,18 @@ class BttdController extends Controller
                     echo'ok';
                 }
         }
+    }
+
+    public function terima_pajak(request $request){
+        
+        $data           = Bttd::find($request->id);
+        $data->sts_pajak   = 1; 
+        $data->save();
+
+        if($data){
+            echo'ok';
+        }
+        
     }
     public function simpan_ubah(request $request){
         if (trim($request->InvoiceDate) == '') {$error[] = '- Masukan Tanggal Faktur Pajak/Invoice';}

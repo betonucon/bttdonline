@@ -128,6 +128,7 @@ Route::group(['middleware'    => 'auth'],function(){
     Route::get('/bttd', 'BttdController@index');
     Route::get('/sap', 'BttdController@index_sap');
     Route::get('/web', 'BttdController@index_web');
+    Route::get('/web/terima_pajak', 'BttdController@terima_pajak');
     Route::get('/bttd/get_officer', 'BttdController@get_officer');
     Route::get('/bttd/get_officer_web', 'BttdController@get_officer_web');
     Route::get('/BeritaAcara', 'BttdController@index_ba');

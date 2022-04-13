@@ -28,6 +28,7 @@
 								return data;
 							} 
 						},
+						{ data: 'masuk' },
 						{ data: 'LIFNR' },
 						{ data: 'nama_vendor' },
                         { data: 'InvoiceDate' }, 
@@ -202,6 +203,7 @@
 							<thead>
                                 <tr>
                                     <th>NO</th>
+                                    <th>Act</th>
                                     <th>LIFNR</th>
                                     <th >NAME</th>
                                     <th >TGL FAKTUR</th>
@@ -331,6 +333,26 @@
             success: function(msg){
                 $('#tampilkanprint').html(msg);
                 $('#modal-tampilkan').modal('show');
+                
+            }
+        }); 
+                    
+    }
+    function terima_pajak(a){
+        
+        $.ajax({
+            type: 'GET',
+            url: "{{url('web/terima_pajak')}}",
+            data: "id="+a,
+            beforeSend: function() {
+                document.getElementById("loadnya").style.width = "100%";
+            },
+            success: function(msg){
+                var table = $('#data-table-default').DataTable();
+                table.ajax.reload(function ( json ) {
+                    document.getElementById("loadnya").style.width = "0px";
+                });
+                
                 
             }
         }); 

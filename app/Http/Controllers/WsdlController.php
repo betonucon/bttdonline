@@ -131,6 +131,7 @@ class WsdlController extends Controller
                     $save=Bttd::where('Reference',$results[2])->update([
                         'no_voucher'=>$results[4],
                         'sts_sap'=>1,
+                        'update_sap'=>date('Y-m-d'),
                         'app_level1'=>$results[25],
                         'app_tgl_level1'=>det_time($results[25],$results[26],$results[27]),
                         'app_level2'=>$results[28],
@@ -143,6 +144,11 @@ class WsdlController extends Controller
                         'app_tgl_level5'=>det_time($results[37],$results[38],$results[39]),
                         
                     ]);
+                    if($save){
+                        echo'ok<br>';
+                    }else{
+                        echo'Gagal<br>';
+                    }
                    
                 }
             }
