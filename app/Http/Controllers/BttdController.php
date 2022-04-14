@@ -181,7 +181,7 @@ class BttdController extends Controller
                     if($data->app_level1==""){
                         return'';
                     }else{
-                        return name_user($data->app_level1);
+                        return $data->app_level1;
                     }
                     
                 })
@@ -189,7 +189,7 @@ class BttdController extends Controller
                     if($data->app_level2==""){
                         return'';
                     }else{
-                        return name_user($data->app_level2);
+                        return $data->app_level2;
                     }
                     
                 })
@@ -197,7 +197,7 @@ class BttdController extends Controller
                     if($data->app_level3==""){
                         return'';
                     }else{
-                        return name_user($data->app_level3);
+                        return $data->app_level3;
                     }
                     
                 })
@@ -205,7 +205,7 @@ class BttdController extends Controller
                     if($data->app_level4==""){
                         return'';
                     }else{
-                        return name_user($data->app_level4);
+                        return $data->app_level4;
                     }
                     
                 })
@@ -213,7 +213,7 @@ class BttdController extends Controller
                     if($data->app_level5==""){
                         return'';
                     }else{
-                        return name_user($data->app_level5);
+                        return $data->app_level5;
                     }
                     
                 })
