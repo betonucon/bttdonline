@@ -28,7 +28,7 @@
 								return data;
 							} 
 						},
-						{ data: 'masuk' },
+						{ data: 'masuk',className:'text-center' },
 						{ data: 'LIFNR' },
 						{ data: 'nama_vendor' },
                         { data: 'InvoiceDate' }, 
@@ -139,19 +139,19 @@
                 <div class="panel-body">
                     
                     <form method="post"  enctype="multipart/form-data" id="my_data_all">
-                    @csrf
+                        @csrf
                         
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="row row-space-12" style="background:#f6f6ff;padding-top:1%;padding-bottom:1%">
-                                    <div class="col-xs-4">
+                                    <div class="col-xs-3">
                                         <select class="form-control" id="tahun">
                                             @for($x=2020;$x<=date('Y');$x++)
                                                 <option value="{{$x}}" @if($tahun==$x) selected @endif>{{$x}}</option>
                                             @endfor
                                         </select>
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-5">
                                         <select class="form-control" id="bulan">
                                             <option value="all">Semua Bulan</option>
                                             @for($x=1;$x<=12;$x++)
@@ -166,8 +166,9 @@
                                             
                                         </select>
                                     </div>
-                                    <div class="col-xs-2">
+                                    <div class="col-xs-4">
                                         <span class="btn btn-success" onclick="cari()">Cari</span>
+                                        <span class="btn btn-primary" onclick="simpan()">Terima</span>
                                     </div>
                                 </div>
 
@@ -203,7 +204,7 @@
 							<thead>
                                 <tr>
                                     <th>NO</th>
-                                    <th>Act</th>
+                                    <th  width="0.2%">Act</th>
                                     <th>LIFNR</th>
                                     <th >NAME</th>
                                     <th >TGL FAKTUR</th>
@@ -360,10 +361,10 @@
     }
 
     function simpan(){
-        var form=document.getElementById('my_data');
+        var form=document.getElementById('my_data_all');
         $.ajax({
                 type: 'POST',
-                url: "{{url('pengguna/simpan')}}",
+                url: "{{url('web/terima_pajak')}}",
                 data: new FormData(form),
                 contentType: false,
                 cache: false,
@@ -374,11 +375,13 @@
                 success: function(msg){
                     
                     if(msg=='ok'){
-                        location.reload();
+                        var table = $('#data-table-default').DataTable();
+                        table.ajax.reload(function ( json ) {
+                            document.getElementById("loadnya").style.width = "0px";
+                        });
                     }else{
-                    document.getElementById("loadnya").style.width = "0px";
-                        $('#modal-notif').modal('show');
-                        $('#notif').html(msg);
+                        document.getElementById("loadnya").style.width = "0px";
+                        alert(msg);
                     }
                             
                     

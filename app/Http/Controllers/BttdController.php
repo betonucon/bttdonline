@@ -225,9 +225,9 @@ class BttdController extends Controller
         $bulan=$request->bulan;
         $wapu=$request->wapu;
         if($request->bulan=='all'){
-            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->orderBy('InvoiceDate','Asc')->get();
+            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->orderBy('sts_pajak','Asc')->get();
         }else{
-            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('InvoiceDate','Asc')->get();
+            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('sts_pajak','Asc')->get();
         }
         return  Datatables::of($data)->addIndexColumn()
                 ->addColumn('nama_vendor', function($data){
@@ -253,7 +253,7 @@ class BttdController extends Controller
                             return'<i class="fa fa-check"></i>';
                         }else{
                             if($data['lokasi']==3){
-                                return'<span class="btn btn-xs btn-primary" onclick="terima_pajak('.$data['id'].')" ><i class="fa fa-check"></i></span>';
+                                return'<input type="checkbox" name="id[]" value="'.$data['id'].'" />';
                             }else{
                                 return'<span class="btn btn-xs btn-default"><i class="fa fa-check"></i></span>';
                             }
@@ -640,14 +640,21 @@ class BttdController extends Controller
     }
 
     public function terima_pajak(request $request){
-        
-        $data           = Bttd::find($request->id);
-        $data->sts_pajak   = 1; 
-        $data->save();
-
-        if($data){
-            echo'ok';
+        error_reporting(0);
+        $jum=count($request->id);
+        if($jum>0){
+            for($x=0;$x<$jum;$x++){
+                $data           = Bttd::find($request->id[$x]);
+                $data->sts_pajak   = 1; 
+                $data->save();
+            }
+            
+                echo'ok';
+           
+        }else{
+            echo'Pilih Faktur Pajak';
         }
+            
         
     }
     public function simpan_ubah(request $request){

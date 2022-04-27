@@ -109,7 +109,7 @@
                 </tr>
                 <tr>
                     <td class="ttd">3</td>
-                    <td class="ttd">Nilai Faktur Pajak (PPN 10%)</td>
+                    <td class="ttd">Nilai Faktur Pajak (PPN 11%)</td>
                     <td class="ttd">{{$data['AmountInvoice']}}</td>
                 </tr>
                 <tr>
@@ -357,7 +357,7 @@
                         <td class="ttd" align="right" >{{uang($jumtotal_harga)}}</td>
                     </tr>
                     <tr>
-                        <td class="tth" colspan="4">PPN 10%</td>
+                        <td class="tth" colspan="4">PPN 11%</td>
                         <td class="ttd" align="right" >{{uang(($jumtotal_harga*10)/100)}}</td>
                     </tr>
                     <tr>
@@ -398,7 +398,7 @@
                         <td class="ttd" align="right" >{{uang($jumtotal_harga)}}</td>
                     </tr>
                     <tr>
-                        <td class="tth" colspan="4">PPN 10%</td>
+                        <td class="tth" colspan="4">PPN 11%</td>
                         <td class="ttd" align="right" >{{uang(($jumtotal_harga*10)/100)}}</td>
                     </tr>
                     <tr>
