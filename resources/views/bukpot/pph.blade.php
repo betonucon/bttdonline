@@ -28,13 +28,24 @@
                     <h4 class="panel-title">{{$menu}}</h4>
                 </div>
                 <div class="panel-body">
-                    <div class="btn-group" style="margin-bottom:10px;">
-                        <button class="btn btn-xs btn-primary" onclick="tambah()"><i class="fa fa-plus"></i> Upload BukPot PPH</button>
-                        <button class="btn btn-xs btn-danger" onclick="hapus()"><i class="fa fa-eraser"></i> Hapus</button>
+                    <div class="row">
+        
+                        <div class="col-lg-11">
+                            <div class="btn-group" style="margin-bottom:10px;">
+                                <button class="btn btn-xs btn-primary" onclick="tambah()"><i class="fa fa-plus"></i> Upload BukPot PPH</button>
+                                <button class="btn btn-xs btn-danger" onclick="hapus()"><i class="fa fa-eraser"></i> Hapus</button>
+                            </div>
+                        </div>
+                        <div class="col-lg-1">
+                            <div class="btn-group" style="margin-bottom:10px;">
+                                <button class="btn btn-sm btn-primary" onclick="cari_data()"><i class="fa fa-search"></i> Filter</button>
+                            </div>
+                        </div>
                     </div>
+                   
                     <form method="post"  enctype="multipart/form-data" id="my_data_all">
                     @csrf
-                        <table id="example" class="table table-striped table-bordered">
+                        <table id="exampledata" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th width="3%">NO</th>
@@ -133,20 +144,27 @@
                         </div>
                     </div>
                     <!-- #modal-message -->
-                    <div class="modal modal-message fade" id="modal-message">
+                    <div class="modal" id="modal-message">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h4 class="modal-title">Modal Message Header</h4>
+                                    <h4 class="modal-title">Filter Pencarian</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Text in a modal</p>
-                                    <p>Do you want to turn on location services so GPS can use your location ?</p>
+                                    <label>Pilih Parameter</label>
+                                    <select id="value" class="form-control">
+                                         <option value="">Pilih ---</option>
+                                         <option value="LIFNR">Kode Vendor</option>
+                                         <option value="Docno">No BukPot</option>
+                                         <option value="DateDocno">Tanggal Bukpot (yyyy-mm-dd)</option>
+                                    </select>
+                                    <label>Cari</label>
+                                    <input type="text" class="form-control" id="text">
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-                                    <a href="javascript:;" class="btn btn-primary">Save Changes</a>
+                                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">tutup</a>
+                                    <a href="javascript:;" class="btn btn-primary" onclick="proses_cari()">Terapkan</a>
                                 </div>
                             </div>
                         </div>
@@ -167,11 +185,30 @@
 @push('ajax')
 <script>
     $(document).ready(function() {
-        
+        $('#exampledata').dataTable( {
+            "paging":   false,
+            "responsive": true,
+            "searching": false,
+            "ordering": false,
+            "info":     false
+        } );
     });
 
     function tambah(){
         $('#modal-tambah').modal('show');
+    }
+    function cari_data(){
+        $('#modal-message').modal('show');
+    }
+    function proses_cari(){
+        var value=$('#value').val();
+        var text=$('#text').val();
+        if(text=="" || value==""){
+            alert('Pilih parameter dan isi kata pencarian')
+        }else{
+            location.assign("{{url('pph')}}?value="+value+"&text="+text)
+        }
+        
     }
 
     function ubah(a){

@@ -5,8 +5,8 @@ namespace App\Imports;
 use App\Pph;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithStartRow;
-
-class PphImport implements ToModel, WithStartRow
+use Maatwebsite\Excel\Concerns\WithCalculatedFormulas;
+class PphImport implements ToModel, WithStartRow,WithCalculatedFormulas
 {
     /**
     * @param array $row
@@ -27,8 +27,10 @@ class PphImport implements ToModel, WithStartRow
                 'Reference' => $row[4], 
                 'AmountDpp' => $row[5], 
                 'AmountPph' => $row[6], 
+                'lastdate' => date('Y-m-d'), 
                 'sts' => 0, 
             ]);
+            // 'HeaderText','Reference','LIFNR','Docno','AmountDpp','AmountPph','DateDocno','sts','nodoc','vocer','lastdate','tgl_faktur'
 
             
         }

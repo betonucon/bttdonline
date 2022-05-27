@@ -36,7 +36,14 @@ class BukpotController extends Controller
         if(Auth::user()['role_id']==2){
             $menu='Bukti Potong PPH';
             $menu_detail=name();
-            $data=Pph::with(['vendor'])->orderBy('Docno','Asc')->paginate(20);
+            $value=$request->value;
+            $text=$request->text;
+            if($value==""){
+                $data=Pph::with(['vendor'])->orderBy('Docno','Asc')->paginate(20);
+            }else{
+                $data=Pph::with(['vendor'])->where($value,$text)->orderBy('Docno','Asc')->paginate(20);
+            }
+            
             return view('bukpot.pph',compact('menu','menu_detail','data'));
        
         }else{
