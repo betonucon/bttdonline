@@ -37,7 +37,7 @@
 						{ data: 'HeaderText' },
 						{ data: 'nilai_faktur' },
 						{ data: 'nilai_invoice' },
-						{ data: 'filebttd' },
+						{ data: 'filebttd',"className": "text-center"},
 						{ data: 'statusnya' },
 						
 					],
@@ -213,7 +213,7 @@
                                     <th>No Invoice</th>
                                     <th>Nilai Faktur</th>
                                     <th>Nilai Invoice</th>
-                                    <th width="0.2%">Bttd</th>
+                                    <th width="0.2%">Faktur</th>
                                     <th width="0.2%">Status</th>
                                     
                                 </tr>
