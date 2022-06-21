@@ -240,7 +240,12 @@ class BttdController extends Controller
                     return uang($data->AmountInvoice);
                 })
                 ->addColumn('statusnya', function($data){
-                    return'<i>'.$data['rolenya']['name'].'</i>';
+                    if($data->sts_pajak==1){
+                        return'<i>PAJAK</i>';
+                    }else{
+                        return'<i>'.$data['rolenya']['name'].'</i>';
+                    }
+                    
                     
                 })
                 ->addColumn('filebttd', function($data){
