@@ -249,7 +249,7 @@ class BttdController extends Controller
                     
                 })
                 ->addColumn('filebttd', function($data){
-                    return'<span class="btn btn-xs btn-success" title="File Faktur Pajak" onclick="tampilkan('.$data['id'].')" ><i class="fa fa-file-pdf"></i></span>';
+                    return'<span class="btn btn-xs btn-success" title="File Faktur Pajak" onclick="window.open(`'.url('_file_tagihan/'.$data->file).'`,`_blank`)" ><i class="fa fa-file-pdf"></i></span>';
                     
                 })
                 ->addColumn('masuk', function($data){
