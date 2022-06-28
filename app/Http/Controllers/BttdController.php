@@ -225,9 +225,9 @@ class BttdController extends Controller
         $bulan=$request->bulan;
         $wapu=$request->wapu;
         if($request->bulan=='all'){
-            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->orderBy('sts_pajak','Asc')->get();
+            $data=Bttd::where('sts_sap',null)->where('lokasi',3)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->orderBy('sts_pajak','Asc')->get();
         }else{
-            $data=Bttd::where('sts_sap',null)->where('lokasi','!=',7)->where('lokasi','>',2)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('sts_pajak','Asc')->get();
+            $data=Bttd::where('sts_sap',null)->where('lokasi',3)->where('kategori',1)->whereIn('wapu',array($wapu))->whereYear('InvoiceDate',$tahun)->whereMonth('InvoiceDate',$bulan)->orderBy('sts_pajak','Asc')->get();
         }
         return  Datatables::of($data)->addIndexColumn()
                 ->addColumn('nama_vendor', function($data){
