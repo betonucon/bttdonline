@@ -92,6 +92,17 @@ function cetak_pph(){
    
    return $data;
 }
+function ppn($tahun){
+   
+   $data=App\Potonganppn::where('tahun',$tahun)->first();
+   $exp=explode('.',$data['value']);
+   if($exp[1]=='00'){
+      $nilai=$exp[0];
+   }else{
+      $nilai=$data['value'];
+   }
+   return $nilai;
+}
 function cetak_ppn(){
    $data=App\Cetakppn::with(['ppn','vendor'])->where('LIFNR',Auth::user()['username'])->where('tanggal',date('Y-m-d'))->whereBetween('urut',[1,15])->get();
    

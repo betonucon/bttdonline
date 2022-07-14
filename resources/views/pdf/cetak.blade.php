@@ -109,7 +109,7 @@
                 </tr>
                 <tr>
                     <td class="ttd">3</td>
-                    <td class="ttd">Nilai Faktur Pajak (PPN 11%)</td>
+                    <td class="ttd">Nilai Faktur Pajak (PPN {{ppn(date('Y',strtotime($data->InvoiceDate)))}}%)</td>
                     <td class="ttd">{{$data['AmountInvoice']}}</td>
                 </tr>
                 <tr>
@@ -149,7 +149,7 @@
                 </tr>
                 <tr>
                     <td class="ttd">11</td>
-                    <td class="ttd">Nama Bank</td>
+                    <td class="ttd">Nama Bank </td>
                     <td class="ttd">{{$data['nama_bank']}}</td>
                 </tr>
             </table>
@@ -357,12 +357,12 @@
                         <td class="ttd" align="right" >{{uang($jumtotal_harga)}}</td>
                     </tr>
                     <tr>
-                        <td class="tth" colspan="4">PPN 11%</td>
-                        <td class="ttd" align="right" >{{uang(($jumtotal_harga*11)/100)}}</td>
+                        <td class="tth" colspan="4">PPN {{ppn(date('Y',strtotime($data->InvoiceDate)))}}%</td>
+                        <td class="ttd" align="right" >{{uang(($jumtotal_harga*ppn(date('Y',strtotime($data->InvoiceDate))))/100)}}</td>
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">DPP + PPN</td>
-                        <td class="ttd" align="right" >{{uang($jumtotal_harga+(($jumtotal_harga*11)/100))}}</td>
+                        <td class="ttd" align="right" >{{uang($jumtotal_harga+(($jumtotal_harga*ppn(date('Y',strtotime($data->InvoiceDate))))/100))}}</td>
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">Materai</td>
@@ -398,12 +398,12 @@
                         <td class="ttd" align="right" >{{uang($jumtotal_harga)}}</td>
                     </tr>
                     <tr>
-                        <td class="tth" colspan="4">PPN 11%</td>
-                        <td class="ttd" align="right" >{{uang(($jumtotal_harga*11)/100)}}</td>
+                        <td class="tth" colspan="4">PPN {{ppn(date('Y',strtotime($data->InvoiceDate)))}}%</td>
+                        <td class="ttd" align="right" >{{uang(($jumtotal_harga*ppn(date('Y',strtotime($data->InvoiceDate))))/100)}}</td>
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">DPP + PPN</td>
-                        <td class="ttd" align="right" >{{uang($jumtotal_harga+(($jumtotal_harga*11)/100))}}</td>
+                        <td class="ttd" align="right" >{{uang($jumtotal_harga+(($jumtotal_harga*ppn(date('Y',strtotime($data->InvoiceDate))))/100))}}</td>
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">UM PPH 22</td>
@@ -411,7 +411,7 @@
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">DPP + PPN + UM PPH 22</td>
-                        <td class="ttd" align="right" >{{uang(($jumtotal_harga+(($jumtotal_harga*11)/100))+($jumtotal_harga*(datastruk($data['Reference'])['um']/100)))}}</td>
+                        <td class="ttd" align="right" >{{uang(($jumtotal_harga+(($jumtotal_harga*ppn(date('Y',strtotime($data->InvoiceDate))))/100))+($jumtotal_harga*(datastruk($data['Reference'])['um']/100)))}}</td>
                     </tr>
                     <tr>
                         <td class="tth" colspan="4">PPH {{datastruk($data['Reference'])['tarif']}}%</td>
