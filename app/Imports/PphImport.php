@@ -15,7 +15,7 @@ class PphImport implements ToModel, WithStartRow,WithCalculatedFormulas
     */
     public function model(array $row)
     {
-        $cek=Pph::where('Docno',$row[0])->count();
+        $cek=Pph::where('Docno',$row[0])->where('tahun',$row[7])->count();
         if($cek>0){
             
         }else{
@@ -27,6 +27,8 @@ class PphImport implements ToModel, WithStartRow,WithCalculatedFormulas
                 'Reference' => $row[4], 
                 'AmountDpp' => $row[5], 
                 'AmountPph' => $row[6], 
+                'tahun' => $row[7], 
+                'file' => $row[8], 
                 'lastdate' => date('Y-m-d'), 
                 'sts' => 0, 
             ]);
