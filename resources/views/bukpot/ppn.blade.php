@@ -45,6 +45,8 @@
                                     <th width="15%">Tgl Faktur Pajak</th>
                                     <th width="12%" >Nilai DPP (Rp) </th>
                                     <th width="12%" >Nilai PPH (Rp) </th>
+                                    <th width="5%" >Tahun </th>
+                                    <th width="5%" >File</th>
                                     <th width="8%" >Status</th>
                                     
                                 </tr>
@@ -67,6 +69,8 @@
                                     
                                     <td class="ttd">{{$o['AmountDpp']}}</td>
                                     <td class="ttd">{{$o['AmountPph']}}</td>
+                                    <td class="ttd">{{$o['tahun']}}</td>
+                                    <td class="ttd"><span class="btn btn-xs btn-success" onclick="location.assign(`{{$o['file']}}`)" title="File PPN" ><i class="fas fa-clone"></i></td>
                                     @if($o['sts']==0)
                                         <td class="ttd"><i>Proses</i></td>
                                     @else
