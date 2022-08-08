@@ -128,7 +128,7 @@
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Dokumen Tagihan </label>
                                                     <input type="file" name="file" class="form-control" placeholder="Ketik disini" />
-                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf & Max 500kb</small>
+                                                    <small class="f-s-12 text-grey-darker">Upload file tagihan dalam format .pdf & Max 2MB</small>
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="exampleInputEmail1">Buat Struk  </label>

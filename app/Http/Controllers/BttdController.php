@@ -586,7 +586,7 @@ class BttdController extends Controller
                     $file = \Storage::disk('public_uploads');
                     
                     
-                    if($image->getClientOriginalExtension()=='pdf' && $size<'554881'){
+                    if($image->getClientOriginalExtension()=='pdf' && $size<'2219524'){
                         if($file->put($filePath, file_get_contents($image))){
                             $data           = New Bttd;
                             $data->LIFNR   = Auth::user()['username']; 
@@ -617,7 +617,7 @@ class BttdController extends Controller
 
                         }
                     }else{
-                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf | Ukuran file Maximal 500kb</p>';
+                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf | Ukuran file Maximal 2MB</p>';
                     }
                 }else{
                     echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Isi nilai Struk</p>';
@@ -712,7 +712,7 @@ class BttdController extends Controller
                     $file = \Storage::disk('public_uploads');
                     
                     $size = $image->getSize();
-                    if($image->getClientOriginalExtension()=='pdf' && $size<'554881'){
+                    if($image->getClientOriginalExtension()=='pdf' && $size<'2219524'){
                     
                         // echo hapuslinkdrive($imageFileName);
                         if(hapuslinkdrive($imageFileName)){
@@ -747,7 +747,7 @@ class BttdController extends Controller
                             echo'Gagal Hapus';
                         }
                     }else{
-                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf | Ukuran file Maximal 500kb</p>';
+                        echo '<p style="padding:5px;background:red;color:#fff;font-size:12px"><b>Error</b><br />-Format file harus .pdf | Ukuran file Maximal 2MB</p>';
                     }
             }    
             
