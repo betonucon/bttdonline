@@ -15,7 +15,7 @@ class PpnImport implements ToModel, WithStartRow
     */
     public function model(array $row)
     {
-        $cek=Ppn::where('HeaderText',$row[0])->where('tahun',$row[7])->count();
+        $cek=Ppn::where('HeaderText',$row[0])->where('tahun',$row[6])->count();
         if($cek>0){
             
         }else{
@@ -27,7 +27,7 @@ class PpnImport implements ToModel, WithStartRow
                 'AmountDpp' => $row[4], 
                 'AmountPph' => $row[5], 
                 'tahun' => $row[6], 
-                'file' => $row[7], 
+                // 'file' => $row[7], 
                 'sts' => 0, 
             ]);
 

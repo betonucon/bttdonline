@@ -110,6 +110,7 @@ class BukpotController extends Controller
         }
     }
     public function index_ppn(request $request){
+        error_reporting(0);
         if(Auth::user()['role_id']==2){
             $menu='Bukti Potong PPN';
             $menu_detail=name();
