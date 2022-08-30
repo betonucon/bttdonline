@@ -82,7 +82,7 @@
                                     <td class="ttd">{{$o['AmountDpp']}}</td>
                                     <td class="ttd">{{$o['AmountPph']}}</td>
                                     <td class="ttd">{{$o['tahun']}}</td>
-                                    <td class="ttd"><span class="btn btn-xs btn-success" onclick="location.assign(`{{url('bukpot')}}/{{$o['file']}}`)" title="File PPH" ><i class="fas fa-clone"></i></td>
+                                    <td class="ttd"><span class="btn btn-xs btn-success" onclick="window.open(`{{url('bukpot')}}/{{$o['file']}}`,`_blank`)" title="File PPH" ><i class="fas fa-clone"></i></td>
                                     @if($o['sts']==0)
                                         <td class="ttd"><i>Proses</i></td>
                                     @else
