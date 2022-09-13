@@ -46,6 +46,7 @@
                                     <th width="13%" >No Faktur Pajak</th>
                                     <th width="12%" >Nilai DPP (Rp) </th>
                                     <th width="12%" >Nilai PPH (Rp) </th>
+                                    <th width="5%" >File</th>
                                     <th width="8%" >Status</th>
                                     
                                 </tr>
@@ -64,6 +65,7 @@
                                     <td class="ttd">{{$o['Reference']}}</td>
                                     <td class="ttd">{{$o['AmountDpp']}}</td>
                                     <td class="ttd">{{$o['AmountPph']}}</td>
+                                    <td class="ttd"><span class="btn btn-xs btn-success" onclick="window.open(`{{url('bukpot')}}/{{$o['file']}}`,`_blank`)" title="File PPH" ><i class="fas fa-clone"></i></td>
                                     @if($o['sts']==0)
                                         <td class="ttd"><i>Proses</i></td>
                                     @else
