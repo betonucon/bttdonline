@@ -65,7 +65,12 @@
                                     <td class="ttd">{{$o['Reference']}}</td>
                                     <td class="ttd">{{$o['AmountDpp']}}</td>
                                     <td class="ttd">{{$o['AmountPph']}}</td>
+                                    @if($o['file']=="")
+                                    <td class="ttd"><span class="btn btn-xs btn-white" title="Tidak ada file" ><i class="fas fa-clone"></i></td>
+                                    @else
                                     <td class="ttd"><span class="btn btn-xs btn-success" onclick="window.open(`{{url('bukpot')}}/{{$o['file']}}`,`_blank`)" title="File PPH" ><i class="fas fa-clone"></i></td>
+                                    @endif
+                                    
                                     @if($o['sts']==0)
                                         <td class="ttd"><i>Proses</i></td>
                                     @else
