@@ -128,7 +128,7 @@
                             <h4 class="panel-title">Rekap Poling {{$tahun}}</h4>
                         </div>
                         <div class="panel-body" >
-                            <span class="btn btn-sm btn-success">Export Excel {{date('Y')}}</span>
+                            <span class="btn btn-sm btn-success" onclick="location.assign(`{{url('bttd/export_excel')}}`)">Export Excel {{date('Y')}}</span>
                                 
                             <div class="list-group">
                                 <div class="table-responsive">
