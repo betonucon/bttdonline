@@ -128,8 +128,9 @@
                             <h4 class="panel-title">Rekap Poling {{$tahun}}</h4>
                         </div>
                         <div class="panel-body" >
-                            <div class="list-group">
+                            <span class="btn btn-sm btn-success">Export Excel {{date('Y')}}</span>
                                 
+                            <div class="list-group">
                                 <div class="table-responsive">
                                     <table class="table table-striped m-b-0">
                                         <thead>

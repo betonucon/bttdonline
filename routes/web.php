@@ -126,6 +126,7 @@ Route::group(['middleware'    => 'auth'],function(){
 });
 Route::group(['middleware'    => 'auth'],function(){
     Route::get('/bttd', 'BttdController@index');
+    Route::get('/bttd/export_excel', 'BttdController@export_excel');
     Route::get('/sap', 'BttdController@index_sap');
     Route::get('/web', 'BttdController@index_web');
     Route::post('/web/terima_pajak', 'BttdController@terima_pajak');

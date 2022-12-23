@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
+use App\Exports\PolingExport;
+use Maatwebsite\Excel\Facades\Excel;
 use App\User;
 use App\Vendor;
 use App\Traking;
@@ -1124,5 +1126,12 @@ class BttdController extends Controller
 
     }
 
-    
+    public function export_excel(request $request)
+	{
+        error_reporting(0);
+        ob_end_clean(); // this
+        ob_start(); // and this
+		return Excel::download(new PolingExport, 'POLING.xlsx');
+        
+	}
 }
