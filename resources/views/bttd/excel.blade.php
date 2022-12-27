@@ -15,8 +15,9 @@
             <th bgcolor="aqua">No</th>
             <th bgcolor="aqua" width="10px">LIFNER</th>
             <th bgcolor="aqua" width="50px">VENDOR</th>
-            <th bgcolor="aqua" width="10px">S.Puas</th>
             <th bgcolor="aqua" width="10px">Tanggal</th>
+            <th bgcolor="aqua" width="10px">S.Puas</th>
+            
             <th bgcolor="aqua" width="10px">Puas</th>
             <th bgcolor="aqua" width="10px">T.puas</th>
         </tr>
